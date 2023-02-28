@@ -3,9 +3,9 @@
 import * as React from 'react'
 import { ChakraProvider } from '@chakra-ui/react';
 import { getTest } from "./api/test";
-import Login from "./pages/Login";
-import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
-import Signup from "./pages/Signup";
+import Login from "./pages/Login/Login";
+import {BrowserRouter as Router, Routes, Route, Navigate} from 'react-router-dom';
+// import Signup from "./pages/Login/Signup";
 import Navbar from './components/navbar';
 import MyProfile from './pages/MyProfile';
 import Home from './pages/Home';
@@ -23,10 +23,11 @@ import Listings from './components/listings';
 import Reviews from './components/reviews';
 import Listing from './pages/Listing/Listing'
 import ConfirmationList from './pages/Listing/ConfirmationList'
+import { useAuthContext } from './pages/Login/hooks/useAuthContext';
 
 
 function App() {
-
+  const { user } = useAuthContext()
 
   return (
     <ChakraProvider>
@@ -34,6 +35,8 @@ function App() {
         <Navbar/>
           <Routes>
             <Route path="/" element={<Home/>}/>
+            <Route path="/login" element={!user ? <Login/> : <Navigate to="/"/>}/>
+            {/* <Route path="/signup" element={!user ? <Signup/> : <Navigate to="/"/>}/> */}
             <Route path='/myProfile' element={<MyProfile/>}>
               <Route path='myListings' element={<Listings/>}/>
               <Route path='myReviews' element={<Reviews/>}/>
