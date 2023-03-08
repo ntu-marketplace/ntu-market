@@ -5,7 +5,7 @@ import sports from '../media/sports.jpg'
 function Categories() {
     return(
         <center>
-            <Heading mb={4} size='lg'>Categories</Heading>
+            <Heading mb={4} size='lg' >Categories</Heading>
             <Divider w='40%'></Divider>
             <Grid 
                 autoFlow='column'

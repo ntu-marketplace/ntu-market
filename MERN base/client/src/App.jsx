@@ -1,4 +1,3 @@
-
 //functions
 import * as React from 'react'
 import { ChakraProvider } from '@chakra-ui/react';
@@ -30,6 +29,7 @@ function App() {
   const { user } = useAuthContext()
 
   return (
+    <>
     <ChakraProvider>
       <div >
         <Navbar/>
@@ -63,6 +63,7 @@ function App() {
           </Routes>
       </div>
     </ChakraProvider>
+    </>
   );
 }
 

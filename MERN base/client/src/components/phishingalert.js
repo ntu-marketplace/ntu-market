@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Text, Heading, Flex } from "@chakra-ui/react";
-
+// bhar to make this loop through a bunch of messages and not just one
 function PhishingAlert() {
     return(
         <Flex justify='center' mt='0' paddingTop='1em' paddingBottom={'1em'}>

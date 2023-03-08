@@ -2,9 +2,10 @@ import { Button, Container , Heading} from "@chakra-ui/react";
 import React from "react";
 import { Link, Outlet } from "react-router-dom";
 
-function Profile(){
+function SellerProfile(){
     return(
         <>
+        <></>
         <Container w='full' h='full' bg='green.300'>
             <Heading>Seller Profile Page</Heading>
             <br /><br />
@@ -19,4 +20,4 @@ function Profile(){
         </>
     )
 }
-export default Profile;
+export default SellerProfile;

@@ -22,7 +22,7 @@ import { Link } from 'react-router-dom';
 import { useSignout } from '../pages/Login/hooks/useSignout'
 import { useAuthContext } from '../pages/Login/hooks/useAuthContext'
 
-
+//Navbar is used once users have logged in. Will be called header otherwise.
 
 function Navbar() {
   const { signout } = useSignout()
@@ -38,7 +38,7 @@ function Navbar() {
         <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
           <Show above='766px'>
             <Box>
-              <Link to='/'>
+              <Link to='/home'>
                 <img src={cart} alt="NTU Marketplace" height={50} width={50} />
               </Link>
             </Box>
