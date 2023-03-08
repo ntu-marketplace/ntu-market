@@ -19,8 +19,18 @@ import {
 import { HamburgerIcon, Search2Icon, BellIcon, EmailIcon, StarIcon } from '@chakra-ui/icons';
 import cart from '../media/shopping-cart.png'
 import { Link } from 'react-router-dom';
+import { useSignout } from '../pages/Login/hooks/useSignout'
+import { useAuthContext } from '../pages/Login/hooks/useAuthContext'
+
 //Navbar is used once users have logged in. Will be called header otherwise.
+
 function Navbar() {
+  const { signout } = useSignout()
+  const { user } = useAuthContext()
+
+  const handleClick = () => {
+    signout()
+  }
 
   return (
     <>
@@ -43,27 +53,47 @@ function Navbar() {
                   <HamburgerIcon color='white' h={'1.5em'} w={'1.5em'} ></HamburgerIcon>
                 </MenuButton>
                 <MenuList>
-                  <MenuItem minH='48px'>
-                    <Image
-                      boxSize='4rem'
-                      borderRadius='full'
-                      src='https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9'
-                      alt='Profile Picture'
-                      mr='12px'
-                    />
-                    <span>Hey there, Monica!</span>
-                  </MenuItem>
-                  <Link to='/settings'>
-                    <MenuItem>Settings</MenuItem>
-                  </Link>
-                  <Link to='/myProfile'>
-                    <MenuItem>My Profile</MenuItem>
-                  </Link>
-                  <Link to='/wallet'>
-                    <MenuItem>My Wallet</MenuItem>
-                  </Link>
-                  <MenuDivider />
-                  <MenuItem>Sign Out</MenuItem>
+                  {user && (
+                    <div>
+                      <MenuItem minH='48px'>
+                        <Image
+                          boxSize='4rem'
+                          borderRadius='full'
+                          src='https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9'
+                          alt='Profile Picture'
+                          mr='12px'
+                        />
+                        <span>Hey there, Monica!</span>
+                      </MenuItem>
+                      <Link to='/settings'>
+                        <MenuItem>Settings</MenuItem>
+                      </Link>
+                      <Link to='/myProfile'>
+                        <MenuItem>My Profile</MenuItem>
+                      </Link>
+                      <Link to='/wallet'>
+                        <MenuItem>My Wallet</MenuItem>
+                      </Link>
+                      <MenuDivider />
+                      <MenuItem onClick={handleClick}>Sign Out</MenuItem> 
+                    </div>
+                  )}
+
+                  {!user && (
+                    <div>
+                      <MenuItem minH='48px'>
+                        <Avatar boxSize='4rem' mr='12px' />
+                        <span >Please Login</span>
+                      </MenuItem>
+                      {/* <Link to='/settings'>
+                        <MenuItem>Settings</MenuItem>
+                      </Link> */}
+                      <MenuDivider />
+                      <Link to = '/login'>
+                        <MenuItem>Log in</MenuItem> 
+                      </Link>
+                    </div>
+                  )}
                 </MenuList>
               </Menu>
             </Flex>
@@ -95,32 +125,59 @@ function Navbar() {
             <Show above='766px'>
               <Flex alignItems={'center'}>
                 <Menu>
-                  <MenuButton
-                    as={Button}
-                    rounded={'full'}
-                    variant={'link'}
-                    cursor={'pointer'}
-                    minW={0}>
-                    <Avatar
-                      size={'sm'}
-                      src={
-                        'https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9'
-                      }
-                    />
-                  </MenuButton>
-                  <MenuList>
-                    <Link to='/settings'>
-                      <MenuItem>Settings</MenuItem>
-                    </Link>
-                    <Link to='/myProfile'>
-                      <MenuItem>My Profile</MenuItem>
-                    </Link>
-                    <Link to='/wallet'>
-                      <MenuItem>My Wallet</MenuItem>
-                    </Link>
-                    <MenuDivider />
-                    <MenuItem>Sign Out</MenuItem>
-                  </MenuList>
+                  {user && (
+                    <div>
+                      <MenuButton
+                        as={Button}
+                        rounded={'full'}
+                        variant={'link'}
+                        cursor={'pointer'}
+                        minW={0}>
+                        <Avatar
+                          size={'sm'}
+                          src={
+                            'https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9'
+                          }
+                        />
+                      </MenuButton>
+                      <MenuList>
+                        <Link to='/settings'>
+                          <MenuItem>Settings</MenuItem>
+                        </Link>
+                        <Link to='/myProfile'>
+                          <MenuItem>My Profile</MenuItem>
+                        </Link>
+                        <Link to='/wallet'>
+                          <MenuItem>My Wallet</MenuItem>
+                        </Link>
+                        <MenuDivider />
+                        <MenuItem onClick={handleClick}>Sign Out</MenuItem>
+                      </MenuList>
+                    </div>
+                  )}
+
+                  {!user && (
+                    <div>
+                      <MenuButton
+                        as={Button}
+                        rounded={'full'}
+                        variant={'link'}
+                        cursor={'pointer'}
+                        minW={0}>
+                        <Avatar size={'sm'}/>
+                      </MenuButton>
+                      <MenuList>
+                        {/* <Link to='/settings'>
+                          <MenuItem>Settings</MenuItem>
+                        </Link>
+                        <MenuDivider /> */}
+                        < Link to ='/login'>
+                          <MenuItem>Log in</MenuItem>
+                        </Link>
+                      </MenuList>
+                    </div>
+                  )}
+
                 </Menu>
               </Flex>
             </Show>

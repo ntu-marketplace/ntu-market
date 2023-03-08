@@ -85,6 +85,10 @@ app.use((error, req, res, next) => {
 });
 
 // routes
+const userRoutes = require('./routes/user');
+
+app.use('/api/user', userRoutes);
+
 app.get("/", getData.handleGetUsers);
 app.get("/get-items", getItems.handleGetItems);
 app.post("/create-user", createUser.handleCreateUser);
