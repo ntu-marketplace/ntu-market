@@ -24,7 +24,7 @@ function ModalIntro() {
         <Img src ='/LOGO.png'></Img>
         <Stack textColor='black'>
         {showButton && (
-        MyButton('/house', 'Enter')
+        MyButton('/home', 'Enter')
         )}
         </Stack>
         
