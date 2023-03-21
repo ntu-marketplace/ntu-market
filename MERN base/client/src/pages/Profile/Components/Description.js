@@ -1,11 +1,13 @@
-import { Tab, Tabs, TabList, TabPanel, TabPanels, Grid, GridItem } from "@chakra-ui/react";
+import { Text } from "@chakra-ui/react";
 import { useState } from "react";
-function Description(){
+function Description(props){
+
     return(
         <>
-        <a>
-            NAME. Pull from DB pls. I will do just need to mock it up first.
-        </a>
+            <Text> {props.name} </Text>
+            <Text>
+                {props.description}
+            </Text>
 
         </>
 

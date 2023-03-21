@@ -3,6 +3,7 @@ import Background from "../../components/Background";
 import Footer from "../../components/Footer";
 import { FormControl, FormLabel, Input, FormHelperText } from "@chakra-ui/react";
 import MyButton from "../../components/MyButton";
+import NewAccAlert from "../../components/NewAccAlert";
 
 function SignUp() {
 
@@ -29,8 +30,9 @@ function SignUp() {
             <FormHelperText>We'll never tell a soul.</FormHelperText>
         </FormControl>
         <Stack color='white' textColor='black'>
-            {MyButton('authentication', 'Submit')}
+            <NewAccAlert/>
         </Stack>
+
         
     </Background>
     

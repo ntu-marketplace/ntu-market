@@ -2,7 +2,7 @@ import { Box, Tab, Tabs, TabList, TabPanel, TabPanels, Grid, GridItem, Button } 
 import { useEffect, useState } from "react";
 import Description from "./Description";
 import Listing from "./Listing";
-import Review from "./Review";
+import Review from "./ProfileReview";
 //Toggling states can be dropped, handled by CHAKRAUI in TABS
 function ProfileBody(){
     return(

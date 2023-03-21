@@ -1,33 +1,29 @@
-import { Tab, Tabs, TabList, TabPanel, TabPanels, Grid, GridItem } from "@chakra-ui/react";
-import { useState } from "react";
-import Description from "./Description";
-//API to populate reviews
-function Review(){
-    return(
-        <>
-        <Grid
-            templateAreas={`"nav main"
-                            "nav main"`}
-            gridTemplateRows={'50px 1fr 30px'}
-            gridTemplateColumns={'150px 1fr'}
-            h='800px'
-            gap='1'
-            color='blackAlpha.700'
-            fontWeight='bold'
-            >
-            <GridItem pl='3' bg='white.300' area={'nav'}>
-                <Description/>
-            </GridItem>
-            <GridItem pl='3' bg='white.300' area={'main'}>
-                TODO
-            </GridItem>
-        </Grid>
-        
-        </>
-
-
-    )
-
-
+import { StarIcon } from "@chakra-ui/icons";
+import { Flex } from "@chakra-ui/layout";
+import Rating from "./Rating";
+import { Accordion, AccordionItem, AccordionButton, AccordionPanel, AccordionIcon, Box, Avatar, Grid, GridItem, HStack } from "@chakra-ui/react";
+function Review(props) {
+    console.log(props)
+  return (
+    <>
+        <AccordionItem>
+            <HStack p={3}>
+            <Avatar src={props.getImageSrc} />
+            <AccordionButton>
+                <Box as="span" flex='1' textAlign='left'>
+                {props.name}
+                <Rating value={props.value}/>
+                </Box>
+                
+                <AccordionIcon />
+            </AccordionButton>
+            </HStack>
+            <AccordionPanel pb={4}>
+                {props.description}
+            </AccordionPanel>
+        </AccordionItem>
+    </>
+  );
 }
+
 export default Review;

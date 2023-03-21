@@ -5,7 +5,7 @@ import Footer from "../../components/Footer";
 import TopPicture from "./Components/TopPicture";
 import ProfileBody from "./Components/ProfileBody";
 import { useState } from "react";
-function MyProfile(){
+function MyProfile(props){
 
     return(
         <>

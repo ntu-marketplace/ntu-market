@@ -26,6 +26,7 @@ function Header() {
     <>
       <Box bg={'#181C62'} px={4}>
         <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
+          
           <Show above='766px'>
             <Box>
               <Link to='/'>
