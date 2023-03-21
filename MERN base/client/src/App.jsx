@@ -25,6 +25,7 @@ import {ChakraProvider} from "@chakra-ui/react";
 import ModalIntro from "./pages/ModalIntro";
 import House from "./pages/House";
 import ErrorNotFound from "./pages/ErrorNotFound";
+import AddListing from "./pages/AddListing";
 
 function App() {
   return (
@@ -47,6 +48,7 @@ function App() {
           <Route path='/myChats' element={<MyChats/>}/>
           <Route path='/notifications' element={<Notifications/>}/>
           <Route path='/wishlist' element={<Wishlist/>}/>
+          <Route path='/addListing' element={<AddListing/>}/>
           <Route path='/details' >
             <Route index element={<Details/>}/>
             <Route path='payment' element={<Payment/>}/>
