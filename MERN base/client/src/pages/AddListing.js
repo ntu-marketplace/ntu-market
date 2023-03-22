@@ -19,12 +19,15 @@ import {
   InputLeftElement,
   Image,
   Grid,
+  Stack,
+  Text,
 } from '@chakra-ui/react';
 
 import { useToast } from '@chakra-ui/react';
 import Background from '../components/Background';
 import Navbar from '../components/navbar';
 import { Link } from 'react-router-dom';
+import { CloseIcon } from '@chakra-ui/icons';
 
 
 const Form1 = () => {
@@ -42,13 +45,23 @@ const Form1 = () => {
   const previewImages = (source) =>{
     return source.map((image)=>{
       return (
-      <GridItem>
-        <Image 
-        src={image} 
-        key={image} 
-        boxSize="13em" 
-        borderRadius="3px"
-        objectFit="cover"></Image>
+      <GridItem
+      position='relative'>
+          <Image 
+          src={image} 
+          key={image} 
+          boxSize="15em" 
+          borderRadius="3px"
+          objectFit="cover"></Image>
+          <Button
+            colorScheme="blackAlpha"
+            position='absolute'
+            right='1'
+            top='1' 
+            borderRadius='10'
+            onClick={() => setSelectedImage(selectedImages.filter((e) => e !== image))}>
+              <CloseIcon color='white' boxSize={2}></CloseIcon>
+            </Button>        
       </GridItem>
       )
     })
@@ -63,35 +76,59 @@ const Form1 = () => {
       
         <Box
         borderRadius="5"
-        height="15em"
+        height="25em"
         background="#3b409c"
         overflowX="auto"
-        overflowY="hidden">
-          <Grid 
-            autoFlow='column'
-            autoColumns={['21%', '21%','28%']}
-            overflowX='auto'
-            overflowY='hidden'
-            gap="1"
-            mt='1.5em'
-                mb='1.5em'
-                sx={{
-                    '&::-webkit-scrollbar': {
-                        display : 'hidden'
-                    }
-                }}>
-            {previewImages(selectedImages)}
-          </Grid> 
+        overflowY="hidden" 
+        padding="1"
+        display="flex"
+        alignItems="center"
+        justifyContent="center"> 
+          <Stack p="8" textAlign="center" spacing="1">
+            <Grid 
+              autoFlow='column'
+              autoColumns={['21%', '21%','28%']}
+              overflowX='auto'
+              overflowY='hidden'
+              gap="2"
+              mt='1.5em'
+              mb="0.7em"
+              sx={{
+                  '&::-webkit-scrollbar': {
+                      display : 'hidden'
+                  }
+              }}>
+              {previewImages(selectedImages)}
+            </Grid>
+            <Box 
+              position='relative'
+              width='100%'
+              border="1px dashed grey"
+              paddingTop="3"
+              paddingBottom="3"
+              borderRadius="5">
+              <Heading fontSize="lg" color="white" fontWeight="bold">
+                Click to upload
+              </Heading>
+              <Text fontWeight="light" color="grey.100">or drop images here</Text>
+              <Input
+                height="100%"
+                width="100%"
+                position="absolute"
+                top="0"
+                bottom="0"
+                left="0"
+                opacity="0"
+                aria-hidden="true"
+                type="file"
+                name="Listing Images"
+                multiple
+                onChange={OnSelectFile}
+                accept="image/*">
+              </Input>
+            </Box>
+          </Stack>      
         </Box>
-      
-      
-      <Input
-        type="file"
-        name="Listing Images"
-        multiple
-        onChange={OnSelectFile}
-        accept="image/*">
-      </Input>
     </>
   );
 };
@@ -102,6 +139,21 @@ const Form2 = () => {
     <Heading w="100%" textAlign={'center'} fontWeight="normal" mb="2%">
         Tell us more!
       </Heading>
+      <Input variant="filled" background="#3b409c" placeholder='What are you selling?' />
+      <Select 
+      mt="3"
+      variant="filled"
+      placeholder='Category'
+      background="#3b409c"
+      mb="3"
+      color='gray.300' >
+        <option value='option1'>Electronics</option>
+        <option value='option2'>Home Appliances</option>
+        <option value='option3'>School Items</option>
+        <option value='option4'>Skincare</option>
+        <option value='option5'>Fashion</option>
+        <option value='option6'>Food & Cooking</option>
+      </Select>
       <InputGroup>
         <InputLeftElement
           pointerEvents='none'
@@ -141,7 +193,8 @@ const Form3 = () => {
       mt="3"
       variant="filled"
       placeholder='How do you want to deal?'
-      background="#3b409c" >
+      background="#3b409c"
+      color='gray.300' >
         <option value='option1'>Meet Up</option>
         <option value='option2'>Postage</option>
         <option value='option2'>Meet Up & Postage</option>
