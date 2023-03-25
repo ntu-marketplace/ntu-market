@@ -2,7 +2,7 @@ const User = require('../models/User');
 
 const handleCreateUser = async (req, res) => {
     const { username, password, name, email, mobile } = req.body;
-    if (!username || !password || !name || !email) return res.status(400).json("Missing information")
+    if (!username || !password || !email) return res.status(400).json("Missing information")
 
     try {
         const user = await User
