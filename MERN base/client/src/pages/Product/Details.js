@@ -12,7 +12,7 @@ function Details(){
             <Link to='chat'>
                 <Button> Chat With Buyer</Button>
             </Link>
-            <Link to='/profile'>
+            <Link to='/sellerProfile'>
                 <Button> Seller Profile</Button>
             </Link>
         </Container>
