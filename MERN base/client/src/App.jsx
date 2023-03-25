@@ -16,9 +16,9 @@ import Details from './pages/Product/Details'
 import Payment from './pages/Product/Payment';
 import Chat from './pages/Product/Chat';
 import ConfirmationBuy from './pages/Product/ConfirmationBuy'
-// import SellerProfile from './pages/Profile/SellerProfile';
-// import Listings from './components/Listings';
-// import Reviews from './components/Reviews';
+import SellerProfile from './pages/Profile/SellerProfile';
+import Listings from './components/listings';
+import Reviews from './components/reviews';
 import Listing from './pages/Listing/Listing';
 import ConfirmationList from './pages/Listing/ConfirmationList';
 import {ChakraProvider} from "@chakra-ui/react";
@@ -53,10 +53,10 @@ function App() {
             <Route path='chat' element={<Chat/>}/>
             <Route path='confirmationBuy' element={<ConfirmationBuy/>}/>
           </Route>
-          {/* <Route path='/sellerProfile' element={<SellerProfile/>}>
+          <Route path='/sellerProfile' element={<SellerProfile/>}>
             <Route path='listings' element={<Listings/>}/>
             <Route path='reviews' element={<Reviews/>}/>
-          </Route> */}
+          </Route>
           <Route path='/newListing'>
             <Route index element={<Listing/>}/>
             <Route path='confirmation' element={<ConfirmationList/>}/>
