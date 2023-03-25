@@ -3,10 +3,12 @@ import { Container, HStack, Heading, Divider, Grid} from "@chakra-ui/react";
 import PhishingAlert from '../components/phishingalert';
 import ListingCard from '../components/ListingCard';
 import Navbar from "../components/navbar";
+import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Categories from "../components/categories";
 function Home(){
   //fetch this as a json response. @ Jeremy
+  
   const items = [
     {
       title: "Living Room Sofa",
@@ -52,6 +54,7 @@ function Home(){
     return(
       <>
       <Navbar/>
+      <Header />
         <Container
         mt='0'
         mb='0'
