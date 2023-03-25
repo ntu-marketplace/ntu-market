@@ -15,7 +15,7 @@ import {
   Show,
   Image,
 } from '@chakra-ui/react';
-import { HamburgerIcon, Search2Icon, BellIcon, EmailIcon, StarIcon } from '@chakra-ui/icons';
+import { HamburgerIcon, Search2Icon, BellIcon, EmailIcon, StarIcon, AddIcon } from '@chakra-ui/icons';
 import cart from '../media/shopping-cart.png'
 import { Link } from 'react-router-dom';
 //Navbar is used once users have logged in. Will be called header otherwise.
@@ -90,6 +90,9 @@ function Navbar() {
             </Link>
             <Link to='/wishlist'>
               <StarIcon color={'white'} h={'1.2em'} w={'1.2em'} />
+            </Link>
+            <Link to='/addListing'>
+              <AddIcon color={'white'} h={'1.2em'} w={'1.2em'} />
             </Link>
             <Show above='766px'>
               <Flex alignItems={'center'}>
