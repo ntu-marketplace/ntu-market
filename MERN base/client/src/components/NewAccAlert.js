@@ -15,7 +15,7 @@ function NewAccAlert() {
           })
         }
       >
-        Submit
+        Go to Login
       </Button>
     )
   }
