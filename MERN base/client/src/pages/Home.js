@@ -16,6 +16,9 @@ function Home(){
       clearInterval(intervalId);
     };
   })
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  
   
   const alerts = [
     {
@@ -81,8 +84,8 @@ function Home(){
   ]
     return(
       <>
-      <Navbar/>
-      {/* <Header /> */}
+      {isLoggedIn && <Navbar/>}
+      {!isLoggedIn && <Header />}
         <Container
         mt='0'
         mb='0'
