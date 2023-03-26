@@ -12,6 +12,9 @@ function Home(){
     const intervalId = setInterval(()=>{
       setPAIndex((pAIndex + 1)%4);
     },10000);
+    return () => {
+      clearInterval(intervalId);
+    };
   })
   
   const alerts = [
