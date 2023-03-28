@@ -9,9 +9,10 @@
 PORT=8080
 MONGO_URI=mongodb+srv://bigmongoose:catchingfish@ntu-marketplace.0iy2pme.mongodb.net/marketdb
 ```
-# I can not make post request using the MONGO_URL above
 ```
 PORT=8080
 MONGO_URI=mongodb+srv://sayuri_fam:Chelly1028@mongotest.f9rgfra.mongodb.net/?retryWrites=true&w=majority
 SECRET=thisisasecretkeyndjaiwufhrjchsbtughsichs
+MAILTRAP_USERNAME=2abe11d8a135ea
+MAILTRAP_PASSWORD=d3c4f0523b9bb9
 ```
