@@ -6,6 +6,9 @@ import Navbar from "../components/navbar";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Categories from "../components/categories";
+import FeaturedItems from "../components/FeaturedItems";
+import axios from "axios";
+
 function Home(){
   const [pAIndex, setPAIndex] = useState(1);
   useEffect(()=>{
@@ -15,11 +18,30 @@ function Home(){
     return () => {
       clearInterval(intervalId);
     };
-  })
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  });
+  const [listings, setListings] = useState([]);
+  const getListings = async () =>{
+    try{
+      const resp = axios.get('http://localhost:8080/get-items')
+      .then((response) => {
+        setListings(response.data)
+        console.log(response.data)
+      })
+      .catch(error => {
+      console.log(error);
+      
+    }
+    
+      );
+    }catch(e){
+      console.log("dont torture me", e);
+    }
 
-  
-  
+  }
+  useEffect(()=>{
+    getListings();
+  },[])
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
   const alerts = [
     {
       title:"Protect yourself from phishing scams!",
@@ -38,28 +60,6 @@ function Home(){
       content:"Keep a level of anonymity in order to prevent yourself from being stalked."
     },
   ];
-
-  const[item,setItem] = useState(alerts[0]);
-  const items = [
-    {
-      title: "Living Room Sofa",
-      price: "$450",
-      description:
-        "This sofa is perfect for modern tropical spaces, baroque inspired spaces, earthy toned spaces and for people who love a chic design with a sprinkle of vintage design.",
-      getImageSrc: () => require("../../src/media/any.jpg"),
-      favourited: false,
-      buyer: true,
-    },
-    {
-      title: "Living Room Sofa",
-      price: "$450",
-      description:
-        "This sofa is perfect for modern tropical spaces, baroque inspired spaces, earthy toned spaces and for people who love a chic design with a sprinkle of vintage design.",
-      getImageSrc: () => require("../../src/media/any.jpg"),
-      favourited: false,
-      buyer: true,
-    },
-  ]
   const categoriesItems = [
     {
       title: "Electronics",
@@ -98,19 +98,19 @@ function Home(){
         <Heading mb={4} size='lg' >Categories</Heading>
         <Divider w='40%'></Divider>
         <Grid 
-              autoFlow='column'
-              autoColumns={['21%', '21%','15%']}
-              w='90vw'
-              overflowX='auto'
-              overflowY='hidden'
-              gap={3}
-              mt='1.5em'
-              mb='1.5em'
-              sx={{
-                  '&::-webkit-scrollbar': {
-                      display : 'hidden'
-                  }
-              }} >
+          autoFlow='column'
+          autoColumns={['21%', '21%','15%']}
+          w='90vw'
+          overflowX='auto'
+          overflowY='hidden'
+          gap={3}
+          mt='1.5em'
+          mb='1.5em'
+          sx={{
+              '&::-webkit-scrollbar': {
+                  display : 'hidden'
+              }
+          }} >
         {categoriesItems.map((categoriesItem)=>(
           <Categories
           key={categoriesItem.title}
@@ -120,22 +120,9 @@ function Home(){
         ))}
 
         </Grid>
-        <HStack>
-          {items.map((item) => (
-            <ListingCard
-              key = {item.title}
-              title = {item.title}
-              price = {item.price}
-              description = {item.description}
-              buyer = {item.buyer}
-              favourited = {item.favourited}
-              imageSrc={item.getImageSrc()}
-            />
-          ))}
-        </HStack>
-
+        <FeaturedItems/>
         </Container>
-        
+      <br/><br/>
       <Footer/>
       </>
     )
