@@ -23,7 +23,6 @@ import Listing from './pages/Listing/Listing';
 import ConfirmationList from './pages/Listing/ConfirmationList';
 import {ChakraProvider} from "@chakra-ui/react";
 import ModalIntro from "./pages/ModalIntro";
-import House from "./pages/House";
 import ErrorNotFound from "./pages/ErrorNotFound";
 import AddListing from "./pages/AddListing";
 
@@ -37,7 +36,6 @@ function App() {
           <Route path="/login" element={<Login/>}/>
           <Route path='/signUp' element={<SignUp/>}/>
             <Route path='authentication' element={<Authentication/>}/>
-          <Route path='/house' element={<House/>}/>
           <Route path='/home' element={<Home/>}/>
           <Route path='/myProfile' element={<MyProfile/>}>
             {/* <Route path='myListings' element={<Listings/>}/> */}
