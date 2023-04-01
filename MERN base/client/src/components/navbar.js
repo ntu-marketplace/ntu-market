@@ -15,10 +15,10 @@ import {
   Show,
   Image,
 } from '@chakra-ui/react';
-import { HamburgerIcon, Search2Icon, BellIcon, EmailIcon, StarIcon, AddIcon } from '@chakra-ui/icons';
+import { HamburgerIcon, Search2Icon, EmailIcon, StarIcon, AddIcon } from '@chakra-ui/icons';
 import cart from '../media/shopping-cart.png'
 import { Link } from 'react-router-dom';
-//Navbar is used once users have logged in. Will be called header otherwise.
+
 function Navbar() {
 
   return (
@@ -58,9 +58,9 @@ function Navbar() {
                   <Link to='/myProfile'>
                     <MenuItem>My Profile</MenuItem>
                   </Link>
-                  <Link to='/wallet'>
+                  {/* <Link to='/wallet'>
                     <MenuItem>My Wallet</MenuItem>
-                  </Link>
+                  </Link> */}
                   <MenuDivider />
                   <MenuItem>Sign Out</MenuItem>
                 </MenuList>
@@ -81,18 +81,15 @@ function Navbar() {
               <Input bg='#343769' textAlign='center' variant='filled' placeholder='Search' />
             </Show>
           </InputGroup>
-          <HStack spacing={5} align={'center'}>
-            <Link to='/notifications'>
-              <BellIcon color={'white'} h={'1.5em'} w={'1.5em'} />
+          <HStack spacing={8} align={'center'}>
+            <Link to='/addListing'>
+              <AddIcon color={'white'} h={'1.2em'} w={'1.2em'} />
             </Link>
             <Link to='/myChats'>
               <EmailIcon color={'white'} h={'1.5em'} w={'1.5em'} />
             </Link>
             <Link to='/wishlist'>
               <StarIcon color={'white'} h={'1.2em'} w={'1.2em'} />
-            </Link>
-            <Link to='/addListing'>
-              <AddIcon color={'white'} h={'1.2em'} w={'1.2em'} />
             </Link>
             <Show above='766px'>
               <Flex alignItems={'center'}>
@@ -117,9 +114,9 @@ function Navbar() {
                     <Link to='/myProfile'>
                       <MenuItem>My Profile</MenuItem>
                     </Link>
-                    <Link to='/wallet'>
+                    {/* <Link to='/wallet'>
                       <MenuItem>My Wallet</MenuItem>
-                    </Link>
+                    </Link> */}
                     <MenuDivider />
                     <MenuItem>Sign Out</MenuItem>
                   </MenuList>

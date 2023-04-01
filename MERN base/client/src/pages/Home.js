@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { Container, HStack, Heading, Divider, Grid} from "@chakra-ui/react";
 import PhishingAlert from '../components/phishingalert';
-import ListingCard from '../components/ListingCard';
 import Navbar from "../components/navbar";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -25,7 +24,6 @@ function Home(){
       const resp = axios.get('http://localhost:8080/get-items')
       .then((response) => {
         setListings(response.data)
-        console.log(response.data)
       })
       .catch(error => {
       console.log(error);
