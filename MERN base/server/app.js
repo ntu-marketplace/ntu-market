@@ -14,6 +14,7 @@ const getItems = require('./controllers/getItems');
 const createUser = require('./controllers/createUser');
 const findUser = require('./controllers/findUser');
 const postItem = require('./controllers/postItem');
+const getAlerts = require('./controllers/getAlerts');
 
 // app 
 const app = express();
@@ -87,9 +88,11 @@ app.use((error, req, res, next) => {
 // routes
 app.get("/", getData.handleGetUsers);
 app.get("/get-items", getItems.handleGetItems);
+app.get("/get-alerts", getAlerts.handleGetAlerts);
 app.post("/create-user", createUser.handleCreateUser);
 app.post("/find-user", findUser.handleFindUser);
 app.post("/post-item", postItem.handlePostItem);
+
 
 // port
 const port = process.env.PORT || 8080;

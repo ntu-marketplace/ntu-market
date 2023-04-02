@@ -11,23 +11,13 @@ import { AppContextProvider, useAppContext } from "../AppContext";
 
 function Home(){
   const[isLogged, setIsLogged] = useState(false);
-  const [pAIndex, setPAIndex] = useState(1);
-  console.log(localStorage)
-  useEffect(()=>{
-    const intervalId = setInterval(()=>{
-      setPAIndex((pAIndex + 1)%4);
-    },10000);
-    
-    return () => {
-      clearInterval(intervalId);
-    };
-  });
+  const [pAIndex, setPAIndex] = useState(0);
 
   useEffect(()=>{
-    getListings();
+    getAlerts();
     check(); // check with every get call
   },[isLogged]);
-
+  
   const check =() =>{
     if(localStorage.getItem("user") == 'false'){
       setIsLogged(false);
@@ -38,39 +28,29 @@ function Home(){
     }
     return;
   }
-
-
-  const [listings, setListings] = useState([]);
-  const getListings = async () =>{
+  
+  const [alerts, setAlerts] = useState();
+  const getAlerts = async () => {
     try{
-      const resp = await axios.get('http://localhost:8080/get-items')
-      .then((response) => {
-        setListings(response.data)
-      })      
+      const res = await axios.get('http://localhost:8080/get-alerts')
+      .then((response)=>{
+        setAlerts(response.data)
+        console.log(alerts)
+      })
+    } catch (e){
+      console.log("Sian why sia", e);
     }
-    catch(e){
-      console.log("dont torture me", e);
-    }
+  };
 
-  }
-  const alerts = [
-    {
-      title:"Protect yourself from phishing scams!",
-      content:"Do not enter your contact, banking details or OTP to receive payment."
-    },
-    {
-      title:"Always check that the items are up to your standards!",
-      content:"You deserve the best and the best only."
-    },
-    {
-      title:"Flagged anonymous or suspicious users to admin!",
-      content:"We all have a responsibility to keep NTU Marketplace safe."
-    },
-    {
-      title:"Be careful not to exchange personal or private details with sellers!",
-      content:"Keep a level of anonymity in order to prevent yourself from being stalked."
-    },
-  ];
+  useEffect(()=>{
+    const intervalId = setInterval(()=>{
+      setPAIndex((pAIndex + 1)%4);
+    },10000);
+    
+    return () => {
+      clearInterval(intervalId);
+    };
+  });
   const categoriesItems = [
     {
       title: "Electronics",
@@ -103,7 +83,9 @@ function Home(){
         mr='0'
         minWidth='100%'
           >
-        <PhishingAlert title={alerts[pAIndex].title} content={alerts[pAIndex].content} /> 
+        <PhishingAlert 
+        title={ alerts && alerts.length > 0 ? alerts[pAIndex].title : "" } 
+        content={ alerts && alerts.length > 0 ? alerts[pAIndex].content : "" } /> 
 
         <Heading mb={4} size='lg' >Categories</Heading>
         <Divider w='40%'></Divider>
