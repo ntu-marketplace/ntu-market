@@ -10,16 +10,36 @@ import axios from "axios";
 import { AppContextProvider, useAppContext } from "../AppContext";
 
 function Home(){
-  const { isLoggedIn } = useAppContext();
+  const[isLogged, setIsLogged] = useState(false);
   const [pAIndex, setPAIndex] = useState(1);
+  console.log(localStorage)
   useEffect(()=>{
     const intervalId = setInterval(()=>{
       setPAIndex((pAIndex + 1)%4);
     },10000);
+    
     return () => {
       clearInterval(intervalId);
     };
   });
+
+  useEffect(()=>{
+    getListings();
+    check(); // check with every get call
+  },[isLogged]);
+
+  const check =() =>{
+    if(localStorage.getItem("user") == 'false'){
+      setIsLogged(false);
+      return;
+    }
+    else{
+      setIsLogged(true);
+    }
+    return;
+  }
+
+
   const [listings, setListings] = useState([]);
   const getListings = async () =>{
     try{
@@ -33,10 +53,6 @@ function Home(){
     }
 
   }
-  useEffect(()=>{
-    getListings();
-  },[])
-  // const [isLoggedIn, setIsLoggedIn] = useState(true);
   const alerts = [
     {
       title:"Protect yourself from phishing scams!",
@@ -79,8 +95,7 @@ function Home(){
   ]
     return(
       <AppContextProvider>
-      {isLoggedIn && <Navbar/>}
-      {!isLoggedIn && <Header />}
+      {isLogged ? <Navbar/>: <Header />}
         <Container
         mt='0'
         mb='0'

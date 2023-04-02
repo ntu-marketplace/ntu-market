@@ -2,6 +2,7 @@ import { Box, Image, Text } from '@chakra-ui/react';
 
 function TopPicture({ imageUrl, profileImageUrl }) {
   return (
+    <>
     <Box
       bgImage={`url(${imageUrl})`}
       bgRepeat="no-repeat"
@@ -51,6 +52,7 @@ function TopPicture({ imageUrl, profileImageUrl }) {
         </Text>
       </Box>
     </Box>
+    </>
   );
 }
 

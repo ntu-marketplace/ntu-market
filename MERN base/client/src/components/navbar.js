@@ -18,8 +18,14 @@ import {
 import { HamburgerIcon, Search2Icon, EmailIcon, StarIcon, AddIcon } from '@chakra-ui/icons';
 import cart from '../media/shopping-cart.png'
 import { Link } from 'react-router-dom';
+import { useAppContext } from '../AppContext';
+import { useState, useEffect } from 'react';
 
-function Navbar() {
+function Navbar(props) {
+  console.log(localStorage)
+  const handleLogout = () => {
+    localStorage.setItem('user','false')
+  };
 
   return (
     <>
@@ -58,17 +64,16 @@ function Navbar() {
                   <Link to='/myProfile'>
                     <MenuItem>My Profile</MenuItem>
                   </Link>
-                  {/* <Link to='/wallet'>
-                    <MenuItem>My Wallet</MenuItem>
-                  </Link> */}
                   <MenuDivider />
-                  <MenuItem>Sign Out</MenuItem>
+                  <MenuItem>
+                    <Button onClick={handleLogout}>
+                      Sign out
+                    </Button>
+                  </MenuItem>
                 </MenuList>
               </Menu>
             </Flex>
           </Show>
-
-
           <InputGroup m={4} >
             <InputRightElement
               pointerEvents='none'
@@ -114,11 +119,12 @@ function Navbar() {
                     <Link to='/myProfile'>
                       <MenuItem>My Profile</MenuItem>
                     </Link>
-                    {/* <Link to='/wallet'>
-                      <MenuItem>My Wallet</MenuItem>
-                    </Link> */}
                     <MenuDivider />
-                    <MenuItem>Sign Out</MenuItem>
+                    <MenuItem>
+                      <Button onClick={handleLogout}>
+                        Sign out
+                      </Button>
+                    </MenuItem>
                   </MenuList>
                 </Menu>
               </Flex>

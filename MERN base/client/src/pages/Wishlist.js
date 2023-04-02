@@ -2,8 +2,25 @@ import { Container, HStack } from "@chakra-ui/react";
 import Navbar from "../components/navbar";
 import Footer from "../components/Footer";
 import ListingCard from "../components/ListingCard";
+import Header from "../components/Header";
+import { useState, useEffect } from "react";
 
 function Wishlist(){
+    const[isLogged, setIsLogged] = useState(false);
+    console.log(localStorage)
+    useEffect(()=>{
+        check();
+    },[isLogged]);
+    const check =() =>{
+        if(localStorage.getItem("user") == 'false'){
+          setIsLogged(false);
+          return;
+        }
+        else{
+          setIsLogged(true);
+        }
+        return;
+      }
     const wishes = [
         {
             title: "Microsoft Computer",
@@ -35,7 +52,7 @@ function Wishlist(){
     ]
     return(
         <>
-        <Navbar/>
+            {isLogged ? <Navbar/>: <Header/>}
             <Container
             mt='0'
             mb='0'

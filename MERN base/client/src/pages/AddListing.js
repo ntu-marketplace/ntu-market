@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Progress,
   Box,
@@ -28,9 +28,12 @@ import Background from '../components/Background';
 import Navbar from '../components/navbar';
 import { Link } from 'react-router-dom';
 import { CloseIcon } from '@chakra-ui/icons';
+import { useAppContext } from '../AppContext';
+import Header from '../components/Header';
 
 
 const Form1 = () => {
+  
   const [selectedImages, setSelectedImage] = useState([])
   const OnSelectFile = (event) => {
     if(event.target.files){
@@ -208,9 +211,26 @@ export default function AddListing() {
   const toast = useToast();
   const [step, setStep] = useState(1);
   const [progress, setProgress] = useState(33.33);
+  const[isLogged, setIsLogged] = useState(false);
+  console.log(localStorage)
+
+  useEffect(()=>{
+      check();
+  },[isLogged]);
+
+  const check =() =>{
+      if(localStorage.getItem("user") == 'false'){
+        setIsLogged(false);
+        return;
+      }
+      else{
+        setIsLogged(true);
+      }
+      return;
+    }
   return (
     <>
-    <Navbar/>
+    {isLogged ? <Navbar/>: <Header />}
     <Background>
       
       <Box
