@@ -7,8 +7,10 @@ import Footer from "../components/Footer";
 import Categories from "../components/categories";
 import FeaturedItems from "../components/FeaturedItems";
 import axios from "axios";
+import { AppContextProvider, useAppContext } from "../AppContext";
 
 function Home(){
+  const { isLoggedIn } = useAppContext();
   const [pAIndex, setPAIndex] = useState(1);
   useEffect(()=>{
     const intervalId = setInterval(()=>{
@@ -21,17 +23,12 @@ function Home(){
   const [listings, setListings] = useState([]);
   const getListings = async () =>{
     try{
-      const resp = axios.get('http://localhost:8080/get-items')
+      const resp = await axios.get('http://localhost:8080/get-items')
       .then((response) => {
         setListings(response.data)
-      })
-      .catch(error => {
-      console.log(error);
-      
+      })      
     }
-    
-      );
-    }catch(e){
+    catch(e){
       console.log("dont torture me", e);
     }
 
@@ -39,7 +36,7 @@ function Home(){
   useEffect(()=>{
     getListings();
   },[])
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  // const [isLoggedIn, setIsLoggedIn] = useState(true);
   const alerts = [
     {
       title:"Protect yourself from phishing scams!",
@@ -81,7 +78,7 @@ function Home(){
     },
   ]
     return(
-      <>
+      <AppContextProvider>
       {isLoggedIn && <Navbar/>}
       {!isLoggedIn && <Header />}
         <Container
@@ -122,7 +119,7 @@ function Home(){
         </Container>
       <br/><br/>
       <Footer/>
-      </>
+      </AppContextProvider>
     )
 }
 export default Home;

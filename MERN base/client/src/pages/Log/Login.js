@@ -1,14 +1,24 @@
-import { Img, FormControl, FormLabel, Input, Stack, Button } from "@chakra-ui/react";
+import { Img, FormControl, FormLabel, Input, Stack, Button, Link as ChakraLink } from "@chakra-ui/react";
 import Background from "../../components/Background";
 import Footer from "../../components/Footer";
 import MyButton from "../../components/MyButton";
-import { useState } from "react";
-function Login() {
+import { useState, useEffect } from "react";
+import { AppContextProvider, useAppContext } from "../../AppContext";
+const Login = () => {
+  
+  const {isLoggedIn, setIsLoggedIn} = useAppContext();
   const [reDirect, setReDirect] = useState(false);
   const [formData, setFormData] = useState({
     username: "",
     password: ""
   });
+  console.log(useAppContext)
+
+  useEffect(()=>{
+    setIsLoggedIn(true);
+    localStorage.setItem('user', 'true');
+  },[])
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try{
@@ -23,6 +33,7 @@ function Login() {
         console.log(response)
         console.log("Form data posted successfully!");
         setReDirect(true);
+        setIsLoggedIn(true);
       } else {
         console.error("Error")
       }
@@ -36,7 +47,7 @@ function Login() {
     setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
   }
   return (
-    <>
+    < >
     <Background
         justifyContent="center"
         alignItems="center"
@@ -58,6 +69,9 @@ function Login() {
       {reDirect && <>
       <Stack color='white' textColor='black'>
         <br/>
+        {/* <ChakraLink href="/home">
+          <Button size='md' onClick={() => setIsLoggedIn(true)}>Go to Home Page</Button>
+        </ChakraLink> */}
         {MyButton('/home', 'Go to Home')}
 
       </Stack>
