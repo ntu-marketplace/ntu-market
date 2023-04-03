@@ -15,6 +15,7 @@ function Home(){
 
   useEffect(()=>{
     getAlerts();
+    getCategories();
     check(); // check with every get call
   },[isLogged]);
   
@@ -41,6 +42,19 @@ function Home(){
       console.log("Sian why sia", e);
     }
   };
+  const [categories, setCategories] = useState([]);
+  const getCategories = async () => {
+    try{
+      const res = await axios.get('http://localhost:8080/get-categories')
+      .then((response)=>{
+        setCategories(response.data)
+        console.log(categories)
+      })
+    } catch (e){
+      console.log("Sian why sia", e);
+    }
+  };
+  console.log(categories)
 
   useEffect(()=>{
     const intervalId = setInterval(()=>{
@@ -51,28 +65,6 @@ function Home(){
       clearInterval(intervalId);
     };
   });
-  const categoriesItems = [
-    {
-      title: "Electronics",
-      getImageSrc: () => require("../../src/media/iphone.png"),
-    },
-    {
-      title: "Sports",
-      getImageSrc: () => require("../../src/media/sports.jpg"),
-    },
-    {
-      title: "Furnitures",
-      getImageSrc: () => require("../../src/media/any.jpg"),
-    },
-    {
-      title: "Furnitures",
-      getImageSrc: () => require("../../src/media/any.jpg"),
-    },
-    {
-      title: "Furnitures",
-      getImageSrc: () => require("../../src/media/any.jpg"),
-    },
-  ]
     return(
       <AppContextProvider>
       {isLogged ? <Navbar/>: <Header />}
@@ -103,11 +95,11 @@ function Home(){
                   display : 'hidden'
               }
           }} >
-        {categoriesItems.map((categoriesItem)=>(
+        
+        {categories.map((category)=>(
           <Categories
-          key={categoriesItem.title}
-          title={categoriesItem.title}
-          src={categoriesItem.getImageSrc()}
+          title={categories && categories.length>0 ? category.title : ""}
+          src={categories && categories.length > 0? category.imageSrc : ""}
           />
         ))}
 

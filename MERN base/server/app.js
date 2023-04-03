@@ -11,6 +11,7 @@ require('dotenv').config();
 // controllers
 const getData = require('./controllers/getUsers');
 const getItems = require('./controllers/getItems');
+const getCategories = require('./controllers/getCategories');
 const createUser = require('./controllers/createUser');
 const findUser = require('./controllers/findUser');
 const postItem = require('./controllers/postItem');
@@ -89,6 +90,7 @@ app.use((error, req, res, next) => {
 app.get("/", getData.handleGetUsers);
 app.get("/get-items", getItems.handleGetItems);
 app.get("/get-alerts", getAlerts.handleGetAlerts);
+app.get("/get-categories", getCategories.handleGetCategories);
 app.post("/create-user", createUser.handleCreateUser);
 app.post("/find-user", findUser.handleFindUser);
 app.post("/post-item", postItem.handlePostItem);
