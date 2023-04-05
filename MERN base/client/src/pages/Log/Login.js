@@ -25,7 +25,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try{
-      const response = await fetch("http://localhost:8080/find-user", {
+      const response = await fetch("https://marketdb.herokuapp.com/find-user", {
         method: "POST",
         headers : {
           "Content-Type": "application/json",

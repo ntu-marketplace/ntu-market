@@ -24,7 +24,7 @@ export default class FeaturedItems extends React.Component {
         listings: []
       }
     componentDidMount() {
-        axios.get(`http://localhost:8080/get-items`)
+        axios.get(`https://marketdb.herokuapp.com/get-items`)
           .then(res => {
             const listings = res.data;
             // console.log(listings);
