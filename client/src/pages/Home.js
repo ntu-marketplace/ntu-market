@@ -10,10 +10,12 @@ import axios from "axios";
 import { AppContextProvider, useAppContext } from "../AppContext";
 
 function Home(){
-  const[isLogged, setIsLogged] = useState(false);
+  const [isLogged, setIsLogged] = useState(false);
   const [pAIndex, setPAIndex] = useState(0);
+  const [aIndex, setAIndex] = useState(0);
 
   useEffect(()=>{
+    getAds();
     getAlerts();
     getCategories();
     check(); // check with every get call
@@ -29,11 +31,24 @@ function Home(){
     }
     return;
   }
-  
+  const [ads, setAds] = useState();
+  const getAds = async () => {
+    try{
+      const res = await axios.get('http://localhost:8080/get-ads')
+      .then((response) => {
+        setAds(response.data)
+        console.log(ads)
+      })
+    } catch(e) {
+      console.log("Why sia?", e);
+    }
+  }
+
+
   const [alerts, setAlerts] = useState();
   const getAlerts = async () => {
     try{
-      const res = await axios.get('https://marketdb.herokuapp.com/get-alerts')
+      const res = await axios.get('http://localhost:8080/get-alerts')
       .then((response)=>{
         setAlerts(response.data)
         console.log(alerts)
@@ -45,7 +60,7 @@ function Home(){
   const [categories, setCategories] = useState([]);
   const getCategories = async () => {
     try{
-      const res = await axios.get('https://marketdb.herokuapp.com/get-categories')
+      const res = await axios.get('http://localhost:8080/get-categories')
       .then((response)=>{
         setCategories(response.data)
         console.log(categories)
@@ -54,7 +69,14 @@ function Home(){
       console.log("Sian why sia", e);
     }
   };
-  console.log(categories)
+  useEffect(()=>{
+    const adsId = setInterval(()=>{
+      setAIndex((aIndex+1)%3);
+    }, 30000);
+    return () => {
+      clearInterval(adsId);
+    };
+  });
 
   useEffect(()=>{
     const intervalId = setInterval(()=>{

@@ -10,6 +10,7 @@ require('dotenv').config();
 
 // controllers
 const getData = require('./controllers/getUsers');
+const getAds = require('./controllers/getAds');
 const getItems = require('./controllers/getItems');
 const getCategories = require('./controllers/getCategories');
 const createUser = require('./controllers/createUser');
@@ -88,6 +89,7 @@ app.use((error, req, res, next) => {
 
 // routes
 app.get("/", getData.handleGetUsers);
+app.get("/get-ads", getAds.handleGetAds);
 app.get("/get-items", getItems.handleGetItems);
 app.get("/get-alerts", getAlerts.handleGetAlerts);
 app.get("/get-categories", getCategories.handleGetCategories);
