@@ -3,7 +3,6 @@ import { Box, Heading, Divider, Grid, GridItem, SimpleGrid, Text, Image, VStack}
 import sports from '../media/sports.jpg'
 
 function Categories(props) {
-    console.log(props);
     return(
         <GridItem display='flex' alignItems='flex-start' paddingTop='0.5em'>
             <VStack>

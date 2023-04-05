@@ -1,17 +1,15 @@
 const User = require('../models/User');
 
 const handleFindUser = async (req, res) => {
-    const { parameter, property } = req.body;
-
-    switch (property) {
-        case 'name':
-            await User.find({ name: parameter })
-            .then(users => res.json(users))
-            .catch(console.log);
-            break;
-        default:
-            res.status(400).json("Property is invalid");
-            break;
+    const { username, password } = req.body;
+    if (!username || !password) return res.status(400).json("Missing information")
+    try{
+        const user = await User.find({username:username, password:password})
+                                .then(users => res.json(users))
+    }
+    catch(e){
+        console.log(e);
+        res.status(400).json("error")
     }
 }
 

@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 import MyButton from "../components/MyButton";
 
 function ModalIntro() {
+  localStorage.setItem('user', 'false'); // init local storage
+  console.log(localStorage)
   const [showButton, setShowButton] = useState(false);
   useEffect(() => {
     const timer = setTimeout(() => {

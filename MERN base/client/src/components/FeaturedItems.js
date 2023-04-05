@@ -10,7 +10,10 @@ import {
         VStack, 
         HStack, 
         Avatar, 
-        Divider
+        Divider,
+        CardFooter,
+        Button,
+        ButtonGroup
         } from "@chakra-ui/react";
 import { StarIcon } from "@chakra-ui/icons";
 import { Link } from "react-router-dom";
@@ -21,7 +24,7 @@ export default class FeaturedItems extends React.Component {
         listings: []
       }
     componentDidMount() {
-        axios.get(`http://localhost:8080/get-items`)
+        axios.get(`https://marketdb.herokuapp.com/get-items`)
           .then(res => {
             const listings = res.data;
             // console.log(listings);
@@ -30,12 +33,11 @@ export default class FeaturedItems extends React.Component {
       }
       render() {
         return (
-          <center>
+          <>
             <Heading mb={4} size={['lg']}>Featured Items</Heading>
             <Divider width='40%'/>
             <SimpleGrid
               maxWidth='90vw'
-              // templateColumns={['repeat(2,1fr)','repeat(3,1fr)','repeat(5,1fr)']}
               mt='1.5em'
               mb='1em'
               minChildWidth="30%"
@@ -45,30 +47,40 @@ export default class FeaturedItems extends React.Component {
                 this.state.listings
                 .map(listing =>
                   <GridItem>
-                    <Link to='/details'>
-                      <Card>
-                        <CardBody display='flex' flexDirection='column' alignItems='center'>
-                          <Image src={listing.imageSrc[0]} h='8em' w='8em' mb='5'></Image>
-                          <VStack display='flex' alignItems='flex-start'>
-                              <Heading size='xs'>{listing.productTitle}</Heading>
-                              <HStack spacing={5} display='flex' align='center'>
-                                  <Heading size='sm' color='#e75425'>{listing.price}</Heading>
-                                  <Text fontSize='xs' color='grey'>Brand New</Text>
-                                  <StarIcon size='1em' color='#3c3c3c'></StarIcon>
-                              </HStack>
-                              <HStack>
-                                  <Avatar size='xs'></Avatar>
-                                  <Text fontSize='xs' color='grey'>{listing.sellerUsername}</Text>
-                              </HStack>                                  
+                    <Card>
+                      <CardBody display='flex' flexDirection='column' alignItems='center'>
+                        <Image src={listing.imageSrc[0]} h='12em' w='12em' mb='5' borderRadius='lg'></Image>
+                        <VStack alignItems='left'>
+                          <Heading alignItems='flex-start' size='sm'>{listing.productTitle}</Heading>
+                          <Heading size='sm' color='#e75425'>$ {listing.price}</Heading>
+                          <VStack minH='4em'>
+                            <Text fontSize='s' color='grey'>{listing.productInfo}</Text>
                           </VStack>
-                        </CardBody>
-                      </Card>
-                    </Link>
+                          <HStack>
+                              <Avatar size='xs'></Avatar>
+                              <Text fontSize='xs' color='grey'>{listing.sellerUsername}</Text>
+                          </HStack>                                  
+                        </VStack>
+                      </CardBody>
+                      <Divider/>
+                      <CardFooter>
+                        <ButtonGroup spacing='1'>
+                          <Link to='/details'>
+                            {<Button variant='solid' size='sm' colorScheme='blue'>
+                                Chat with buyer
+                            </Button>}
+                          </Link>
+                          {<Button variant='ghost' size='sm' colorScheme='blue'>
+                              Add to Favourites
+                          </Button>}
+                        </ButtonGroup>
+                      </CardFooter>
+                    </Card>
                   </GridItem>
                 )
               }
             </SimpleGrid>
-          </center>
+          </>
         )
       }
 }
