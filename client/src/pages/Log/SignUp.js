@@ -21,7 +21,7 @@ function SignUp() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try{
-      const response = await fetch("http://localhost:8080/create-user", {
+      const response = await fetch("https://marketdb.herokuapp.com/create-user", {
         method: "POST",
         headers : {
           "Content-Type": "application/json",

@@ -34,7 +34,7 @@ function Home(){
   const [ads, setAds] = useState();
   const getAds = async () => {
     try{
-      const res = await axios.get('http://localhost:8080/get-ads')
+      const res = await axios.get('https://marketdb.herokuapp.com/get-ads')
       .then((response) => {
         setAds(response.data)
         console.log(ads)
@@ -48,7 +48,7 @@ function Home(){
   const [alerts, setAlerts] = useState();
   const getAlerts = async () => {
     try{
-      const res = await axios.get('http://localhost:8080/get-alerts')
+      const res = await axios.get('https://marketdb.herokuapp.com/get-alerts')
       .then((response)=>{
         setAlerts(response.data)
         console.log(alerts)
@@ -60,7 +60,7 @@ function Home(){
   const [categories, setCategories] = useState([]);
   const getCategories = async () => {
     try{
-      const res = await axios.get('http://localhost:8080/get-categories')
+      const res = await axios.get('https://marketdb.herokuapp.com/get-categories')
       .then((response)=>{
         setCategories(response.data)
         console.log(categories)
