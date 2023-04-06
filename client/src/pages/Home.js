@@ -8,6 +8,7 @@ import Categories from "../components/categories";
 import FeaturedItems from "../components/FeaturedItems";
 import axios from "axios";
 import { AppContextProvider, useAppContext } from "../AppContext";
+import AdsSpace from "../components/adsSpace";
 
 function Home(){
   const [isLogged, setIsLogged] = useState(false);
@@ -71,8 +72,8 @@ function Home(){
   };
   useEffect(()=>{
     const adsId = setInterval(()=>{
-      setAIndex((aIndex+1)%3);
-    }, 30000);
+      setAIndex((aIndex+1)%2);
+    }, 8000);
     return () => {
       clearInterval(adsId);
     };
@@ -124,8 +125,10 @@ function Home(){
           src={categories && categories.length > 0? category.imageSrc : ""}
           />
         ))}
-
         </Grid>
+
+        <AdsSpace src={ ads && ads.length > 0 ? ads[aIndex].imageSrc : "" }/> 
+
         <FeaturedItems/>
         </Container>
       <br/><br/>
