@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
-import { Container, HStack, Heading, Divider, Grid} from "@chakra-ui/react";
+import { Container, Show, Heading, Divider, Grid, SimpleGrid} from "@chakra-ui/react";
 import PhishingAlert from '../components/phishingalert';
 import Navbar from "../components/navbar";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Categories from "../components/categories";
-import FeaturedItems from "../components/FeaturedItems";
 import axios from "axios";
 import { AppContextProvider, useAppContext } from "../AppContext";
 import AdsSpace from "../components/adsSpace";
+import ListingCard from "../components/ListingCard";
 
 function Home(){
   const [isLogged, setIsLogged] = useState(false);
@@ -19,6 +19,7 @@ function Home(){
     getAds();
     getAlerts();
     getCategories();
+    getListings();
     check(); // check with every get call
   },[isLogged]);
   
@@ -38,7 +39,7 @@ function Home(){
       const res = await axios.get('https://marketdb.herokuapp.com/get-ads')
       .then((response) => {
         setAds(response.data)
-        console.log(ads)
+        // console.log(ads)
       })
     } catch(e) {
       console.log("Why sia?", e);
@@ -52,7 +53,7 @@ function Home(){
       const res = await axios.get('https://marketdb.herokuapp.com/get-alerts')
       .then((response)=>{
         setAlerts(response.data)
-        console.log(alerts)
+        // console.log(alerts)
       })
     } catch (e){
       console.log("Sian why sia", e);
@@ -64,12 +65,24 @@ function Home(){
       const res = await axios.get('https://marketdb.herokuapp.com/get-categories')
       .then((response)=>{
         setCategories(response.data)
-        console.log(categories)
+        // console.log(categories)
       })
     } catch (e){
       console.log("Sian why sia", e);
     }
   };
+
+  const [listings, setListings] = useState([]);
+  const getListings = async () => {
+      try{
+        const res = await axios.get('https://marketdb.herokuapp.com/get-items')
+        .then((response)=>{
+          setListings(response.data)
+        })
+      } catch (e){
+        console.log("Sian why sia", e);
+      }
+    };
   useEffect(()=>{
     const adsId = setInterval(()=>{
       setAIndex((aIndex+1)%2);
@@ -97,6 +110,7 @@ function Home(){
         ml='0'
         mr='0'
         minWidth='100%'
+        backgroundColor="#F5F5F5"
           >
         <PhishingAlert 
         title={ alerts && alerts.length > 0 ? alerts[pAIndex].title : "" } 
@@ -128,8 +142,38 @@ function Home(){
         </Grid>
 
         <AdsSpace src={ ads && ads.length > 0 ? ads[aIndex].imageSrc : "" }/> 
+        {/* <FeaturedItems/> */}
+        <br/>
+        <Heading>Featured Items</Heading>
+        <br/>
+        <Show above='sm'>
+          <SimpleGrid               
+            maxWidth='90vw'
+            minChildWidth="30%">
+            {listings.map((list)=>(
+              <ListingCard 
+              title={listings && listings.length>0 ? list.productTitle : ""}
+              src={listings && listings.length>0 ? list.imageSrc : ""} 
+              description={listings && listings.length>0 ? list.productInfo : ""}
+              price={listings && listings.length>0 ? list.price : ""}
+              />
+            ))}
+          </SimpleGrid>
+        </Show>
+        <Show below='sm'>
+          <SimpleGrid               
+            maxWidth='100vw'>
+            {listings.map((list)=>(
+              <ListingCard 
+              title={listings && listings.length>0 ? list.productTitle : ""}
+              src={listings && listings.length>0 ? list.imageSrc : ""} 
+              description={listings && listings.length>0 ? list.productInfo : ""}
+              price={listings && listings.length>0 ? list.price : ""}
+              />
+            ))}
+          </SimpleGrid>
+        </Show>
 
-        <FeaturedItems/>
         </Container>
       <br/><br/>
       <Footer/>
