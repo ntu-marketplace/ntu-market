@@ -9,7 +9,7 @@ function Categories(props) {
                 <Image
                     shadow='base'
                     borderRadius='full'
-                    boxSize={['4em','5em','6em']}
+                    boxSize={['4em','6em','8em']}
                     src={props.src} />
                 <Heading fontSize={['xs','xs','small']}>{props.title}</Heading>                          
             </VStack>
