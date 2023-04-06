@@ -14,14 +14,30 @@ import {
   InputGroup,
   Show,
   Image,
+  FormControl
 } from '@chakra-ui/react';
 import { HamburgerIcon, Search2Icon, EmailIcon, StarIcon, AddIcon } from '@chakra-ui/icons';
 import cart from '../media/shopping-cart.png'
 import { Link } from 'react-router-dom';
-import { useAppContext } from '../AppContext';
-import { useState, useEffect } from 'react';
+import { StateContext } from '../pages/Home';
+import { useState, useEffect, useContext } from 'react';
 
 function Navbar(props) {
+  const listings = useContext(StateContext); // list of items from home
+  const [query, setQuery] = useState("") // childstate
+  const handleSearch = (e) =>{
+    setQuery(e.target.value);
+  }
+  // console.log(listings)
+  const filteredListings = listings.filter((listing) => 
+    listing.productTitle.toLowerCase().includes(query.toLowerCase()));
+
+  // console.log(filteredListings);
+
+  function handleChange() {
+    props.onChildStateChange(filteredListings);
+  }
+
   const handleLogout = () => {
     localStorage.setItem('user','false')
   };
@@ -79,10 +95,14 @@ function Navbar(props) {
               children={<Search2Icon color='white' />}
             />
             <Show above='620px'>
-              <Input bg='#343769' variant='filled' placeholder='Find the items you want' />
+              <FormControl>
+                <Input bg='#343769' color={'white'} variant='filled' type="text" onChange={handleSearch} onClick={handleChange} placeholder='Find the items you want' />
+              </FormControl>
             </Show>
             <Show below='620px'>
-              <Input bg='#343769' textAlign='center' variant='filled' placeholder='Search' />
+              <FormControl>
+                <Input bg='#343769' color={'white'} textAlign='center' variant='filled' type="text" onChange={handleSearch} onClick={handleChange} placeholder='Search' />
+              </FormControl>
             </Show>
           </InputGroup>
           <HStack spacing={8} align={'center'}>

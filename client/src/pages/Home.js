@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { Container, Show, Heading, Divider, Grid, SimpleGrid} from "@chakra-ui/react";
+import { useState, useEffect, createContext } from "react";
+import { Container, Show, Heading, Divider, Grid, SimpleGrid, list} from "@chakra-ui/react";
 import PhishingAlert from '../components/phishingalert';
 import Navbar from "../components/navbar";
 import Header from "../components/Header";
@@ -10,11 +10,26 @@ import { AppContextProvider, useAppContext } from "../AppContext";
 import AdsSpace from "../components/adsSpace";
 import ListingCard from "../components/ListingCard";
 
+export const StateContext = createContext();
+
 function Home(){
   const [isLogged, setIsLogged] = useState(false);
   const [pAIndex, setPAIndex] = useState(0);
   const [aIndex, setAIndex] = useState(0);
-
+  
+  const [listings, setListings] = useState([]);
+  const getListings = async () => {
+      try{
+        const res = await axios.get('https://marketdb.herokuapp.com/get-items')
+        .then((response)=>{
+          setListings(response.data)
+        })
+      } catch (e){
+        console.log("Sian why sia", e);
+      }
+    };
+    
+  console.log(listings)
   useEffect(()=>{
     getAds();
     getAlerts();
@@ -46,6 +61,9 @@ function Home(){
     }
   }
 
+  function updateListings(filteredListings){
+    setListings(filteredListings);
+  }
 
   const [alerts, setAlerts] = useState();
   const getAlerts = async () => {
@@ -71,18 +89,10 @@ function Home(){
       console.log("Sian why sia", e);
     }
   };
+  // const [listingsData, setListingsData] = useState(listings);
 
-  const [listings, setListings] = useState([]);
-  const getListings = async () => {
-      try{
-        const res = await axios.get('https://marketdb.herokuapp.com/get-items')
-        .then((response)=>{
-          setListings(response.data)
-        })
-      } catch (e){
-        console.log("Sian why sia", e);
-      }
-    };
+  
+
   useEffect(()=>{
     const adsId = setInterval(()=>{
       setAIndex((aIndex+1)%2);
@@ -103,7 +113,12 @@ function Home(){
   });
     return(
       <AppContextProvider>
-      {isLogged ? <Navbar/>: <Header />}
+      {isLogged ? 
+      <StateContext.Provider value={listings}>
+        <Navbar onChildStateChange={updateListings}/>
+      </StateContext.Provider>
+      
+      : <Header />}
         <Container
         mt='0'
         mb='0'
@@ -161,10 +176,10 @@ function Home(){
           </SimpleGrid>
         </Show>
         <Show below='sm'>
-          <SimpleGrid               
+          <SimpleGrid   
             maxWidth='100vw'>
             {listings.map((list)=>(
-              <ListingCard 
+              <ListingCard     
               title={listings && listings.length>0 ? list.productTitle : ""}
               src={listings && listings.length>0 ? list.imageSrc : ""} 
               description={listings && listings.length>0 ? list.productInfo : ""}
