@@ -1,6 +1,7 @@
-import { Card, CardBody, Image, Stack, Text, Divider, CardFooter, Button, ButtonGroup, Heading, AspectRatio, GridItem } from "@chakra-ui/react";
+import { Card, CardBody, Image, Stack, Text, Divider, CardFooter, Button, ButtonGroup, Heading, AspectRatio, GridItem, Flex } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import axios from 'axios';
+// import { StarIcon } from '@chakra-ui/icons'
+import { StarIcon } from '@chakra-ui/icons'
 function ListingCard(props) {    
     const [isEmptyButtons, setIsEmptyButtons] = useState(false);
     const check = () => {
@@ -19,7 +20,13 @@ function ListingCard(props) {
                         />
                     </AspectRatio>
                     <Stack mt='6' spacing='3'>
-                    <Heading size='md'>{props.title}</Heading>
+                    <Heading size='md'>
+                        {props.title}
+                        <Button align="right" variant='ghost' colorScheme='blue'>
+                            <StarIcon></StarIcon>
+                        </Button>
+                    </Heading>
+                    
                     <AspectRatio maxH='50px'>
                     <Text leftAlign>
                         {props.description}
@@ -27,18 +34,15 @@ function ListingCard(props) {
 
                     </AspectRatio>
                     <Text color='blue.600' fontSize='2xl'>
-                        {props.price}
+                        $ {props.price}
                     </Text>
                     </Stack>
                 </CardBody>
                 {isEmptyButtons && <Divider />}
                 <CardFooter>
-                    <ButtonGroup spacing='2'>
+                    <ButtonGroup >
                     <Button variant='solid' colorScheme='blue'>
                         Chat with buyer
-                    </Button>
-                    <Button variant='ghost' colorScheme='blue'>
-                        Add to Favourites
                     </Button>
                     </ButtonGroup>
                 </CardFooter>
