@@ -3,14 +3,9 @@ import { Box, Image, HStack, Flex, Container, AspectRatio } from "@chakra-ui/rea
 function AdsSpace(props) {
     return(
         <>
-            {/* <Flex justify='center' mt='0' paddingTop='1em' paddingBottom={'1em'}> */}
-                <AspectRatio maxW='100vw' maxH='250px' ratio={4/3}>
-                    <Image src={props.src}>
-
-                    </Image>
-
-                </AspectRatio>
-            {/* </Flex> */}
+            <AspectRatio maxW='100vw' maxH='250px' ratio={4/3}>
+                <Image src={props.src} />
+            </AspectRatio>
         </>
     )
 }
