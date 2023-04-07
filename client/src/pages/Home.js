@@ -16,7 +16,7 @@ function Home(){
   const [isLogged, setIsLogged] = useState(false);
   const [pAIndex, setPAIndex] = useState(0);
   const [aIndex, setAIndex] = useState(0);
-  
+  // const [isSuperAdmin, setIsSuperAdmin] = useState(false);
   const [listings, setListings] = useState([]);
   const getListings = async () => {
       try{
@@ -35,10 +35,11 @@ function Home(){
     getAlerts();
     getCategories();
     getListings();
-    check(); // check with every get call
+    // checkSuperAdmin();
+    checkLoggedIn();
   },[isLogged]);
   
-  const check =() =>{
+  const checkLoggedIn =() =>{
     if(localStorage.getItem("user") == 'false'){
       setIsLogged(false);
       return;
@@ -89,10 +90,6 @@ function Home(){
       console.log("Sian why sia", e);
     }
   };
-  // const [listingsData, setListingsData] = useState(listings);
-
-  
-
   useEffect(()=>{
     const adsId = setInterval(()=>{
       setAIndex((aIndex+1)%2);

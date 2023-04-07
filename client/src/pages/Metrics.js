@@ -3,7 +3,7 @@ import React from "react";
 import Footer from "../components/Footer";
 import Navbar from "../components/navbar";
 
-function Notifications(){
+function Metrics(){
     return(
         <>
         {/* Need to know what this is for. Can show stats. */}
@@ -34,4 +34,4 @@ function Notifications(){
         </>
     )
 }
-export default Notifications;
+export default Metrics;

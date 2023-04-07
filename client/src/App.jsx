@@ -10,7 +10,6 @@ import Home from './pages/Home';
 import Settings from './pages/Settings';
 import Wallet from './pages/Wallet'
 import MyChats from './pages/MyChats';
-import Notifications from './pages/Notifications';
 import Wishlist from './pages/Wishlist';
 import Details from './pages/Product/Details'
 import Payment from './pages/Product/Payment';
@@ -26,6 +25,7 @@ import ModalIntro from "./pages/ModalIntro";
 import ErrorNotFound from "./pages/ErrorNotFound";
 import AddListing from "./pages/AddListing";
 import { AppContextProvider } from "./AppContext";
+import Metrics from "./pages/Metrics";
 
 function App() {
   return (
@@ -45,7 +45,7 @@ function App() {
         <Route path='/settings' element={<Settings/>}/>
         <Route path='/wallet' element={<Wallet/>}/>
         <Route path='/myChats' element={<MyChats/>}/>
-        <Route path='/notifications' element={<Notifications/>}/>
+        <Route path='/metrics' element={<Metrics/>}/>
         <Route path='/wishlist' element={<Wishlist/>}/>
         <Route path='/addListing' element={<AddListing/>}/>
         <Route path='/details' >

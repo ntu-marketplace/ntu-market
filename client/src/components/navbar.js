@@ -16,7 +16,7 @@ import {
   Image,
   FormControl
 } from '@chakra-ui/react';
-import { HamburgerIcon, Search2Icon, EmailIcon, StarIcon, AddIcon } from '@chakra-ui/icons';
+import { HamburgerIcon, Search2Icon, EmailIcon, StarIcon, AddIcon, InfoIcon } from '@chakra-ui/icons';
 import cart from '../media/shopping-cart.png'
 import { Link } from 'react-router-dom';
 import { StateContext } from '../pages/Home';
@@ -25,21 +25,36 @@ import { useState, useEffect, useContext } from 'react';
 function Navbar(props) {
   const listings = useContext(StateContext); // list of items from home
   const [query, setQuery] = useState("") // childstate
+  const [isSuperAdmin, setIsSuperAdmin] = useState(false);
+  
   const handleSearch = (e) =>{
     setQuery(e.target.value);
   }
-  // console.log(listings)
-  const filteredListings = listings.filter((listing) => 
+
+  const checkSuperAdmin = () => {
+    if(localStorage.getItem("isSuperAdmin") == 'true'){
+      setIsSuperAdmin(true);
+      return;
+    }
+    else{
+      setIsSuperAdmin(false);
+    }
+    return;
+  }
+  useEffect(()=>{
+    checkSuperAdmin();
+  },[isSuperAdmin])
+
+
+  function handleChange() { 
+    const filteredListings = listings.filter((listing) => 
     listing.productTitle.toLowerCase().includes(query.toLowerCase()));
-
-  // console.log(filteredListings);
-
-  function handleChange() {
     props.onChildStateChange(filteredListings);
   }
 
   const handleLogout = () => {
-    localStorage.setItem('user','false')
+    localStorage.setItem('user','false');
+    localStorage.setItem('isSuperAdmin', 'false');
   };
 
   return (
@@ -95,14 +110,10 @@ function Navbar(props) {
               children={<Search2Icon color='white' />}
             />
             <Show above='620px'>
-              <FormControl>
-                <Input bg='#343769' color={'white'} variant='filled' type="text" onChange={handleSearch} onClick={handleChange} placeholder='Find the items you want' />
-              </FormControl>
+              <Input bg='#343769' color={'white'} variant='filled' type="text" onChange={handleSearch} onClick={handleChange} placeholder='Find the items you want' />
             </Show>
             <Show below='620px'>
-              <FormControl>
-                <Input bg='#343769' color={'white'} textAlign='center' variant='filled' type="text" onChange={handleSearch} onClick={handleChange} placeholder='Search' />
-              </FormControl>
+              <Input bg='#343769' color={'white'} textAlign='center' variant='filled' type="text" onChange={handleSearch} onClick={handleChange} placeholder='Search' />
             </Show>
           </InputGroup>
           <HStack spacing={8} align={'center'}>
@@ -115,6 +126,11 @@ function Navbar(props) {
             <Link to='/wishlist'>
               <StarIcon color={'white'} h={'1.2em'} w={'1.2em'} />
             </Link>
+            {isSuperAdmin && <Link to="/metrics">
+              <InfoIcon color={'white'} h={'1.2em'} w={'1.2em'} />
+            </Link>}
+
+
             <Show above='766px'>
               <Flex alignItems={'center'}>
                 <Menu>
