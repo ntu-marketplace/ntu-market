@@ -22,7 +22,6 @@ import { useAppContext } from '../AppContext';
 import { useState, useEffect } from 'react';
 
 function Navbar(props) {
-  console.log(localStorage)
   const handleLogout = () => {
     localStorage.setItem('user','false')
   };

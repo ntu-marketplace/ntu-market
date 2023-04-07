@@ -5,22 +5,11 @@ import MyButton from "../../components/MyButton";
 import { useState, useEffect } from "react";
 import { AppContextProvider, useAppContext } from "../../AppContext";
 const Login = () => {
-  // const {isLoggedIn, login, logout} = useAppContext();
   const [reDirect, setReDirect] = useState(false);
   const [formData, setFormData] = useState({
     username: "",
     password: ""
   });
-
-  console.log(localStorage)
-
-  // useEffect(()=>{
-  //   if(isLoggedIn == false ){
-  //     console.log("hjere")
-  //     setIsLoggedIn(true);
-  //     localStorage.setItem('user', 'true');
-  //   }
-  // },[])
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -32,6 +21,7 @@ const Login = () => {
         },
         body: JSON.stringify(formData),
       });
+      console.log(response);
       if(response.ok){
         // console.log(response)
         console.log("Form data posted successfully!");
