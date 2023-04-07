@@ -11,7 +11,7 @@ function Categories(props) {
                     borderRadius='full'
                     boxSize={['4em','6em','8em']}
                     src={props.src} />
-                <Heading fontSize={['xs','xs','small']}>{props.title}</Heading>                          
+                <Heading fontSize={['xs','md','lg']}>{props.title}</Heading>                          
             </VStack>
         </GridItem>
     )

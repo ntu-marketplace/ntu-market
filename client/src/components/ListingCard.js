@@ -20,7 +20,7 @@ function ListingCard(props) {
                         />
                     </AspectRatio>
                     <Stack mt='6' spacing='3'>
-                    <Heading size='md'>
+                    <Heading size='md' fontFamily="sans-serif">
                         {props.title}
                         <Button align="right" variant='ghost' colorScheme='blue'>
                             <StarIcon></StarIcon>
@@ -28,7 +28,7 @@ function ListingCard(props) {
                     </Heading>
                     
                     <AspectRatio maxH='50px'>
-                    <Text leftAlign>
+                    <Text leftAlign fontFamily="serif" fontSize="xl">
                         {props.description}
                     </Text>
 
