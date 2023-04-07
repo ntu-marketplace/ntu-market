@@ -21,7 +21,7 @@ const Login = () => {
         },
         body: JSON.stringify(formData),
       });
-      console.log(response);
+      // console.log(response);
       if(response.ok){
         // console.log(response)
         console.log("Form data posted successfully!");
@@ -62,11 +62,7 @@ const Login = () => {
       {reDirect && <>
       <Stack color='white' textColor='black'>
         <br/>
-        {/* <ChakraLink href="/home">
-          <Button size='md' onClick={() => setIsLoggedIn(true)}>Go to Home Page</Button>
-        </ChakraLink> */}
         {MyButton('/home', 'Go to Home')}
-
       </Stack>
       </> }
         
