@@ -133,7 +133,7 @@ function Navbar(props) {
             <Link to='/wishlist'>
               <StarIcon color={'white'} h={'1.2em'} w={'1.2em'} />
             </Link>
-            {isSuperAdmin && <Link to="/metrics">
+            {isSuperAdmin && <Link to="https://dsoh010.grafana.net/goto/ipj5N-YVk?orgId=1">
               <InfoIcon color={'white'} h={'1.2em'} w={'1.2em'} />
             </Link>}
 
