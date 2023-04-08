@@ -79,13 +79,21 @@ function Navbar(props) {
                 </MenuButton>
                 <MenuList>
                   <MenuItem minH='48px'>
-                    <Image
+                  {!isSuperAdmin && <Image
                       boxSize='4rem'
                       borderRadius='full'
                       src='https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9'
                       alt='Profile Picture'
                       mr='12px'
+                    />}
+                  {isSuperAdmin && <Image
+                      boxSize='4rem'
+                      borderRadius='full'
+                      src='https://bit.ly/dan-abramov'
+                      alt='Profile Picture'
+                      mr='12px'
                     />
+                  }
                     <span>Hey there, Monica!</span>
                   </MenuItem>
                   <Link to='/settings'>
@@ -140,12 +148,19 @@ function Navbar(props) {
                     variant={'link'}
                     cursor={'pointer'}
                     minW={0}>
-                    <Avatar
+                    {!isSuperAdmin && <Avatar
                       size={'sm'}
                       src={
                         'https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9'
                       }
-                    />
+                    />}
+                    {isSuperAdmin && <Avatar
+                    size={'sm'}
+                    src={
+                      'https://bit.ly/dan-abramov'
+                    }/>
+
+                    }
                   </MenuButton>
                   <MenuList>
                     <Link to='/settings'>

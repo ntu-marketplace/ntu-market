@@ -17,6 +17,7 @@ const createUser = require('./controllers/createUser');
 const findUser = require('./controllers/findUser');
 const postItem = require('./controllers/postItem');
 const getAlerts = require('./controllers/getAlerts');
+const deleteItem = require('./controllers/deleteItem');
 
 // app 
 const app = express();
@@ -96,6 +97,7 @@ app.get("/get-categories", getCategories.handleGetCategories);
 app.post("/create-user", createUser.handleCreateUser);
 app.post("/find-user", findUser.handleFindUser);
 app.post("/post-item", postItem.handlePostItem);
+app.delete("/delete-item/:id", deleteItem.handleDelItems);
 
 
 // port

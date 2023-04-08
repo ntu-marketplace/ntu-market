@@ -29,7 +29,7 @@ function Home(){
       }
     };
     
-  console.log(listings)
+  // console.log(listings[0]._id)
   useEffect(()=>{
     getAds();
     getAlerts();
@@ -164,6 +164,7 @@ function Home(){
             minChildWidth="30%">
             {listings.map((list)=>(
               <ListingCard 
+              id = {listings && listings.length>0 ? list._id : ""}
               title={listings && listings.length>0 ? list.productTitle : ""}
               src={listings && listings.length>0 ? list.imageSrc : ""} 
               description={listings && listings.length>0 ? list.productInfo : ""}
@@ -177,6 +178,7 @@ function Home(){
             maxWidth='100vw'>
             {listings.map((list)=>(
               <ListingCard     
+              id = {listings && listings.length>0 ? list._id : ""}
               title={listings && listings.length>0 ? list.productTitle : ""}
               src={listings && listings.length>0 ? list.imageSrc : ""} 
               description={listings && listings.length>0 ? list.productInfo : ""}

@@ -1,15 +1,33 @@
 import { Card, CardBody, Image, Stack, Text, Divider, CardFooter, Button, ButtonGroup, Heading, AspectRatio, GridItem, Flex } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-// import { StarIcon } from '@chakra-ui/icons'
-import { StarIcon } from '@chakra-ui/icons'
+import { StarIcon, DeleteIcon } from '@chakra-ui/icons';
+import axios from "axios";
 function ListingCard(props) {    
-    const [isEmptyButtons, setIsEmptyButtons] = useState(false);
+    const [isDeleteButton, setIsDeleteButton] = useState(false);
+    // console.log(props)
+
+    const handleDeleteItems = async (listingId) => { 
+        try{
+            const res = await axios.delete(`http://localhost:8080/delete-item/${listingId}`);
+          } catch (e){
+            console.log("Error in deleteing why sia", e);
+          }
+    }
+
+
     const check = () => {
-        setIsEmptyButtons(props.buyer)
+        if(localStorage.getItem('isSuperAdmin')=='true'){
+            setIsDeleteButton(true);
+            return;
+        }
+        else{
+            setIsDeleteButton(false)
+        }
+        return;
     }
     useEffect(()=>{
         check();
-    });
+    },[isDeleteButton]);
     return(
         <GridItem color={"greenyellow"} paddingY={4}>
             <Card maxW='sm' borderRadius={"3xl"}>
@@ -38,12 +56,16 @@ function ListingCard(props) {
                     </Text>
                     </Stack>
                 </CardBody>
-                {isEmptyButtons && <Divider />}
+                {<Divider />}
                 <CardFooter>
                     <ButtonGroup >
                     <Button variant='solid' colorScheme='blue'>
                         Chat with buyer
                     </Button>
+                    { isDeleteButton && 
+                    <Button variant='solid' colorScheme='red' onClick={() => handleDeleteItems(props.id)}>
+                        <DeleteIcon/>
+                    </Button>}
                     </ButtonGroup>
                 </CardFooter>
             </Card>
