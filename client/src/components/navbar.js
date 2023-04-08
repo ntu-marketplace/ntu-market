@@ -13,8 +13,7 @@ import {
   InputRightElement,
   InputGroup,
   Show,
-  Image,
-  FormControl
+  Image
 } from '@chakra-ui/react';
 import { HamburgerIcon, Search2Icon, EmailIcon, StarIcon, AddIcon, InfoIcon } from '@chakra-ui/icons';
 import cart from '../media/shopping-cart.png'

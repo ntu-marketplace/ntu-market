@@ -11,12 +11,13 @@ import AdsSpace from "../components/adsSpace";
 import ListingCard from "../components/ListingCard";
 
 export const StateContext = createContext();
-
+export const FavContext = createContext();
 function Home(){
   const [isLogged, setIsLogged] = useState(false);
   const [pAIndex, setPAIndex] = useState(0);
   const [aIndex, setAIndex] = useState(0);
-  // const [isSuperAdmin, setIsSuperAdmin] = useState(false);
+  const [favouriteListings, setFavouriteListings] = useState([]);
+
   const [listings, setListings] = useState([]);
   const getListings = async () => {
       try{
@@ -29,13 +30,11 @@ function Home(){
       }
     };
     
-  // console.log(listings[0]._id)
   useEffect(()=>{
     getAds();
     getAlerts();
     getCategories();
     getListings();
-    // checkSuperAdmin();
     checkLoggedIn();
   },[isLogged]);
   
@@ -65,6 +64,12 @@ function Home(){
   function updateListings(filteredListings){
     setListings(filteredListings);
   }
+  function updateFav(favListings){
+    setFavouriteListings(favListings);
+  }
+  console.log(favouriteListings);
+
+
 
   const [alerts, setAlerts] = useState();
   const getAlerts = async () => {
@@ -158,35 +163,41 @@ function Home(){
         <br/>
         <Heading>Featured Items</Heading>
         <br/>
-        <Show above='sm'>
-          <SimpleGrid               
-            maxWidth='90vw'
-            minChildWidth="30%">
-            {listings.map((list)=>(
-              <ListingCard 
-              id = {listings && listings.length>0 ? list._id : ""}
-              title={listings && listings.length>0 ? list.productTitle : ""}
-              src={listings && listings.length>0 ? list.imageSrc : ""} 
-              description={listings && listings.length>0 ? list.productInfo : ""}
-              price={listings && listings.length>0 ? list.price : ""}
-              />
-            ))}
-          </SimpleGrid>
-        </Show>
-        <Show below='sm'>
-          <SimpleGrid   
-            maxWidth='100vw'>
-            {listings.map((list)=>(
-              <ListingCard     
-              id = {listings && listings.length>0 ? list._id : ""}
-              title={listings && listings.length>0 ? list.productTitle : ""}
-              src={listings && listings.length>0 ? list.imageSrc : ""} 
-              description={listings && listings.length>0 ? list.productInfo : ""}
-              price={listings && listings.length>0 ? list.price : ""}
-              />
-            ))}
-          </SimpleGrid>
-        </Show>
+        <FavContext.Provider value={favouriteListings}>
+          <Show above='sm'>
+            <SimpleGrid 
+              onChildStateChange={updateFav}          
+              maxWidth='90vw'
+              minChildWidth="30%">
+              {listings.map((list)=>(
+                <ListingCard 
+                id = {listings && listings.length>0 ? list._id : ""}
+                title={listings && listings.length>0 ? list.productTitle : ""}
+                src={listings && listings.length>0 ? list.imageSrc : ""} 
+                description={listings && listings.length>0 ? list.productInfo : ""}
+                price={listings && listings.length>0 ? list.price : ""}
+                isFav = {listings && listings.length>0 ? list.isFavourited : ""}
+                />
+              ))}
+            </SimpleGrid>
+          </Show>
+          <Show below='sm'>
+            <SimpleGrid   
+              onChildStateChange={updateFav}   
+              maxWidth='100vw'>
+              {listings.map((list)=>(
+                <ListingCard     
+                id = {listings && listings.length>0 ? list._id : ""}
+                title={listings && listings.length>0 ? list.productTitle : ""}
+                src={listings && listings.length>0 ? list.imageSrc : ""} 
+                description={listings && listings.length>0 ? list.productInfo : ""}
+                price={listings && listings.length>0 ? list.price : ""}
+                isFav = {listings && listings.length>0 ? list.isFavourited : ""}
+                />
+              ))}
+            </SimpleGrid>
+          </Show>
+        </FavContext.Provider>
 
         </Container>
       <br/><br/>

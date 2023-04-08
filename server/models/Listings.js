@@ -6,7 +6,7 @@ const listingSchema = new mongoose.Schema({
     productInfo: String,
     imageSrc: [String],
     price: Number,
-    // _id : String,
+    isFavourited:Number,
 });
 
 module.exports = mongoose.model("Listings", listingSchema);
