@@ -1,78 +1,75 @@
-import { Container, HStack } from "@chakra-ui/react";
+import { SimpleGrid, Show } from "@chakra-ui/react";
 import Navbar from "../components/navbar";
 import Footer from "../components/Footer";
 import ListingCard from "../components/ListingCard";
 import Header from "../components/Header";
 import { useState, useEffect } from "react";
+import axios from "axios";
 
 function Wishlist(){
     const[isLogged, setIsLogged] = useState(false);
     console.log(localStorage)
-    useEffect(()=>{
-        check();
-    },[isLogged]);
     const check =() =>{
-        if(localStorage.getItem("user") == 'false'){
-          setIsLogged(false);
-          return;
-        }
-        else{
-          setIsLogged(true);
-        }
+      if(localStorage.getItem("user") == 'false'){
+        setIsLogged(false);
         return;
       }
-    const wishes = [
-        {
-            title: "Microsoft Computer",
-            price: "$200",
-            description:
-              "Any Description goes .",
-            getImageSrc: () => require("../../src/media/anything.jpg"),
-            favourited: true,
-            buyer: true,
-        },
-        {
-            title: "Microsoft Computer",
-            price: "$200",
-            description:
-              "Any Description goes .",
-            getImageSrc: () => require("../../src/media/anything.jpg"),
-            favourited: true,
-            buyer: true,
-        },
-        {
-            title: "Microsoft Computer",
-            price: "$200",
-            description:
-              "Any Description goes .",
-            getImageSrc: () => require("../../src/media/anything.jpg"),
-            favourited: true,
-            buyer: true,
-        },
-    ]
+      else{
+        setIsLogged(true);
+      }
+      return;
+    }
+    useEffect(()=>{
+      getListings();
+      check();
+    },[isLogged]);
+    const [listings, setListings] = useState([]);
+    const getListings = async () => {
+      try{
+        const res = await axios.get('https://marketdb.herokuapp.com/get-items')
+        .then((response)=>{
+          setListings(response.data)
+        })
+      } catch (e){
+        console.log("Sian why sia", e);
+      }
+    };
+    const favouritedListings = listings.filter(listing=>listing.isFavourited == 1);
+    console.log(favouritedListings)
     return(
         <>
             {isLogged ? <Navbar/>: <Header/>}
-            <Container
-            mt='0'
-            mb='0'
-            ml='0'
-            mr='0'
-            minWidth='100%'
-                >
-                <HStack>
-                    {wishes.map((wish) => (
-                    <ListingCard
-                    key = {wish.title}
-                    title = {wish.title}
-                    price = {wish.price}
-                    description = {wish.description}
-                    imageSrc={wish.getImageSrc()}
-                    favourited = {wish.favourited}
-                    buyer={wish.buyer}
-                    />))}
-                </HStack>
-            </Container>
+            <Show above='sm'>
+            <SimpleGrid          
+              maxWidth='90vw'
+              minChildWidth="30%">
+              {favouritedListings.map((list)=>(
+                <ListingCard 
+                id = {favouritedListings && favouritedListings.length>0 ? list._id : ""}
+                title={favouritedListings && favouritedListings.length>0 ? list.productTitle : ""}
+                src={favouritedListings && favouritedListings.length>0 ? list.imageSrc : ""} 
+                description={favouritedListings && favouritedListings.length>0 ? list.productInfo : ""}
+                price={favouritedListings && favouritedListings.length>0 ? list.price : ""}
+                isFav = {favouritedListings && favouritedListings.length>0 ? list.isFavourited : ""}
+                />
+              ))}
+            </SimpleGrid>
+          </Show>
+          <Show below='sm'>
+            <SimpleGrid    
+              maxWidth='100vw'>
+              {favouritedListings.map((list)=>(
+                <ListingCard     
+                id = {favouritedListings && favouritedListings.length>0 ? list._id : ""}
+                title={favouritedListings && favouritedListings.length>0 ? list.productTitle : ""}
+                src={favouritedListings && favouritedListings.length>0 ? list.imageSrc : ""} 
+                description={favouritedListings && favouritedListings.length>0 ? list.productInfo : ""}
+                price={favouritedListings && favouritedListings.length>0 ? list.price : ""}
+                isFav = {favouritedListings && favouritedListings.length>0 ? list.isFavourited : ""}
+                />
+              ))}
+            </SimpleGrid>
+          </Show>
           
         <Footer/>
         </>
