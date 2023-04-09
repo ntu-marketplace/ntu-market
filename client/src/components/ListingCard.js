@@ -8,7 +8,7 @@ function ListingCard(props) {
 
     const handleDeleteItems = async (listingId) => { 
         try{
-            const res = await axios.delete(`http://localhost:8080/delete-item/${listingId}`);
+            const res = await axios.delete(`https://marketdb.herokuapp.com/delete-item/${listingId}`);
           } catch (e){
             console.log("Error in deleting why sia", e);
           }
@@ -28,7 +28,7 @@ function ListingCard(props) {
         }
         const update = {isFavourited: value}
         try{
-            const res = await axios.patch(`http://localhost:8080/patch-item/${listingId}`, update)
+            const res = await axios.patch(`https://marketdb.herokuapp.com/patch-item/${listingId}`, update)
             .then(response=>console.log(response.data));
           } catch (e){
             console.log("Error in updating why sia", e);
