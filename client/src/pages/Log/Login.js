@@ -21,12 +21,14 @@ const Login = () => {
         },
         body: JSON.stringify(formData),
       });
-      // console.log(response);
       if(response.ok){
-        // console.log(response)
         console.log("Form data posted successfully!");
         setReDirect(true);
         localStorage.setItem('user', "true")
+        if(formData.username == "SuperAdmin"){
+          localStorage.setItem('isSuperAdmin', 'true');
+        }
+        console.log(localStorage)
       } else {
         console.error("Error")
       }

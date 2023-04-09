@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect, createContext, useContext } from "react";
 import {
   Progress,
   Box,
@@ -8,14 +8,10 @@ import {
   Flex,
   FormControl,
   GridItem,
-  FormLabel,
   Input,
   Select,
-  SimpleGrid,
-  InputLeftAddon,
   InputGroup,
   Textarea,
-  FormHelperText,
   InputLeftElement,
   Image,
   Grid,
@@ -24,16 +20,13 @@ import {
 } from '@chakra-ui/react';
 
 import { useToast } from '@chakra-ui/react';
-import Background from '../components/Background';
 import Navbar from '../components/navbar';
 import { Link } from 'react-router-dom';
 import { CloseIcon } from '@chakra-ui/icons';
-import { useAppContext } from '../AppContext';
+import { AppContextProvider, useAppContext } from '../AppContext';
 import Header from '../components/Header';
 
-
 const Form1 = () => {
-  
   const [selectedImages, setSelectedImage] = useState([])
   const OnSelectFile = (event) => {
     if(event.target.files){
@@ -69,7 +62,7 @@ const Form1 = () => {
       )
     })
   }
-  const [show, setShow] = React.useState(false);
+  const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
   return (
     <>
@@ -77,16 +70,7 @@ const Form1 = () => {
         Upload some photos
       </Heading>
       
-        <Box
-        borderRadius="5"
-        height="25em"
-        background="#3b409c"
-        overflowX="auto"
-        overflowY="hidden" 
-        padding="1"
-        display="flex"
-        alignItems="center"
-        justifyContent="center"> 
+        <Box> 
           <Stack p="8" textAlign="center" spacing="1">
             <Grid 
               autoFlow='column'
@@ -137,12 +121,24 @@ const Form1 = () => {
 };
 
 const Form2 = () => {
+  const {formData, setFormData} = useContext(PostContext);
+  const handleChange = (event) => {
+    const {name, value} = event.target;
+    setFormData((prevFormData) => ({...prevFormData, [name]: value}));
+  }
+  const handleChangeArr = (event) => {
+    const {name, value} = event.target;
+    setFormData((prevFormData) => ({...prevFormData, [name]: [value]}));
+  }
+  
   return (
     <>
     <Heading w="100%" textAlign={'center'} fontWeight="normal" mb="2%">
         Tell us more!
       </Heading>
-      <Input variant="filled" background="#3b409c" placeholder='What are you selling?' />
+      <FormControl>
+        <Input variant="filled" background="#3b409c" placeholder='What are you selling?' name='title' value={formData.title || ''} onChange={handleChange}/>
+      </FormControl>
       <Select 
       mt="3"
       variant="filled"
@@ -162,31 +158,25 @@ const Form2 = () => {
           pointerEvents='none'
           color='gray.300'
           fontSize='1.2em'
-          children='$'
         />
-        <Input variant="filled" background="#3b409c" placeholder='Enter amount' />
+        <FormControl>
+          <Input variant="filled" background="#3b409c" placeholder='Enter amount' name='price' value={formData.price ||''} onChange={handleChange}/>
+        </FormControl>
       </InputGroup>
-      <Textarea
-       placeholder='Give us some details about your product'
-       variant="filled"
-       background="#3b409c"
-       size="md"
-       isRequired
-       mt='3'
-       resize="vertical"
-       overflowY="auto"
-       overflowX="hidden"
-       sx={{
-        '&::-webkit-scrollbar': {
-            display : 'hidden'
-        }
-    }} />
+      <br/>
+      <FormControl>
+        <Input size="md" isRequired mt='3' overflowX="hidden" overflowY="auto" variant="filled" background="#3b409c" 
+        placeholder='Give us some details about your product' name='info' value={formData.info || ''} onChange={handleChange} />
+      </FormControl>
+      <FormControl>
+        <Input type='text' size="md" isRequired mt='3' overflowY="auto" variant="filled" background="#3b409c" 
+        placeholder='Please provide us a source link' name='url' value={formData.url || ''} onChange={handleChangeArr} />
+      </FormControl>
     </>
   );
 };
 
 const Form3 = () => {
-  
   return (
     <>
       <Heading w="100%" textAlign={'center'} fontWeight="normal">
@@ -207,17 +197,50 @@ const Form3 = () => {
   );
 };
 
+export const PostContext = createContext();
+
 export default function AddListing() {
   const toast = useToast();
   const [step, setStep] = useState(1);
   const [progress, setProgress] = useState(33.33);
   const[isLogged, setIsLogged] = useState(false);
-  console.log(localStorage)
+  // THIS FORM DATA  is to be shared across all three forms
+  const [formData, setFormData] = useState({
+    username: "Monica",
+    title: '',
+    info: '',
+    url: [''],
+    price: ''
+  });
 
   useEffect(()=>{
       check();
   },[isLogged]);
 
+  function updateFormData(updatedFormData){
+    setFormData(updatedFormData);
+  }
+  console.log(formData)
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try{
+      const response = await fetch("http://localhost:8080/post-item", {
+        method: "POST",
+        headers : {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      if(response.ok){
+        console.log("Form data posted successfully!");
+      } else {
+        console.error("Error")
+      }
+      
+    }catch (error) {
+      console.log("Dk wtf happen: ", error)
+    }
+  };
   const check =() =>{
       if(localStorage.getItem("user") == 'false'){
         setIsLogged(false);
@@ -229,10 +252,9 @@ export default function AddListing() {
       return;
     }
   return (
-    <>
+    <AppContextProvider>
     {isLogged ? <Navbar/>: <Header />}
-    <Background>
-      
+
       <Box
         background="#181C62"
         color="white"
@@ -248,7 +270,19 @@ export default function AddListing() {
           mx="5%"
           size="sm"
           isAnimated></Progress>
-        {step === 1 ? <Form1 /> : step === 2 ? <Form2 /> : <Form3 />}
+        
+          {step === 1 ? <Form1 /> : <></>}
+              
+          {step === 2 ? 
+          <PostContext.Provider value={{formData, setFormData}}>
+            <Form2 onChildStateChange={updateFormData}/> 
+          </PostContext.Provider>
+          : <></>}
+          {step === 3 ?
+          <PostContext.Provider value={formData}>
+            <Form3 />
+          </PostContext.Provider> 
+          : <></>}
         <ButtonGroup mt="5%" w="100%">
           <Flex w="100%" justifyContent="space-between">
             <Flex>
@@ -281,28 +315,28 @@ export default function AddListing() {
               </Button>
             </Flex>
             {step === 3 ? (
-              <Link to="/myProfile">
                 <Button
-                w="7rem"
-                colorScheme="red"
-                variant="solid"
-                onClick={() => {
-                  toast({
-                    title: 'Listing Added.',
-                    description: "You can check it out under My Listings.",
-                    status: 'success',
-                    duration: 3000,
-                    isClosable: true,
-                  });
-                }}>
-                Add Listing
-              </Button>
-              </Link>
+                  w="7rem"
+                  colorScheme="red"
+                  variant="solid"
+                  onClick={(e) => {
+                    toast({
+                      title: 'Listing Added.',
+                      description: "You can check it out under My Listings.",
+                      status: 'success',
+                      duration: 3000,
+                      isClosable: true,
+                    });
+                    handleSubmit(e)
+                  }}>
+                  <Link to="/home">
+                    Add Listing
+                  </Link>
+                </Button>
             ) : null}
           </Flex>
         </ButtonGroup>
       </Box>
-    </Background>  
-    </>
+    </AppContextProvider>
   );
 }

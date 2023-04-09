@@ -1,6 +1,4 @@
-import React from "react";
-import { Box, Heading, Divider, Grid, GridItem, SimpleGrid, Text, Image, VStack} from "@chakra-ui/react";
-import sports from '../media/sports.jpg'
+import { Heading, GridItem, Image, VStack} from "@chakra-ui/react";
 
 function Categories(props) {
     return(
@@ -11,7 +9,7 @@ function Categories(props) {
                     borderRadius='full'
                     boxSize={['4em','6em','8em']}
                     src={props.src} />
-                <Heading fontSize={['xs','xs','small']}>{props.title}</Heading>                          
+                <Heading fontSize={['xs','md','lg']}>{props.title}</Heading>                          
             </VStack>
         </GridItem>
     )
