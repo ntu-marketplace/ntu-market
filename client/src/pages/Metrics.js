@@ -4,7 +4,6 @@ import Footer from "../components/Footer";
 import Navbar from "../components/navbar";
 import axios from 'axios';
 
-
 function Metrics() {
     const token = 'eyJrIjoiUzl4VlQzdU9vbHJiM2pCQXllQXFJc2ExMVNKUDNKV3YiLCJuIjoiTk1LZXkiLCJpZCI6MX0=';
     const headers = {

@@ -26,6 +26,7 @@ import ErrorNotFound from "./pages/ErrorNotFound";
 import AddListing from "./pages/AddListing";
 import { AppContextProvider } from "./AppContext";
 import Metrics from "./pages/Metrics";
+import MongoMetrics from "./pages/MongoMetrics";
 
 function App() {
   return (
@@ -46,6 +47,7 @@ function App() {
         <Route path='/wallet' element={<Wallet/>}/>
         <Route path='/myChats' element={<MyChats/>}/>
         <Route path='/metrics' element={<Metrics/>}/>
+        <Route path='/mongoMetrics' element={<MongoMetrics/>}/>
         <Route path='/wishlist' element={<Wishlist/>}/>
         <Route path='/addListing' element={<AddListing/>}/>
         <Route path='/details' >

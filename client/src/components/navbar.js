@@ -15,7 +15,7 @@ import {
   Show,
   Image
 } from '@chakra-ui/react';
-import { HamburgerIcon, Search2Icon, EmailIcon, StarIcon, AddIcon, InfoIcon } from '@chakra-ui/icons';
+import { HamburgerIcon, Search2Icon, EmailIcon, StarIcon, AddIcon, InfoIcon, ExternalLinkIcon, MoonIcon } from '@chakra-ui/icons';
 import cart from '../media/shopping-cart.png'
 import { Link } from 'react-router-dom';
 import { StateContext } from '../pages/Home';
@@ -135,6 +135,13 @@ function Navbar(props) {
             </Link>
             {isSuperAdmin && <Link to="https://dsoh010.grafana.net/goto/ipj5N-YVk?orgId=1">
               <InfoIcon color={'white'} h={'1.2em'} w={'1.2em'} />
+            </Link>}
+            {/*  */}
+            {isSuperAdmin && <Link to="https://dsoh010.grafana.net/goto/7mw13BLVz?orgId=1">
+              <ExternalLinkIcon color={'white'} h={'1.2em'} w={'1.2em'} />
+            </Link>}
+            {isSuperAdmin && <Link to="/MongoMetrics">
+              <MoonIcon color={'white'} h={'1.2em'} w={'1.2em'} />
             </Link>}
 
 
