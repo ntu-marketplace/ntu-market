@@ -6,7 +6,7 @@ function ListingCard(props) {
     const [isDeleteButton, setIsDeleteButton] = useState(false);
     const [isFavourited, setIsFavourited] = useState(false);
     // const favouriteListings = useContext(FavContext); //list of favourtites items
-    console.log(props.isFav)
+    // console.log(props.isFav)
     const handleDeleteItems = async (listingId) => { 
         try{
             const res = await axios.delete(`http://localhost:8080/delete-item/${listingId}`);
@@ -15,7 +15,7 @@ function ListingCard(props) {
           }
     }
     // console.log(isFavourited);
-    console.log(props)
+    // console.log(props)
 
     const toggleFavourite = () => {
         setIsFavourited(!isFavourited);
