@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import { Box, Image, HStack, Flex, Container, AspectRatio } from "@chakra-ui/react";
+import { Image, AspectRatio } from "@chakra-ui/react";
 function AdsSpace(props) {
     return(
         <>

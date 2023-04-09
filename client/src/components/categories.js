@@ -1,6 +1,4 @@
-import React from "react";
-import { Box, Heading, Divider, Grid, GridItem, SimpleGrid, Text, Image, VStack} from "@chakra-ui/react";
-import sports from '../media/sports.jpg'
+import { Heading, GridItem, Image, VStack} from "@chakra-ui/react";
 
 function Categories(props) {
     return(

@@ -1,6 +1,4 @@
-import * as React from "react";
 import { VStack } from "@chakra-ui/react";
-//maxWidth="980px" not needed for now
 const Background = ({ children, isDarkBackground, ...boxProps }) => {
   return (
     <VStack
