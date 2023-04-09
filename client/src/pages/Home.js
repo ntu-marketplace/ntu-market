@@ -17,7 +17,6 @@ function Home(){
   const [pAIndex, setPAIndex] = useState(0);
   const [aIndex, setAIndex] = useState(0);
   const [favouriteListings, setFavouriteListings] = useState([]);
-
   const [listings, setListings] = useState([]);
   const getListings = async () => {
       try{
@@ -67,7 +66,7 @@ function Home(){
   function updateFav(favListings){
     setFavouriteListings(favListings);
   }
-  console.log(favouriteListings);
+  // console.log(favouriteListings);
 
 
 
