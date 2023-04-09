@@ -224,7 +224,7 @@ export default function AddListing() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try{
-      const response = await fetch("http://localhost:8080/post-item", {
+      const response = await fetch("https://marketdb.herokuapp.com/post-item", {
         method: "POST",
         headers : {
           "Content-Type": "application/json",
