@@ -1,10 +1,26 @@
 import { Container } from "@chakra-ui/react";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Footer from "../components/Footer";
 import Navbar from "../components/navbar";
 import axios from 'axios';
 
 function Metrics() {
+
+  const[isLogged, setIsLogged] = useState(false);
+  console.log(localStorage)
+  useEffect(()=>{
+      check();
+  },[isLogged]);
+  const check =() =>{
+      if(localStorage.getItem("user") == 'false'){
+        setIsLogged(false);
+        return;
+      }
+      else{
+        setIsLogged(true);
+      }
+      return;
+    }
     const token = 'eyJrIjoiUzl4VlQzdU9vbHJiM2pCQXllQXFJc2ExMVNKUDNKV3YiLCJuIjoiTk1LZXkiLCJpZCI6MX0=';
     const headers = {
       Authorization: `Bearer ${token}`
