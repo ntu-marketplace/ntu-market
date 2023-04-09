@@ -8,14 +8,10 @@ import {
   Flex,
   FormControl,
   GridItem,
-  FormLabel,
   Input,
   Select,
-  SimpleGrid,
-  InputLeftAddon,
   InputGroup,
   Textarea,
-  FormHelperText,
   InputLeftElement,
   Image,
   Grid,
@@ -24,7 +20,6 @@ import {
 } from '@chakra-ui/react';
 
 import { useToast } from '@chakra-ui/react';
-import Background from '../components/Background';
 import Navbar from '../components/navbar';
 import { Link } from 'react-router-dom';
 import { CloseIcon } from '@chakra-ui/icons';
@@ -127,7 +122,6 @@ const Form1 = () => {
 
 const Form2 = () => {
   const {formData, setFormData} = useContext(PostContext);
-  // console.log(formData);
   const handleChange = (event) => {
     const {name, value} = event.target;
     setFormData((prevFormData) => ({...prevFormData, [name]: value}));
@@ -247,7 +241,6 @@ export default function AddListing() {
       console.log("Dk wtf happen: ", error)
     }
   };
-  // console.log(step)
   const check =() =>{
       if(localStorage.getItem("user") == 'false'){
         setIsLogged(false);
@@ -290,8 +283,6 @@ export default function AddListing() {
             <Form3 />
           </PostContext.Provider> 
           : <></>}
-
-        
         <ButtonGroup mt="5%" w="100%">
           <Flex w="100%" justifyContent="space-between">
             <Flex>
@@ -324,7 +315,6 @@ export default function AddListing() {
               </Button>
             </Flex>
             {step === 3 ? (
-              
                 <Button
                   w="7rem"
                   colorScheme="red"
@@ -337,14 +327,12 @@ export default function AddListing() {
                       duration: 3000,
                       isClosable: true,
                     });
-                  }}
-                  onSubmit={handleSubmit}>
+                    handleSubmit(e)
+                  }}>
                   <Link to="/home">
                     Add Listing
                   </Link>
-                  
                 </Button>
-              
             ) : null}
           </Flex>
         </ButtonGroup>

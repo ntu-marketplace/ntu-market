@@ -3,9 +3,7 @@ import { Button, Link as ChakraLink } from "@chakra-ui/react";
 import { useState } from "react";
 import Background from "../../components/Background";
 import Footer from "../../components/Footer";
-import NewAccAlert from "../../components/NewAccAlert";
 import {FormControl, FormLabel, Input, FormHelperText } from "@chakra-ui/react";
-import { redirect } from "react-router-dom";
 import MyButton from "../../components/MyButton";
 
 function SignUp() {
