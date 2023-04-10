@@ -1,24 +1,88 @@
-import React from "react";
+import React, { useEffect, useState, useRef } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { io } from "socket.io-client";
 import styled from "styled-components";
+import ChatContainer from "../components/ChatContainer";
+import Contacts from "../components/Contacts";
+import Welcome from "../components/Welcome";
+
+export default function MyChats() {
+  const navigate = useNavigate();
+  const socket = useRef();
+  const [contacts, setContacts] = useState([]);
+  const [currentChat, setCurrentChat] = useState(undefined);
+  const [currentUser, setCurrentUser] = useState(undefined);
+
+  useEffect(() => {
+    if (!localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)) {
+      navigate("/login");
+    } else {
+      async function fetchUserData() {
+        setCurrentUser(
+          await JSON.parse(
+            localStorage.getItem("username")
+          )
+        );
+      }
+      fetchUserData();
+    }
+  }, []);
+
+  useEffect(() => {
+    if (currentUser) {
+      socket.current = io("https://marketdb.herokuapp.com");
+      socket.current.emit("add-user", currentUser);
+    }
+  }, [currentUser]);
+
+  useEffect(() => {
+    if (currentUser) {
+      const fetchData = async () => {
+        // const data = await axios.get(`${allUsersRoute}/${currentUser._id}`);
+        // setContacts(data.data);
+      }
+      fetchData();
+    }
+  }, [currentUser]);
+
+  const handleChatChange = (chat) => {
+    setCurrentChat(chat);
+  };
+  
+  return (
+    <>
+      <Container>
+        <div className="container">
+          <Contacts contacts={contacts} changeChat={handleChatChange} />
+          {currentChat === undefined ? (
+            <Welcome />
+          ) : (
+            <ChatContainer currentChat={currentChat} socket={socket} />
+          )}
+        </div>
+      </Container>
+    </>
+  );
+}
 
 const Container = styled.div`
-    height: 100vh;
-`
-
-const Wrapper = styled.div`
-    margin: 100px;
-    border: 1px solid black;
-    border-radius: 20px;
-    height: 100%;
-`
-
-function MyChats(){
-    return(
-        <Container>
-            <Wrapper>
-
-            </Wrapper>
-        </Container>
-    )
-}
-export default MyChats;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+  align-items: center;
+  background-color: #131324;
+  .container {
+    height: 85vh;
+    width: 85vw;
+    background-color: #00000076;
+    display: grid;
+    grid-template-columns: 25% 75%;
+    @media screen and (min-width: 720px) and (max-width: 1080px) {
+      grid-template-columns: 35% 65%;
+    }
+  }
+`;
