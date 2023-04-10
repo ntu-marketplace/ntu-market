@@ -66,7 +66,7 @@ const Form1 = () => {
   const handleClick = () => setShow(!show);
   return (
     <>
-      <Heading w="100%" textAlign={'center'} fontWeight="normal" mb="2%">
+      <Heading w="100%" textAlign={'center'} fontWeight="bold" mb="2%">
         Upload some photos
       </Heading>
       
@@ -99,8 +99,6 @@ const Form1 = () => {
               </Heading>
               <Text fontWeight="light" color="grey.100">or drop images here</Text>
               <Input
-                height="100%"
-                width="100%"
                 position="absolute"
                 top="0"
                 bottom="0"
@@ -133,7 +131,7 @@ const Form2 = () => {
   
   return (
     <>
-    <Heading w="100%" textAlign={'center'} fontWeight="normal" mb="2%">
+    <Heading w="100%" textAlign={'center'} fontWeight="bold" mb="2%">
         Tell us more!
       </Heading>
       <FormControl>
@@ -170,7 +168,7 @@ const Form2 = () => {
       </FormControl>
       <FormControl>
         <Input type='text' size="md" isRequired mt='3' overflowY="auto" variant="filled" background="#3b409c" 
-        placeholder='Please provide us a source link' name='url' value={formData.url || ''} onChange={handleChangeArr} />
+        placeholder='Please provide us a source link of your picture' name='url' value={formData.url || ''} onChange={handleChangeArr} />
       </FormControl>
     </>
   );
@@ -179,7 +177,7 @@ const Form2 = () => {
 const Form3 = () => {
   return (
     <>
-      <Heading w="100%" textAlign={'center'} fontWeight="normal">
+      <Heading w="100%" textAlign={'center'} fontWeight="bold">
         Almost Done!
       </Heading>
       <Select 
@@ -210,7 +208,9 @@ export default function AddListing() {
     title: '',
     info: '',
     url: [''],
-    price: ''
+    price: '',
+    isFavourited: 0,
+    isBought: 0,
   });
 
   useEffect(()=>{
@@ -317,7 +317,7 @@ export default function AddListing() {
             {step === 3 ? (
                 <Button
                   w="7rem"
-                  colorScheme="red"
+                  colorScheme="green"
                   variant="solid"
                   onClick={(e) => {
                     toast({

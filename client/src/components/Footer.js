@@ -17,7 +17,7 @@ const Footer = () => {
           color="white"
           justifyContent="center"
           alignItems="center"
-          height={16}
+          height={14}
         >
           <p>Ntu Marketplace • © 2023</p>
         </Flex>

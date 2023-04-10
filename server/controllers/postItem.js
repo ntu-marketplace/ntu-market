@@ -1,7 +1,7 @@
 const Listings = require('../models/Listings');
 
 const handlePostItem = async (req, res) => {
-    const { username, title, info, url, price } = req.body;
+    const { username, title, info, url, price, isFavourited, isBought } = req.body;
     if (!username || !title || !info || !url || !price) return res.status(400).json("Missing information")
     // console.log(req.body);
 

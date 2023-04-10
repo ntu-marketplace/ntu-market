@@ -2,6 +2,7 @@ import { Container } from "@chakra-ui/react";
 import { useEffect, useRef, useState } from "react";
 import Footer from "../components/Footer";
 import Navbar from "../components/navbar";
+import Header from "../components/Header";
 import axios from 'axios';
 
 function Metrics() {
@@ -60,7 +61,7 @@ function Metrics() {
 
   return (
     <>
-      <Navbar />
+      {isLogged ? <Navbar/>: <Header/>}
       <Container ref={grafanaRef} height="100vh" />
       <Footer />
     </>
