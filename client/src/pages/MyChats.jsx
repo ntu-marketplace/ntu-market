@@ -16,11 +16,11 @@ export default function MyChats() {
   const [currentUser, setCurrentUser] = useState(undefined);
 
   useEffect(() => {
-    if (!localStorage.getItem("username")) {
+    if (!localStorage.getItem("_id")) {
       navigate("/login");
     } else {
       async function fetchUserData() {
-        setCurrentUser(localStorage.getItem("username"));
+        setCurrentUser(localStorage.getItem("_id"));
       }
       fetchUserData();
     }
@@ -37,7 +37,8 @@ export default function MyChats() {
     if (currentUser) {
       const fetchData = async () => {
         const data = await axios.get(server);
-        console.log(data.data)
+        console.log(data.data);
+        
         setContacts(data.data);
       }
       fetchData();
