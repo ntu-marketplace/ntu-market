@@ -12,6 +12,7 @@ import ListingCard from "../components/ListingCard";
 
 export const StateContext = createContext();
 export const FavContext = createContext();
+
 function Home(){
   const [isLogged, setIsLogged] = useState(false);
   const [pAIndex, setPAIndex] = useState(0);
@@ -59,7 +60,6 @@ function Home(){
       console.log("Why sia?", e);
     }
   }
-
   function updateListings(filteredListings){
     setListings(filteredListings);
   }
@@ -144,13 +144,15 @@ function Home(){
                   display : 'hidden'
               }
           }} >
-        
-        {categories.map((category)=>(
-          <Categories
-          title={categories && categories.length>0 ? category.title : ""}
-          src={categories && categories.length > 0? category.imageSrc : ""}
-          />
-        ))}
+        <StateContext.Provider value={listings}>
+          {categories.map((category)=>(
+            <Categories
+            title={categories && categories.length>0 ? category.title : ""}
+            src={categories && categories.length > 0? category.imageSrc : ""}
+            onChildStateChange={updateListings}
+            />
+          ))}
+        </StateContext.Provider>
         </Grid>
 
         <AdsSpace src={ ads && ads.length > 0 ? ads[aIndex].imageSrc : "" }/> 
