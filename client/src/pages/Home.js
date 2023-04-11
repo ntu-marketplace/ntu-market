@@ -19,15 +19,15 @@ function Home(){
   const [favouriteListings, setFavouriteListings] = useState([]);
   const [listings, setListings] = useState([]);
   const getListings = async () => {
-      try{
-        const res = await axios.get('https://marketdb.herokuapp.com/get-items')
-        .then((response)=>{
-          setListings(response.data)
-        })
-      } catch (e){
-        console.log("Sian why sia", e);
-      }
-    };
+    try{
+      const res = await axios.get('https://marketdb.herokuapp.com/get-items')
+      .then((response)=>{
+        setListings(response.data)
+      })
+    } catch (e){
+      console.log("Sian why sia", e);
+    }
+  };
     
   useEffect(()=>{
     getAds();
@@ -67,9 +67,6 @@ function Home(){
     setFavouriteListings(favListings);
   }
   // console.log(favouriteListings);
-
-
-
   const [alerts, setAlerts] = useState();
   const getAlerts = async () => {
     try{
@@ -118,8 +115,8 @@ function Home(){
       <StateContext.Provider value={listings}>
         <Navbar onChildStateChange={updateListings}/>
       </StateContext.Provider>
-      
       : <Header />}
+
         <Container
         mt='0'
         mb='0'
@@ -132,8 +129,7 @@ function Home(){
         title={ alerts && alerts.length > 0 ? alerts[pAIndex].title : "" } 
         content={ alerts && alerts.length > 0 ? alerts[pAIndex].content : "" } /> 
 
-        <Heading mb={4} size='lg' >Categories</Heading>
-        <Divider w='40%'></Divider>
+        <Heading mb={1} size='lg' >Categories</Heading>
         <Grid 
           autoFlow='column'
           autoColumns={['21%', '21%','15%']}
@@ -158,10 +154,8 @@ function Home(){
         </Grid>
 
         <AdsSpace src={ ads && ads.length > 0 ? ads[aIndex].imageSrc : "" }/> 
-        {/* <FeaturedItems/> */}
         <br/>
         <Heading>Featured Items</Heading>
-        <br/>
         <FavContext.Provider value={favouriteListings}>
           <Show above='sm'>
             <SimpleGrid 
