@@ -209,6 +209,7 @@ export default function AddListing() {
     info: '',
     url: [''],
     price: '',
+    category: '',
     isFavourited: 0,
     isBought: 0,
   });

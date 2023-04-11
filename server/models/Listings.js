@@ -6,6 +6,7 @@ const listingSchema = new mongoose.Schema({
     productInfo: String,
     imageSrc: [String],
     price: Number,
+    category: String,
     isFavourited: Number,
     isBought: Number,
 });

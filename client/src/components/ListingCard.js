@@ -78,7 +78,7 @@ function ListingCard(props) {
                     </Heading>
                     
                     <AspectRatio maxH='50px'>
-                    <Text lineHeight="1.2" fontFamily="sans-serif-regular" fontSize="xl" textAlign="left">
+                    <Text lineHeight="1.2" fontFamily="sans-serif" fontSize="xl" textAlign="left">
                         {props.description}
                     </Text>
 

@@ -129,7 +129,7 @@ function Home(){
         title={ alerts && alerts.length > 0 ? alerts[pAIndex].title : "" } 
         content={ alerts && alerts.length > 0 ? alerts[pAIndex].content : "" } /> 
 
-        <Heading mb={1} size='lg' >Categories</Heading>
+        <Heading mb={1} size='lg'> Categories </Heading>
         <Grid 
           autoFlow='column'
           autoColumns={['21%', '21%','15%']}

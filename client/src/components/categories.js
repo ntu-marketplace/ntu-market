@@ -1,6 +1,7 @@
 import { Heading, GridItem, Image, VStack} from "@chakra-ui/react";
 
 function Categories(props) {
+    //TODO
     return(
         <GridItem display='flex' alignItems='flex-start' paddingTop='0.5em'>
             <VStack>
