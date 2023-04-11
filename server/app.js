@@ -101,6 +101,7 @@ app.get("/get-items", getItems.handleGetItems);
 app.get("/get-alerts", getAlerts.handleGetAlerts);
 app.get("/get-categories", getCategories.handleGetCategories);
 app.post("/create-user", createUser.handleCreateUser);
+app.post("/verify-user", createUser.verifyEmail);
 app.post("/find-user", findUser.handleFindUser);
 app.post("/post-item", postItem.handlePostItem);
 app.post("/contact", getContact.handleGetContacts);
