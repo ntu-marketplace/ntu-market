@@ -16,10 +16,6 @@ function ListingCard(props) {
             console.log("Error in deleting why sia", e);
           }
     }
-    console.log(props)
-    const toggleFavourite = () => {
-        setIsFavourited(!isFavourited);
-      };
 
     const updateFavourites = async (listingId) =>{
         var value = 0;
@@ -90,18 +86,9 @@ function ListingCard(props) {
 
                     </AspectRatio>
                     {isSold && (
-                        <Box
-                            position='absolute'
-                            top='186px'
-                            left='20px'
-                            width='30%'
-                            height='10%'
-                            backgroundColor='blue.500'
-                            opacity='0.8'
-                            display='flex'
-                            justifyContent='center'
-                            alignItems='center'
-                            flexDirection='column'
+                        <Box position='absolute' top='186px' left='20px' width='30%' height='10%'
+                            backgroundColor='blue.500' opacity='0.8' display='flex' justifyContent='center'
+                            alignItems='center' 
                         >
                             <Text color='white' fontWeight='bold' fontSize='lg'>
                                 Sold
