@@ -6,6 +6,7 @@ import styled from "styled-components";
 import ChatContainer from "../components/ChatContainer";
 import Contacts from "../components/Contacts";
 import Welcome from "../components/Welcome";
+const server = "https://marketdb.herokuapp.com";
 
 export default function MyChats() {
   const navigate = useNavigate();
@@ -15,15 +16,11 @@ export default function MyChats() {
   const [currentUser, setCurrentUser] = useState(undefined);
 
   useEffect(() => {
-    if (!localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)) {
+    if (!localStorage.getItem("username")) {
       navigate("/login");
     } else {
       async function fetchUserData() {
-        setCurrentUser(
-          await JSON.parse(
-            localStorage.getItem("username")
-          )
-        );
+        setCurrentUser(localStorage.getItem("username"));
       }
       fetchUserData();
     }
@@ -31,7 +28,7 @@ export default function MyChats() {
 
   useEffect(() => {
     if (currentUser) {
-      socket.current = io("https://marketdb.herokuapp.com");
+      socket.current = io(server);
       socket.current.emit("add-user", currentUser);
     }
   }, [currentUser]);
@@ -39,8 +36,9 @@ export default function MyChats() {
   useEffect(() => {
     if (currentUser) {
       const fetchData = async () => {
-        // const data = await axios.get(`${allUsersRoute}/${currentUser._id}`);
-        // setContacts(data.data);
+        const data = await axios.get(server);
+        console.log(data.data)
+        setContacts(data.data);
       }
       fetchData();
     }
