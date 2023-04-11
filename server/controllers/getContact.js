@@ -10,7 +10,7 @@ const handleGetContacts = async (req, res) => {
 
 const handleUpdateContacts = async (req, res) => {
     const { _id, contacts } = req.body;
-    if (!_id || !contact) return res.status(400).json("Missing information")
+    if (!_id || !contacts) return res.status(400).json("Missing information")
 
     try {
         Contacts.updateOne({ _id }, { contacts });
