@@ -15,6 +15,7 @@ export const FavContext = createContext();
 
 function Home(){
   const [isLogged, setIsLogged] = useState(false);
+  const [isSearched, setIsSearched] = useState(false);
   const [pAIndex, setPAIndex] = useState(0);
   const [aIndex, setAIndex] = useState(0);
   const [favouriteListings, setFavouriteListings] = useState([]);
@@ -60,6 +61,10 @@ function Home(){
       console.log("Why sia?", e);
     }
   }
+  function updateSearched(didSearched){
+    setIsSearched(didSearched);
+  }
+
   function updateListings(filteredListings){
     setListings(filteredListings);
   }
@@ -112,8 +117,8 @@ function Home(){
     return(
       <AppContextProvider>
       {isLogged ? 
-      <StateContext.Provider value={listings}>
-        <Navbar onChildStateChange={updateListings}/>
+      <StateContext.Provider value={{listings, isSearched}}>
+        <Navbar onChildStateChange={updateListings} onSearchedState={updateSearched}/>
       </StateContext.Provider>
       : <Header />}
 
@@ -125,11 +130,11 @@ function Home(){
         minWidth='100%'
         backgroundColor="#F5F5F5"
           >
-        <PhishingAlert 
+        {!isSearched && <PhishingAlert 
         title={ alerts && alerts.length > 0 ? alerts[pAIndex].title : "" } 
-        content={ alerts && alerts.length > 0 ? alerts[pAIndex].content : "" } /> 
+        content={ alerts && alerts.length > 0 ? alerts[pAIndex].content : "" } /> }
 
-        <Heading mb={1} size='lg'> Categories </Heading>
+        {!isSearched && <Heading mb={1} size='lg'> Categories </Heading>}
         <Grid 
           autoFlow='column'
           autoColumns={['21%', '21%','15%']}
@@ -144,7 +149,7 @@ function Home(){
                   display : 'hidden'
               }
           }} >
-        <StateContext.Provider value={listings}>
+          { !isSearched && <StateContext.Provider value={listings}>
           {categories.map((category)=>(
             <Categories
             title={categories && categories.length>0 ? category.title : ""}
@@ -152,10 +157,10 @@ function Home(){
             onChildStateChange={updateListings}
             />
           ))}
-        </StateContext.Provider>
+        </StateContext.Provider>}
         </Grid>
 
-        <AdsSpace src={ ads && ads.length > 0 ? ads[aIndex].imageSrc : "" }/> 
+        {!isSearched && <AdsSpace src={ ads && ads.length > 0 ? ads[aIndex].imageSrc : "" }/> }
         <br/>
         <Heading>Featured Items</Heading>
         <FavContext.Provider value={favouriteListings}>

@@ -8,7 +8,6 @@ function Categories(props) {
     const handleSearch = (props) =>{
         setQuery(props.title);
     }
-    console.log(listings)
     function handleChange() { 
         const filteredListings = listings.filter((listing) => 
         listing.category.toLowerCase().includes(query.toLowerCase()));
