@@ -20,11 +20,21 @@ function Home(){
   const [aIndex, setAIndex] = useState(0);
   const [favouriteListings, setFavouriteListings] = useState([]);
   const [listings, setListings] = useState([]);
+  // Changed getListings to sort based on whether an item has been bought before.
   const getListings = async () => {
     try{
       const res = await axios.get('https://marketdb.herokuapp.com/get-items')
       .then((response)=>{
-        setListings(response.data)
+        const sortedListings = response.data.sort((x,y)=>{
+          if(x.isBought && !y.isBought){
+            return 1;
+          }
+          if(!x.isBought && y.isBought){
+            return -1;
+          }
+          return 0;
+        });
+        setListings(sortedListings)
       })
     } catch (e){
       console.log("Sian why sia", e);
@@ -64,7 +74,6 @@ function Home(){
   function updateSearched(didSearched){
     setIsSearched(didSearched);
   }
-
   function updateListings(filteredListings){
     setListings(filteredListings);
   }
@@ -177,6 +186,7 @@ function Home(){
                 description={listings && listings.length>0 ? list.productInfo : ""}
                 price={listings && listings.length>0 ? list.price : ""}
                 isFav = {listings && listings.length>0 ? list.isFavourited : ""}
+                isBought= {listings && listings.length>0 ? list.isBought : ""}
                 />
               ))}
             </SimpleGrid>
@@ -193,6 +203,7 @@ function Home(){
                 description={listings && listings.length>0 ? list.productInfo : ""}
                 price={listings && listings.length>0 ? list.price : ""}
                 isFav = {listings && listings.length>0 ? list.isFavourited : ""}
+                isBought= {listings && listings.length>0 ? list.isBought : ""}
                 />
               ))}
             </SimpleGrid>
