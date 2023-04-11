@@ -8,7 +8,6 @@ import axios from 'axios';
 function Metrics() {
 
   const[isLogged, setIsLogged] = useState(false);
-  console.log(localStorage)
   useEffect(()=>{
       check();
   },[isLogged]);

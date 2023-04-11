@@ -65,7 +65,6 @@ function Home(){
       const res = await axios.get('https://marketdb.herokuapp.com/get-ads')
       .then((response) => {
         setAds(response.data)
-        // console.log(ads)
       })
     } catch(e) {
       console.log("Why sia?", e);
@@ -80,14 +79,12 @@ function Home(){
   function updateFav(favListings){
     setFavouriteListings(favListings);
   }
-  // console.log(favouriteListings);
   const [alerts, setAlerts] = useState();
   const getAlerts = async () => {
     try{
       const res = await axios.get('https://marketdb.herokuapp.com/get-alerts')
       .then((response)=>{
         setAlerts(response.data)
-        // console.log(alerts)
       })
     } catch (e){
       console.log("Sian why sia", e);
@@ -99,7 +96,6 @@ function Home(){
       const res = await axios.get('https://marketdb.herokuapp.com/get-categories')
       .then((response)=>{
         setCategories(response.data)
-        // console.log(categories)
       })
     } catch (e){
       console.log("Sian why sia", e);

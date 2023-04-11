@@ -100,7 +100,7 @@ function ListingCard(props) {
                     </Text>
                     </Stack>
                 </CardBody>
-                {<Divider />}
+                <Divider />
                 <CardFooter>
                     <ButtonGroup className={isSold ? "grey-filter": ""}>
                         <Button variant='solid' colorScheme='blue'>

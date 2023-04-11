@@ -6,8 +6,6 @@ const handleCreateUser = async (req, res) => {
 
     try {
         const user = await User.create({username, password, name, email, mobile});
-        // .then(() => res.json("Successful insert"))
-        // .catch(console.log)
         return res.json("Successful insert");
     } catch(e) {
         console.log(e);

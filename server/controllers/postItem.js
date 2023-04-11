@@ -3,11 +3,7 @@ const Listings = require('../models/Listings');
 const handlePostItem = async (req, res) => {
     const { username, title, info, url, price, isFavourited, isBought } = req.body;
     if (!username || !title || !info || !url || !price) return res.status(400).json("Missing information")
-    // console.log(req.body);
-
-    // console.log(typeof price)
     const data = {sellerUsername: username, productTitle: title, productInfo: info, price: parseFloat(price), imageSrc: [...url]}
-    // console.log(data)
     try {
         return await Listings
         .create(data)
