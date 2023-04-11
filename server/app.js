@@ -6,7 +6,11 @@ const cors = require('cors');
 const multer = require('multer')
 const bodyParser = require('body-parser');
 const { s3Uploadv3 } = require('./s3Service');
+const socket = require("socket.io");
 require('dotenv').config();
+
+// routes
+const messageRoutes = require("./routes/messages");
 
 // controllers
 const getData = require('./controllers/getUsers');
@@ -19,6 +23,7 @@ const postItem = require('./controllers/postItem');
 const getAlerts = require('./controllers/getAlerts');
 const deleteItem = require('./controllers/deleteItem');
 const patchItem = require('./controllers/patchItem');
+
 
 // app 
 const app = express();
@@ -100,7 +105,7 @@ app.post("/find-user", findUser.handleFindUser);
 app.post("/post-item", postItem.handlePostItem);
 app.delete("/delete-item/:id", deleteItem.handleDelItems);
 app.patch("/patch-item/:id", patchItem.handlePatchItem);
-
+app.use("/api/messages", messageRoutes);
 
 // port
 const port = process.env.PORT || 8080;
@@ -109,3 +114,25 @@ const port = process.env.PORT || 8080;
 const server = app.listen(port, () => 
     console.log('server is running on port '+ port)
 );
+
+const io = socket(server, {
+    cors: {
+      origin: "*",
+      credentials: true,
+    },
+});
+
+global.onlineUsers = new Map();
+io.on("connection", (socket) => {
+  global.chatSocket = socket;
+  socket.on("add-user", (userId) => {
+    onlineUsers.set(userId, socket.id);
+  });
+
+  socket.on("send-msg", (data) => {
+    const sendUserSocket = onlineUsers.get(data.to);
+    if (sendUserSocket) {
+      socket.to(sendUserSocket).emit("msg-recieve", data.msg);
+    }
+  });
+});
