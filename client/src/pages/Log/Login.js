@@ -24,9 +24,11 @@ const Login = () => {
       if(response.ok){
         console.log("Form data posted successfully!");
         setReDirect(true);
+        const data = await response.json();
+        localStorage.setItem("_id", data[0]._id);
         localStorage.setItem('user', "true");
         localStorage.setItem('username', formData.username);
-        if(formData.username == "SuperAdmin"){
+        if(formData.username === "SuperAdmin"){
           localStorage.setItem('isSuperAdmin', 'true');
         }
         console.log(localStorage)
