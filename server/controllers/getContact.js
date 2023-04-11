@@ -13,7 +13,7 @@ const handleUpdateContacts = async (req, res) => {
     if (!_id || !contacts) return res.status(400).json("Missing information")
 
     try {
-        Contacts.updateOne({ _id }, { contacts });
+        Contacts.updateOne({ _id }, { contacts }, { upsert: true });
         // .then(() => res.json("Successful insert"))
         // .catch(console.log)
         return res.json("Successful insert");
