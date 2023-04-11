@@ -104,6 +104,8 @@ app.post("/create-user", createUser.handleCreateUser);
 app.post("/find-user", findUser.handleFindUser);
 app.post("/post-item", postItem.handlePostItem);
 app.post("/contact", getContact.handleGetContacts);
+app.post("/contact", getContact.handleGetContacts);
+app.post("/update-contact", getContact.handleUpdateContacts);
 app.delete("/delete-item/:id", deleteItem.handleDelItems);
 app.patch("/patch-item/:id", patchItem.handlePatchItem);
 app.use("/api/messages", messageRoutes);
