@@ -75,7 +75,6 @@ export default function ChatContainer({ currentChat, socket }) {
           </div>
         </div>
       </div>
-      <hr />
       <div className="chat-messages">
         {messages.map((message) => {
           return (
@@ -93,6 +92,7 @@ export default function ChatContainer({ currentChat, socket }) {
           );
         })}
       </div>
+      
       <ChatInput handleSendMsg={handleSendMsg} />
     </Container>
   );
@@ -111,6 +111,7 @@ const Container = styled.div`
     justify-content: space-between;
     align-items: center;
     padding: 0 2rem;
+    border-bottom: 5px solid white;
     .user-details {
       display: flex;
       align-items: center;
@@ -161,7 +162,7 @@ const Container = styled.div`
     .sended {
       justify-content: flex-end;
       .content {
-        background-color: #4f04ff21;
+        background-color: #181C62;
       }
     }
     .recieved {
