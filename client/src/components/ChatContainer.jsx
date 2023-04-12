@@ -70,13 +70,12 @@ export default function ChatContainer({ currentChat, socket }) {
     <Container>
       <div className="chat-header">
         <div className="user-details">
-          <div className="avatar">
-          </div>
           <div className="username">
             <h3>{currentChat.username}</h3>
           </div>
         </div>
       </div>
+      <hr />
       <div className="chat-messages">
         {messages.map((message) => {
           return (
@@ -123,6 +122,8 @@ const Container = styled.div`
       }
       .username {
         h3 {
+          font-size: 1.8em;
+          font-weight: 700;
           color: white;
         }
       }

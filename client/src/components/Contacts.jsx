@@ -16,7 +16,6 @@ export default function Contacts({ contacts, changeChat }) {
   };
 
   return (
-    <>
         <Container>
           <div className="brand">
             {/* <img src={Logo} alt="logo" /> */}
@@ -47,7 +46,6 @@ export default function Contacts({ contacts, changeChat }) {
             </div>
           </div>
         </Container>
-    </>
   );
 }
 const Container = styled.div`
@@ -55,6 +53,7 @@ const Container = styled.div`
   grid-template-rows: 10% 75% 15%;
   overflow: hidden;
   background-color: #080420;
+  border-radius: 35px 0 0 35px;
   .brand {
     display: flex;
     align-items: center;
