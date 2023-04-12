@@ -2,9 +2,10 @@ const axios = require('axios');
 
 async function fetchGPT3Response(openai, prompt) {
     const completion = await openai.createCompletion({
-        model: "text-davinci-003",
+        model: "gpt-3.5-turbo",
         prompt,
     });
+    console.log(completion)
     return completion.data.choices[0].text;
 }
 
