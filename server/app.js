@@ -24,6 +24,7 @@ const getAlerts = require('./controllers/getAlerts');
 const deleteItem = require('./controllers/deleteItem');
 const patchItem = require('./controllers/patchItem');
 const getContact = require('./controllers/getContact');
+const chatbot = require('./controllers/chatbot');
 
 // app 
 const app = express();
@@ -110,6 +111,7 @@ app.post("/update-contact", getContact.handleUpdateContacts);
 app.delete("/delete-item/:id", deleteItem.handleDelItems);
 app.patch("/patch-item/:id", patchItem.handlePatchItem);
 app.use("/api/messages", messageRoutes);
+app.post('/chatbot', chatbot.handleBotPrompt);
 
 // port
 const port = process.env.PORT || 8080;
