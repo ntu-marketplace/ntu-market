@@ -6,7 +6,8 @@ const handleCreateUser = async (req, res) => {
     if (!username || !password || !email) return res.status(400).json("Missing information")
 
     try {
-        const user = await User.create({username, password, name, email, mobile});
+        const user = await User.create({username, password, name, email, mobile, verified});
+        
         if (!email.endsWith('@e.ntu.edu.sg')) {
             throw Error("Please enter a valid NTU email")
         }
@@ -20,7 +21,6 @@ const handleCreateUser = async (req, res) => {
             } 
         }
         const verified = false;
-        const user = await User.create({username, password, name, email, mobile, verified});
         // .then(() => res.json("Successful insert"))
         // .catch(console.log)
         const OTP = generateOTP();
