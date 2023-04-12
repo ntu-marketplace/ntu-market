@@ -1,6 +1,7 @@
-import { Stack, Img } from "@chakra-ui/react";
-import { Button, Link as ChakraLink } from "@chakra-ui/react";
+import { Stack, Img, Box } from "@chakra-ui/react";
+import { Button, Link } from "@chakra-ui/react";
 import { useState } from "react";
+import { redirect } from 'react-router-dom';
 import Background from "../../components/Background";
 import Footer from "../../components/Footer";
 import {FormControl, FormLabel, Input, FormHelperText } from "@chakra-ui/react";
@@ -8,6 +9,7 @@ import MyButton from "../../components/MyButton";
 
 function SignUp() {
   const [reDirect, setReDirect] = useState(false);
+  const [formValid, setFormValid] = useState(true);
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -15,32 +17,80 @@ function SignUp() {
     email: "",
     mobile: ""
   });
+  const [stateError, setStateError] = useState({
+    error: ""
+  });
+  const [userOtp, setUserOtp] = useState({
+    user: "",
+    otp: ""
+  })
+  const [correctOtp, setCorrectOtp] = useState({
+    otp: ""
+  })
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try{
-      const response = await fetch("https://marketdb.herokuapp.com/create-user", {
+      if (!formData.email.endsWith('@e.ntu.edu.sg')) {
+        throw Error("Please enter a valid NTU email")
+      }
+      const response = await fetch("http://localhost:8080/create-user", {
         method: "POST",
         headers : {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
       });
+      // response.json().then((data) => console.log(data));
       if(response.ok){
         console.log("Form data posted successfully!");
         setReDirect(true);
-
+        response.json().then((data) => {
+          console.log(data);
+          setUserOtp((prevData)=> ({...prevData, user:data.user}))
+          setCorrectOtp((prevData)=> ({...prevData, otp:data.otp}));
+        });
       } else {
-        console.error("Error")
+        console.log(response);
       }
-      
-    }catch (error) {
-      console.log("Dk wtf happen: ", error)
+    } catch (err) {
+      console.log("Dk wtf happen: ", err)
+      setStateError((data) => ({ ...data, error: err.toString()}))
+      setFormValid(false)
     }
   };
+
+  const handleVerify = async (event) => {
+    event.preventDefault();
+    try {
+      console.log(correctOtp.otp + "==" + userOtp.otp);
+      if (correctOtp.otp == userOtp.otp) {
+        const response = await fetch("http://localhost:8080/verify-user", {
+          method: "POST",
+          headers : {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(userOtp),
+        });
+        console.log(response);
+        window.location.replace("/login");
+      } else {
+        setReDirect(true);
+        throw Error("OTP does not match");
+      }
+    } catch (e) {
+      console.log("ERROR:" + e)
+    }
+  }
+
   const handleChange = (event) => {
     const {name, value} = event.target;
     setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
+  }
+
+  const handleChangeOtp = (event) => {
+    const {name, value} = event.target;
+    setUserOtp((data) => ({ ...data, otp: value}));
   }
 
   return (
@@ -70,17 +120,30 @@ function SignUp() {
               <FormHelperText>Your Singapore Phone Number.</FormHelperText>
           </FormControl>
           <br/>
+          {!formValid && <>
+            <Box>
+              {stateError.error}
+            </Box>
+            </>
+        }
+          
           <Stack color='white' textColor='black'>
             <Button type='submit' label='Sign Up'>Submit</Button>
           </Stack>
         </form>}
-        {reDirect && <>
+        
+        {reDirect && <form onSubmit={handleVerify}>
+          <FormControl>
+              <FormLabel>OTP</FormLabel>
+              <Input type='text' name="otp" value={userOtp.otp} onChange={handleChangeOtp} />
+              <FormHelperText>Check your NTU email.</FormHelperText>
+          </FormControl>
         <Stack color='white' textColor='black'>
           <br/>
-          {MyButton('/login', 'Go to Login')}
+          <Button type='submit' label='Verify'>Verify</Button>
 
         </Stack>
-        </> }
+        </form> }
 
         
     </Background>

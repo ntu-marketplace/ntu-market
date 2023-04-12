@@ -23,7 +23,7 @@ const postItem = require('./controllers/postItem');
 const getAlerts = require('./controllers/getAlerts');
 const deleteItem = require('./controllers/deleteItem');
 const patchItem = require('./controllers/patchItem');
-
+const getContact = require('./controllers/getContact');
 
 // app 
 const app = express();
@@ -101,8 +101,12 @@ app.get("/get-items", getItems.handleGetItems);
 app.get("/get-alerts", getAlerts.handleGetAlerts);
 app.get("/get-categories", getCategories.handleGetCategories);
 app.post("/create-user", createUser.handleCreateUser);
+app.post("/verify-user", createUser.verifyEmail);
 app.post("/find-user", findUser.handleFindUser);
 app.post("/post-item", postItem.handlePostItem);
+app.post("/contact", getContact.handleGetContacts);
+app.post("/contact", getContact.handleGetContacts);
+app.post("/update-contact", getContact.handleUpdateContacts);
 app.delete("/delete-item/:id", deleteItem.handleDelItems);
 app.patch("/patch-item/:id", patchItem.handlePatchItem);
 app.use("/api/messages", messageRoutes);

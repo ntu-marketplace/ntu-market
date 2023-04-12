@@ -20,7 +20,7 @@ export default function Contacts({ contacts, changeChat }) {
         <Container>
           <div className="brand">
             {/* <img src={Logo} alt="logo" /> */}
-            <h3>snappy</h3>
+            <h3>Chat</h3>
           </div>
           <div className="contacts">
             {contacts.map((contact, index) => {
@@ -42,10 +42,8 @@ export default function Contacts({ contacts, changeChat }) {
             })}
           </div>
           <div className="current-user">
-            <div className="avatar">
-            </div>
             <div className="username">
-              <h2>{currentUserName}</h2>
+              <h1>{`Welcome, ${currentUserName}`}</h1>
             </div>
           </div>
         </Container>
@@ -124,7 +122,7 @@ const Container = styled.div`
       }
     }
     .username {
-      h2 {
+      h1 {
         color: white;
       }
     }
