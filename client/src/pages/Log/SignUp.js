@@ -34,7 +34,7 @@ function SignUp() {
       if (!formData.email.endsWith('@e.ntu.edu.sg')) {
         throw Error("Please enter a valid NTU email")
       }
-      const response = await fetch("http://localhost:8080/create-user", {
+      const response = await fetch("https://marketdb.herokuapp.com/create-user", {
         method: "POST",
         headers : {
           "Content-Type": "application/json",
@@ -65,7 +65,7 @@ function SignUp() {
     try {
       console.log(correctOtp.otp + "==" + userOtp.otp);
       if (correctOtp.otp == userOtp.otp) {
-        const response = await fetch("http://localhost:8080/verify-user", {
+        const response = await fetch("https://marketdb.herokuapp.com/verify-user", {
           method: "POST",
           headers : {
             "Content-Type": "application/json",
@@ -105,19 +105,19 @@ function SignUp() {
           <FormControl>
               <FormLabel>Username</FormLabel>
               <Input type='text' name="username" value={formData.username} onChange={handleChange} />
-              <FormHelperText>Pick something fancy.</FormHelperText>
+              <FormHelperText color={"grey"}>Pick something fancy.</FormHelperText>
               <FormLabel>Password</FormLabel>
               <Input type='password' name="password" value={formData.password} onChange={handleChange} />
-              <FormHelperText>Shhhhhh.</FormHelperText>
+              <FormHelperText color={"grey"}>Shhhhhh.</FormHelperText>
               <FormLabel>Name</FormLabel>
               <Input type='text' name="name" value={formData.name} onChange={handleChange} />
-              <FormHelperText>We'll never tell a soul.</FormHelperText>
+              <FormHelperText color={"grey"}>We'll never tell a soul.</FormHelperText>
               <FormLabel>Email address</FormLabel>
               <Input type='email' name="email" value={formData.email} onChange={handleChange}/>
-              <FormHelperText>We'll never share your email.</FormHelperText>
+              <FormHelperText color={"grey"}>We'll never share your email.</FormHelperText>
               <FormLabel>Mobile Number</FormLabel>
               <Input type='number' name="mobile" value={formData.mobile} onChange={handleChange}/>
-              <FormHelperText>Your Singapore Phone Number.</FormHelperText>
+              <FormHelperText color={"grey"}>Your Singapore Phone Number.</FormHelperText>
           </FormControl>
           <br/>
           {!formValid && <>
