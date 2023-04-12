@@ -1,10 +1,11 @@
-import { Text } from "@chakra-ui/react";
+import { Heading, Text } from "@chakra-ui/react";
 import { useState } from "react";
 function Description(props){
 
     return(
         <>
-            <Text> {props.name} </Text>
+            <Heading size="lg"> {props.name} </Heading>
+            <br/>
             <Text>
                 {props.description}
             </Text>

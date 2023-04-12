@@ -1,36 +1,30 @@
-import { Grid, GridItem, Card, CardBody, Image, Stack, Text, Divider, CardFooter, Button, ButtonGroup, HStack } from "@chakra-ui/react";
+import { Grid, GridItem, Card, CardBody, Image, Stack, Text, Divider, CardFooter, Button, ButtonGroup, HStack, filter, SimpleGrid, Show } from "@chakra-ui/react";
 import Description from "./Description";
 import ListingCard from "../../../components/ListingCard";
+import { useEffect, useState } from "react";
+import axios from "axios";
 function ProfileSection(props) {
+    const [listings, setListings] = useState("")
+
+    useEffect(() => {
+        const getListings = async () => {
+            const {data} = await axios.get('https://marketdb.herokuapp.com/get-items')
+            const filteredData = data.filter(listing => listing.sellerUsername === localStorage.getItem("username"))
+            console.log(filteredData)
+            setListings(filteredData) 
+        }
+        getListings();
+    },[])
 
     const profileItems = 
         {
-            userId: "Number",
-            name: "Name",
-            description: "Pull from DB pls. I will do just need to mock it up first",
+            userId: localStorage.getItem("_id"),
+            name: localStorage.getItem("username"),
+            description: "Just a broke uni student trying to make an extra buck and reducing waste.",
 
         }
 
-    const items = [
-        {
-            title: "Microsoft Computer",
-            price: "$200",
-            description:
-            "Good Computer",
-            getImageSrc: () => require("../../../media/anything.jpg"),
-            favourited: true,
-            buyer: false,
-        },
-        {
-            title: "Microsoft Computer II",
-            price: "$250",
-            description:
-                "Good Computer",
-            getImageSrc: () => require("../../../media/anything.jpg"),
-            favourited: true,
-            buyer: false,
-        },
-    ]   
+    
     return(
         <>
         <Grid
@@ -49,19 +43,39 @@ function ProfileSection(props) {
                 description = {profileItems.description}/>
             </GridItem>
             <GridItem pl='3' bg='white.300' area={'main'}>
-            <HStack>
-                {items.map((item) => (
-                    <ListingCard
-                        key = {item.title}
-                        title = {item.title}
-                        price = {item.price}
-                        description = {item.description}
-                        imageSrc={item.getImageSrc()}
-                        favourited = {item.favourited}
-                        buyer={item.buyer}
-                    />
-                ))}
-            </HStack>
+            <Show above='sm'>
+            <SimpleGrid          
+              maxWidth='80vw'
+              minChildWidth="30%">
+              {listings && listings.map((list)=>(
+                <ListingCard 
+                id = {list._id}
+                title={list.productTitle}
+                src={list.imageSrc} 
+                description={list.productInfo}
+                price={list.price}
+                isFav = {list.isFavourited}
+                isBought= {list.isBought}
+                />
+              ))}
+            </SimpleGrid>
+          </Show>
+          <Show below='sm'>
+            <SimpleGrid     
+              maxWidth='100vw'>
+              {listings && listings.map((list)=>(
+                <ListingCard     
+                id = {list._id}
+                title={list.productTitle}
+                src={list.imageSrc} 
+                description={list.productInfo}
+                price={list.price}
+                isFav = {list.isFavourited}
+                isBought= {list.isBought}
+                />
+              ))}
+            </SimpleGrid>
+            </Show>
             </GridItem>
         </Grid>
         
