@@ -8,7 +8,6 @@ async function fetchGPT3Response(openai, prompt) {
             max_tokens: 100,
             temperature: 0.5
         });
-        console.log(completion, "completion")
         return completion.data.choices[0].text;
     } catch (error) {
         console.log("error", error);
