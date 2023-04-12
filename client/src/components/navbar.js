@@ -99,9 +99,6 @@ function Navbar(props) {
                   }
                     <span>Hey there, Monica!</span>
                   </MenuItem>
-                  <Link to='/settings'>
-                    <MenuItem>Settings</MenuItem>
-                  </Link>
                   <Link to='/myProfile'>
                     <MenuItem>My Profile</MenuItem>
                   </Link>
