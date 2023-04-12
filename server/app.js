@@ -8,6 +8,13 @@ const bodyParser = require('body-parser');
 const { s3Uploadv3 } = require('./s3Service');
 const socket = require("socket.io");
 require('dotenv').config();
+const { Configuration, OpenAIApi } = require("openai");
+
+// openai config
+const configuration = new Configuration({
+    apiKey: process.env.OPEN_AI_API,
+});
+const openai = new OpenAIApi(configuration);
 
 // routes
 const messageRoutes = require("./routes/messages");
@@ -111,7 +118,7 @@ app.post("/update-contact", getContact.handleUpdateContacts);
 app.delete("/delete-item/:id", deleteItem.handleDelItems);
 app.patch("/patch-item/:id", patchItem.handlePatchItem);
 app.use("/api/messages", messageRoutes);
-app.post('/chatbot', chatbot.handleBotPrompt);
+app.post('/chatbot', chatbot.handleBotPrompt(openai));
 
 // port
 const port = process.env.PORT || 8080;
