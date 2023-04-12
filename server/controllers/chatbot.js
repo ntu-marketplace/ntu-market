@@ -1,11 +1,17 @@
 const axios = require('axios');
 
 async function fetchGPT3Response(openai, prompt) {
-    const completion = await openai.createCompletion({
-        model: "text-davinci-003",
-        prompt,
-    });
-    return completion.data.choices[0].text;
+    try {
+        const completion = await openai.createCompletion({
+            model: "gpt-3.5-turbo",
+            prompt,
+        });
+        console.log(completion, "completion")
+        return completion.data.choices[0].text;
+    } catch (error) {
+        console.log("error", error);
+        throw Error
+    }
 }
 
 const handleBotPrompt = (openai) => async (req, res) => {
