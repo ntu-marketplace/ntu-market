@@ -8,11 +8,10 @@ import Contacts from "../components/Contacts";
 import Welcome from "../components/Welcome";
 const server = "https://marketdb.herokuapp.com";
 
-export default function MyChats() {
+export default function MyChats({ currentChat, setCurrentChat }) {
   const navigate = useNavigate();
   const socket = useRef();
   const [contacts, setContacts] = useState([]);
-  const [currentChat, setCurrentChat] = useState(undefined);
   const [currentUser, setCurrentUser] = useState(undefined);
 
   useEffect(() => {
@@ -33,24 +32,24 @@ export default function MyChats() {
     }
   }, [currentUser]);
 
-  useEffect(() => {
+  const updateContact = async () => {
     if (currentUser) {
-      const fetchData = async () => {
-        const data = await axios.get(server);
-        console.log(data.data);
-        const oldContacts = await fetch(server + "/contact", {
-          method: "POST",
-          headers : {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ _id: currentUser }),
-        })
-        const contactData = await oldContacts.json();
-        console.log(contactData)
-        setContacts(data.data.filter(item => JSON.parse(contactData[0].contacts).includes(item._id)));
-      }
-      fetchData();
+      const data = await axios.get(server);
+      const oldContacts = await fetch(server + "/contact", {
+        method: "POST",
+        headers : {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ _id: currentUser }),
+      })
+      const contactData = await oldContacts.json();
+      console.log(contactData)
+      setContacts(data.data.filter(item => contactData[0].contacts.includes(item._id)));
     }
+  }
+
+  useEffect(() => {
+    updateContact();
   }, [currentUser]);
 
   const handleChatChange = (chat) => {

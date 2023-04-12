@@ -27,8 +27,11 @@ import AddListing from "./pages/AddListing";
 import { AppContextProvider } from "./AppContext";
 import Metrics from "./pages/Metrics";
 import MongoMetrics from "./pages/MongoMetrics";
+import { useState } from "react";
 
 function App() {
+  const [currentChat, setCurrentChat] = useState(undefined);
+  
   return (
     <AppContextProvider>
     <ChakraProvider>
@@ -38,14 +41,14 @@ function App() {
         <Route path="/login" element={<Login/>}/>
         <Route path='/signUp' element={<SignUp/>}/>
           <Route path='authentication' element={<Authentication/>}/>
-        <Route path='/home' element={<Home/>}/>
+        <Route path='/home' element={<Home setCurrentChat={setCurrentChat}/>}/>
         <Route path='/myProfile' element={<MyProfile/>}>
           {/* <Route path='myListings' element={<Listings/>}/> */}
           {/* <Route path='myReviews' element={<Reviews/>}/> */}
         </Route>
         <Route path='/settings' element={<Settings/>}/>
         <Route path='/wallet' element={<Wallet/>}/>
-        <Route path='/myChats' element={<MyChats/>}/>
+        <Route path='/myChats' element={<MyChats currentChat={currentChat} setCurrentChat={setCurrentChat}/>}/>
         <Route path='/metrics' element={<Metrics/>}/>
         <Route path='/mongoMetrics' element={<MongoMetrics/>}/>
         <Route path='/wishlist' element={<Wishlist/>}/>
