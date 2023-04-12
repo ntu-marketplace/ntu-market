@@ -13,7 +13,7 @@ import ListingCard from "../components/ListingCard";
 export const StateContext = createContext();
 export const FavContext = createContext();
 
-function Home(){
+function Home({ setCurrentChat }){
   const [isLogged, setIsLogged] = useState(false);
   const [isSearched, setIsSearched] = useState(false);
   const [pAIndex, setPAIndex] = useState(0);
@@ -21,9 +21,10 @@ function Home(){
   const [favouriteListings, setFavouriteListings] = useState([]);
   const [listings, setListings] = useState([]);
   // Changed getListings to sort based on whether an item has been bought before.
+
   const getListings = async () => {
     try{
-      const res = await axios.get('https://marketdb.herokuapp.com/get-items')
+      return await axios.get('https://marketdb.herokuapp.com/get-items')
       .then((response)=>{
         const sortedListings = response.data.sort((x,y)=>{
           if(x.isBought && !y.isBought){
@@ -34,7 +35,12 @@ function Home(){
           }
           return 0;
         });
-        setListings(sortedListings)
+        return sortedListings;
+      })
+      .then(async (sortedListings) => {
+        const data = await axios.get("https://marketdb.herokuapp.com");
+        const newListings = sortedListings.map(item => Object.assign({}, item, { seller: data.data.filter(account => account.username === item.sellerUsername)[0] }))
+        setListings(newListings);
       })
     } catch (e){
       console.log("Sian why sia", e);
@@ -176,6 +182,8 @@ function Home(){
               minChildWidth="30%">
               {listings.map((list)=>(
                 <ListingCard 
+                setCurrentChat={setCurrentChat}
+                seller = {listings && listings.length>0 ? list.seller : {}}
                 id = {listings && listings.length>0 ? list._id : ""}
                 title={listings && listings.length>0 ? list.productTitle : ""}
                 src={listings && listings.length>0 ? list.imageSrc : ""} 
