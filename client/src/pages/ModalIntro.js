@@ -18,20 +18,6 @@ function ModalIntro() {
 
   return (
     <>
-    {/* <iframe src='https://my.spline.design/dip3deffectslogo-5e0f6c79aacf5977851cfcea80201db3/'width='100%' height='100%'></iframe>
-    <Background
-        justifyContent="center"
-        alignItems="center"
-        isDarkBackground
-        spacing={5}
-        >
-        <Stack textColor='black'>
-        {showButton && (
-        MyButton('/home', 'Enter')
-        )}
-        </Stack>
-        
-    </Background> */}
     <VStack
       justifyContent="center"
       alignItems="center"
@@ -43,8 +29,11 @@ function ModalIntro() {
     >
       <br/>
       <VStack  >
-        <Stack>
-          <iframe src='https://my.spline.design/dip3deffectslogo-5e0f6c79aacf5977851cfcea80201db3/'></iframe>
+        <Stack >
+          <iframe 
+          height='400px'
+          width='300px'
+          src='https://my.spline.design/dip3deffectslogo-5e0f6c79aacf5977851cfcea80201db3/'></iframe>
 
         </Stack>
         <Stack textColor='black'>
