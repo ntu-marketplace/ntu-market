@@ -1,8 +1,10 @@
-import { Avatar, Stack, Img } from "@chakra-ui/react";
+import { Avatar, VStack, Stack } from "@chakra-ui/react";
 import Background from "../components/Background";
 import Footer from "../components/Footer";
 import { useEffect, useState } from "react";
 import MyButton from "../components/MyButton";
+// import { SplineViewer } from '@splinetool/viewer';
+
 
 function ModalIntro() {
   localStorage.setItem('user', 'false'); // init local storage
@@ -16,20 +18,42 @@ function ModalIntro() {
 
   return (
     <>
+    {/* <iframe src='https://my.spline.design/dip3deffectslogo-5e0f6c79aacf5977851cfcea80201db3/'width='100%' height='100%'></iframe>
     <Background
         justifyContent="center"
         alignItems="center"
         isDarkBackground
         spacing={5}
         >
-        <Img src ='/LOGO.png'></Img>
         <Stack textColor='black'>
         {showButton && (
         MyButton('/home', 'Enter')
         )}
         </Stack>
         
-    </Background>
+    </Background> */}
+    <VStack
+      justifyContent="center"
+      alignItems="center"
+      minHeight="100vh"
+      bgGradient={[
+        'linear(to-b, #313690, #7600bc)',
+      ]}
+      w='100%'
+    >
+      <br/>
+      <VStack  >
+        <Stack>
+          <iframe src='https://my.spline.design/dip3deffectslogo-5e0f6c79aacf5977851cfcea80201db3/'></iframe>
+
+        </Stack>
+        <Stack textColor='black'>
+        {showButton && (
+        MyButton('/home', 'Enter')
+        )}
+        </Stack>
+      </VStack>
+    </VStack>
     
     <Footer/>
     </>

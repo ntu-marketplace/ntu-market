@@ -128,7 +128,7 @@ function Home({ setCurrentChat }){
     return(
       <AppContextProvider>
       {isLogged ? 
-      <StateContext.Provider value={{listings, isSearched}}>
+      <StateContext.Provider value={listings}>
         <Navbar onChildStateChange={updateListings} onSearchedState={updateSearched}/>
       </StateContext.Provider>
       : <Header />}
@@ -177,7 +177,7 @@ function Home({ setCurrentChat }){
         <FavContext.Provider value={favouriteListings}>
           <Show above='sm'>
             <SimpleGrid 
-              onChildStateChange={updateFav}          
+              onChildStateChange={updateFav}  
               maxWidth='90vw'
               minChildWidth="30%">
               {listings.map((list)=>(
