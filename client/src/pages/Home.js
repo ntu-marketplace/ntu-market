@@ -103,7 +103,7 @@ function Home(){
   };
   useEffect(()=>{
     const adsId = setInterval(()=>{
-      setAIndex((aIndex+1)%2);
+      setAIndex((aIndex+1)%3);
     }, 8000);
     return () => {
       clearInterval(adsId);
