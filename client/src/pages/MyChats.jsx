@@ -38,7 +38,6 @@ export default function MyChats() {
       const fetchData = async () => {
         const data = await axios.get(server);
         console.log(data.data);
-        
         const oldContacts = await fetch(server + "/contact", {
           method: "POST",
           headers : {

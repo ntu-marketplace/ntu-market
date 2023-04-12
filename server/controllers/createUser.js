@@ -7,7 +7,6 @@ const handleCreateUser = async (req, res) => {
 
     try {
         const user = await User.create({username, password, name, email, mobile, verified});
-        
         if (!email.endsWith('@e.ntu.edu.sg')) {
             throw Error("Please enter a valid NTU email")
         }
