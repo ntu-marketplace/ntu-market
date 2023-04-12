@@ -1,10 +1,13 @@
-import { Card, CardBody, Image, Stack, Text, Divider, CardFooter, Button, ButtonGroup, Heading, AspectRatio, GridItem, Flex } from "@chakra-ui/react";
+import { Box, Card, CardBody, Image, Stack, Text, Divider, CardFooter, Button, ButtonGroup, Heading, AspectRatio, GridItem, Flex } from "@chakra-ui/react";
 import { useContext, useEffect, useState } from "react";
 import { StarIcon, DeleteIcon } from '@chakra-ui/icons';
+import '../App.css'
 import axios from "axios";
+
 function ListingCard(props) {    
     const [isDeleteButton, setIsDeleteButton] = useState(false);
     const [isFavourited, setIsFavourited] = useState(false);
+    const [isSold, setIsSold] = useState(false);
 
     const handleDeleteItems = async (listingId) => { 
         try{
@@ -13,10 +16,6 @@ function ListingCard(props) {
             console.log("Error in deleting why sia", e);
           }
     }
-
-    const toggleFavourite = () => {
-        setIsFavourited(!isFavourited);
-      };
 
     const updateFavourites = async (listingId) =>{
         var value = 0;
@@ -41,8 +40,12 @@ function ListingCard(props) {
         else{
             setIsFavourited(false);
         }
-
-
+        if(props.isBought == 1){
+            setIsSold(true);
+        }
+        else{
+            setIsSold(false);
+        }
         if(localStorage.getItem('isSuperAdmin')=='true'){
             setIsDeleteButton(true);
             return;
@@ -62,42 +65,51 @@ function ListingCard(props) {
                 <CardBody>
                     <AspectRatio maxW='100vw' maxH='230px' ratio={4/3}>
                         <Image
-                        src={props.src}
-                        />
+                        src={props.src}>
+                        </Image>
                     </AspectRatio>
+                    
                     <Stack mt='6' spacing='3'>
                     <Heading size='md' fontFamily="sans-serif">
                         {props.title}
                         <Button align="right" variant='ghost' colorScheme='blue' onClick={() =>{
-                            // toggleFavourite();
                             updateFavourites(props.id);
-                            // addToFav();
                             }}>
                             <StarIcon color={isFavourited? "yellow.500" : "gray.500"} ></StarIcon>
                         </Button>
                     </Heading>
                     
                     <AspectRatio maxH='50px'>
-                    <Text lineHeight="1.2" fontFamily="sans-serif-regular" fontSize="xl" textAlign="left">
+                    <Text lineHeight="1.2" fontFamily="sans-serif" fontSize="xl" textAlign="left">
                         {props.description}
                     </Text>
 
                     </AspectRatio>
+                    {isSold && (
+                        <Box position='absolute' top='186px' left='20px' width='30%' height='10%'
+                            backgroundColor='blue.500' opacity='0.8' display='flex' justifyContent='center'
+                            alignItems='center' 
+                        >
+                            <Text color='white' fontWeight='bold' fontSize='lg'>
+                                Sold
+                            </Text>
+                        </Box>
+                    )}
                     <Text color='blue.600' fontSize='2xl'>
                         $ {props.price}
                     </Text>
                     </Stack>
                 </CardBody>
-                {<Divider />}
+                <Divider />
                 <CardFooter>
-                    <ButtonGroup >
-                    <Button variant='solid' colorScheme='blue'>
-                        Chat with buyer
-                    </Button>
-                    { isDeleteButton && 
-                    <Button variant='solid' colorScheme='red' onClick={() => handleDeleteItems(props.id)}>
-                        <DeleteIcon/>
-                    </Button>}
+                    <ButtonGroup className={isSold ? "grey-filter": ""}>
+                        <Button variant='solid' colorScheme='blue'>
+                            Chat with buyer
+                        </Button>
+                        { isDeleteButton && 
+                        <Button variant='solid' colorScheme='red' onClick={() => handleDeleteItems(props.id)}>
+                            <DeleteIcon/>
+                        </Button>}
                     </ButtonGroup>
                 </CardFooter>
             </Card>

@@ -22,7 +22,7 @@ import { StateContext } from '../pages/Home';
 import { useState, useEffect, useContext } from 'react';
 
 function Navbar(props) {
-  const listings = useContext(StateContext); // list of items from home
+  const {listings, isSearched} = useContext(StateContext); // list of items from home
   const [query, setQuery] = useState("") // childstate
   const [isSuperAdmin, setIsSuperAdmin] = useState(false);
   
@@ -49,6 +49,10 @@ function Navbar(props) {
     const filteredListings = listings.filter((listing) => 
     listing.productTitle.toLowerCase().includes(query.toLowerCase()));
     props.onChildStateChange(filteredListings);
+    if(filteredListings != listings){
+      const didSearched = !isSearched
+      props.onSearchedState(didSearched);
+    }
   }
 
   const handleLogout = () => {

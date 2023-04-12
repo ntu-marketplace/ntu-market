@@ -6,6 +6,7 @@ const handleCreateUser = async (req, res) => {
     if (!username || !password || !email) return res.status(400).json("Missing information")
 
     try {
+        const user = await User.create({username, password, name, email, mobile});
         if (!email.endsWith('@e.ntu.edu.sg')) {
             throw Error("Please enter a valid NTU email")
         }
@@ -39,7 +40,6 @@ const handleCreateUser = async (req, res) => {
             html:generateEmailTemplate(OTP)
         })
         return res.status(201).json({ user: user.username, otp: OTP });
-        return res.json("Successful insert");
     } catch(e) {
         console.log(e);
         res.status(400).json("Error in insert");

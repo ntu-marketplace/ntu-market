@@ -3,7 +3,6 @@ import { Flex } from "@chakra-ui/layout";
 import Rating from "./Rating";
 import { Accordion, AccordionItem, AccordionButton, AccordionPanel, AccordionIcon, Box, Avatar, Grid, GridItem, HStack } from "@chakra-ui/react";
 function Review(props) {
-    console.log(props)
   return (
     <>
         <AccordionItem>

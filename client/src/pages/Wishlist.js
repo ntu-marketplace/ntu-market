@@ -8,7 +8,6 @@ import axios from "axios";
 
 function Wishlist(){
     const[isLogged, setIsLogged] = useState(false);
-    console.log(localStorage)
     const check =() =>{
       if(localStorage.getItem("user") == 'false'){
         setIsLogged(false);
@@ -35,7 +34,6 @@ function Wishlist(){
       }
     };
     const favouritedListings = listings.filter(listing=>listing.isFavourited == 1);
-    console.log(favouritedListings)
     return(
         <>
             {isLogged ? <Navbar/>: <Header/>}

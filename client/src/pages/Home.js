@@ -12,17 +12,29 @@ import ListingCard from "../components/ListingCard";
 
 export const StateContext = createContext();
 export const FavContext = createContext();
+
 function Home(){
   const [isLogged, setIsLogged] = useState(false);
+  const [isSearched, setIsSearched] = useState(false);
   const [pAIndex, setPAIndex] = useState(0);
   const [aIndex, setAIndex] = useState(0);
   const [favouriteListings, setFavouriteListings] = useState([]);
   const [listings, setListings] = useState([]);
+  // Changed getListings to sort based on whether an item has been bought before.
   const getListings = async () => {
     try{
       const res = await axios.get('https://marketdb.herokuapp.com/get-items')
       .then((response)=>{
-        setListings(response.data)
+        const sortedListings = response.data.sort((x,y)=>{
+          if(x.isBought && !y.isBought){
+            return 1;
+          }
+          if(!x.isBought && y.isBought){
+            return -1;
+          }
+          return 0;
+        });
+        setListings(sortedListings)
       })
     } catch (e){
       console.log("Sian why sia", e);
@@ -53,27 +65,26 @@ function Home(){
       const res = await axios.get('https://marketdb.herokuapp.com/get-ads')
       .then((response) => {
         setAds(response.data)
-        // console.log(ads)
       })
     } catch(e) {
       console.log("Why sia?", e);
     }
   }
-
+  function updateSearched(didSearched){
+    setIsSearched(didSearched);
+  }
   function updateListings(filteredListings){
     setListings(filteredListings);
   }
   function updateFav(favListings){
     setFavouriteListings(favListings);
   }
-  // console.log(favouriteListings);
   const [alerts, setAlerts] = useState();
   const getAlerts = async () => {
     try{
       const res = await axios.get('https://marketdb.herokuapp.com/get-alerts')
       .then((response)=>{
         setAlerts(response.data)
-        // console.log(alerts)
       })
     } catch (e){
       console.log("Sian why sia", e);
@@ -85,7 +96,6 @@ function Home(){
       const res = await axios.get('https://marketdb.herokuapp.com/get-categories')
       .then((response)=>{
         setCategories(response.data)
-        // console.log(categories)
       })
     } catch (e){
       console.log("Sian why sia", e);
@@ -112,8 +122,8 @@ function Home(){
     return(
       <AppContextProvider>
       {isLogged ? 
-      <StateContext.Provider value={listings}>
-        <Navbar onChildStateChange={updateListings}/>
+      <StateContext.Provider value={{listings, isSearched}}>
+        <Navbar onChildStateChange={updateListings} onSearchedState={updateSearched}/>
       </StateContext.Provider>
       : <Header />}
 
@@ -125,11 +135,11 @@ function Home(){
         minWidth='100%'
         backgroundColor="#F5F5F5"
           >
-        <PhishingAlert 
+        {!isSearched && <PhishingAlert 
         title={ alerts && alerts.length > 0 ? alerts[pAIndex].title : "" } 
-        content={ alerts && alerts.length > 0 ? alerts[pAIndex].content : "" } /> 
+        content={ alerts && alerts.length > 0 ? alerts[pAIndex].content : "" } /> }
 
-        <Heading mb={1} size='lg' >Categories</Heading>
+        {!isSearched && <Heading mb={1} size='lg'> Categories </Heading>}
         <Grid 
           autoFlow='column'
           autoColumns={['21%', '21%','15%']}
@@ -144,16 +154,18 @@ function Home(){
                   display : 'hidden'
               }
           }} >
-        
-        {categories.map((category)=>(
-          <Categories
-          title={categories && categories.length>0 ? category.title : ""}
-          src={categories && categories.length > 0? category.imageSrc : ""}
-          />
-        ))}
+          { !isSearched && <StateContext.Provider value={listings}>
+          {categories.map((category)=>(
+            <Categories
+            title={categories && categories.length>0 ? category.title : ""}
+            src={categories && categories.length > 0? category.imageSrc : ""}
+            onChildStateChange={updateListings}
+            />
+          ))}
+        </StateContext.Provider>}
         </Grid>
 
-        <AdsSpace src={ ads && ads.length > 0 ? ads[aIndex].imageSrc : "" }/> 
+        {!isSearched && <AdsSpace src={ ads && ads.length > 0 ? ads[aIndex].imageSrc : "" }/> }
         <br/>
         <Heading>Featured Items</Heading>
         <FavContext.Provider value={favouriteListings}>
@@ -170,6 +182,7 @@ function Home(){
                 description={listings && listings.length>0 ? list.productInfo : ""}
                 price={listings && listings.length>0 ? list.price : ""}
                 isFav = {listings && listings.length>0 ? list.isFavourited : ""}
+                isBought= {listings && listings.length>0 ? list.isBought : ""}
                 />
               ))}
             </SimpleGrid>
@@ -186,6 +199,7 @@ function Home(){
                 description={listings && listings.length>0 ? list.productInfo : ""}
                 price={listings && listings.length>0 ? list.price : ""}
                 isFav = {listings && listings.length>0 ? list.isFavourited : ""}
+                isBought= {listings && listings.length>0 ? list.isBought : ""}
                 />
               ))}
             </SimpleGrid>

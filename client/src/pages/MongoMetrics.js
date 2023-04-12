@@ -7,7 +7,6 @@ import axios from 'axios';
 
 function MongoMetrics() {
   const[isLogged, setIsLogged] = useState(false);
-  console.log(localStorage)
   useEffect(()=>{
       check();
   },[isLogged]);
