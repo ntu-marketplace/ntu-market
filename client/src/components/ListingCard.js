@@ -104,7 +104,7 @@ function ListingCard(props) {
                 <CardFooter>
                     <ButtonGroup className={isSold ? "grey-filter": ""}>
                         <Button variant='solid' colorScheme='blue'>
-                            Chat with buyer
+                            Chat
                         </Button>
                         { isDeleteButton && 
                         <Button variant='solid' colorScheme='red' onClick={() => handleDeleteItems(props.id)}>
