@@ -240,6 +240,7 @@ export default function AddListing() {
     isFavourited: 0,
     isBought: 0,
   });
+  const [finalData,setFinalData] = useState(null);
 
   useEffect(()=>{
       check();
@@ -264,29 +265,43 @@ export default function AddListing() {
         body: imgfile,
       })
       .then(response => response.json())
-      .then(data => {return data})
+      .then(data => {
+        return data;
+      })
       .catch(error => console.error(error));;
 
       console.log("HEY IT WORKED LOOK : " + imgsrc);
-      setFormData((prevData)=> ({...prevData,url:[imgsrc]}))
-
-      const response = await fetch("https://marketdb.herokuapp.com/post-item", {
-        method: "POST",
-        headers : {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-      if(response.ok){
-        console.log("Form data posted successfully!");
-      } else {
-        console.error("Error")
-      }
-      
+      setFormData((prevData)=> ({...prevData,url:[imgsrc]}));
+      setFinalData(formData); 
     }catch (error) {
       console.log("Dk wtf happen: ", error)
     }
   };
+
+  useEffect(()=>{
+    const postData = async () => { 
+      try {
+        const response = await fetch("https://marketdb.herokuapp.com/post-item", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        });
+        if (response.ok) {
+          console.log("Form data posted successfully!");
+          window.location.replace("/home");
+        } else {
+          console.error("Error")
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    postData();
+    
+  },[finalData]);
+  
   const check =() =>{
       if(localStorage.getItem("user") == 'false'){
         setIsLogged(false);
@@ -366,6 +381,7 @@ export default function AddListing() {
                   colorScheme="green"
                   variant="solid"
                   onClick={(e) => {
+                    handleSubmit(e)
                     toast({
                       title: 'Listing Added.',
                       description: "You can check it out under My Listings.",
@@ -373,11 +389,8 @@ export default function AddListing() {
                       duration: 3000,
                       isClosable: true,
                     });
-                    handleSubmit(e)
                   }}>
-                  <Link to="/home">
                     Add Listing
-                  </Link>
                 </Button>
             ) : null}
           </Flex>
