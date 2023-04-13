@@ -17,16 +17,16 @@ function TopPicture({ imageUrl, profileImageUrl }) {
         left={0}
         right={0}
         top={0}
-        zIndex={1}
+        zIndex={0}
       />
       <Box
-        top="50%"
+        position="absolute"
+        top="100%"
         left="50%"
         paddingLeft="50px"
-        paddingTop="200px"
         transform="translate(-50%, -50%)"
         w="100%"
-        zIndex={2}
+        zIndex={1}
         textAlign="center"
       >
         <Image
