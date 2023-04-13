@@ -16,7 +16,7 @@ import {
   Image
 } from '@chakra-ui/react';
 import { HamburgerIcon, Search2Icon, EmailIcon, StarIcon, AddIcon, InfoIcon, ExternalLinkIcon, MoonIcon } from '@chakra-ui/icons';
-import cart from '../media/shopping-cart.png'
+import cart from '../media/LOGO.png'
 import { Link } from 'react-router-dom';
 import { StateContext } from '../pages/Home';
 import { useState, useEffect, useContext } from 'react';
@@ -67,7 +67,7 @@ function Navbar(props) {
           <Show above='620px'>
             <Box>
               <Link to='/home'>
-                <img src={cart} alt="NTU Marketplace" height={50} width={50} />
+                <img src={cart} alt="NTU Marketplace" height={150} width={150} />
               </Link>
             </Box>
           </Show>
