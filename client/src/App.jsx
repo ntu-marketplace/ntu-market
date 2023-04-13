@@ -26,6 +26,7 @@ import ErrorNotFound from "./pages/ErrorNotFound";
 import AddListing from "./pages/AddListing";
 import { AppContextProvider } from "./AppContext";
 import Metrics from "./pages/Metrics";
+import Checkout from "./pages/Checkout";
 import MongoMetrics from "./pages/MongoMetrics";
 import { useState } from "react";
 
@@ -40,32 +41,22 @@ function App() {
         <Route path="/loginSignUp" element={<LoginSignUp/>}/>
         <Route path="/login" element={<Login/>}/>
         <Route path='/signUp' element={<SignUp/>}/>
-          <Route path='authentication' element={<Authentication/>}/>
+        <Route path='authentication' element={<Authentication/>}/>
         <Route path='/home' element={<Home setCurrentChat={setCurrentChat}/>}/>
-        <Route path='/myProfile' element={<MyProfile/>}>
-          {/* <Route path='myListings' element={<Listings/>}/> */}
-          {/* <Route path='myReviews' element={<Reviews/>}/> */}
-        </Route>
+        <Route path='/myProfile' element={<MyProfile/>}/>
         <Route path='/settings' element={<Settings/>}/>
         <Route path='/wallet' element={<Wallet/>}/>
         <Route path='/myChats' element={<MyChats currentChat={currentChat} setCurrentChat={setCurrentChat}/>}/>
         <Route path='/metrics' element={<Metrics/>}/>
         <Route path='/mongoMetrics' element={<MongoMetrics/>}/>
         <Route path='/wishlist' element={<Wishlist/>}/>
-        <Route path='/addListing' element={<AddListing/>}/>
-        <Route path='/details' >
-          <Route index element={<Details/>}/>
-          <Route path='payment' element={<Payment/>}/>
-          <Route path='chat' element={<Chat/>}/>
-          <Route path='confirmationBuy' element={<ConfirmationBuy/>}/>
+        <Route path='/addListing' >
+          <Route index element={<AddListing/>} />
+          <Route path="checkout" element={<Checkout/>}/>
         </Route>
         <Route path='/sellerProfile' element={<SellerProfile/>}>
           <Route path='listings' element={<Listings/>}/>
           <Route path='reviews' element={<Reviews/>}/>
-        </Route>
-        <Route path='/newListing'>
-          <Route index element={<Listing/>}/>
-          <Route path='confirmation' element={<ConfirmationList/>}/>
         </Route>
         <Route path='*' element={<Navigate to='/404'/>}/>
         <Route path='/404'element={<ErrorNotFound/>}/>
