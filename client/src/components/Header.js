@@ -30,14 +30,14 @@ function Header() {
           <Show above='766px'>
             <Box>
               <Link to='/'>
-                <img src={cart} alt="NTU Marketplace" height={50} width={50} />
+                <img src={cart} alt="NTU Marketplace"height={150} width={150} />
               </Link>
             </Box>
           </Show>
           <Show below='766px'>
             <Box>
                 <Link to='/'>
-                <img src={cart} alt="NTU Marketplace" height={50} width={50} />
+                <img src={cart} alt="NTU Marketplace" height={150} width={150}  />
                 </Link>
             </Box>
           </Show>
