@@ -4,7 +4,7 @@ import {
   Flex,
   HStack,
   Show,
-} from '@chakra-ui/react';
+} from '@chakra-ui/react'; 
 import cart from '../media/LOGO.png'
 import { Link } from 'react-router-dom';
 import MyButton from './MyButton';
