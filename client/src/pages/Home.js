@@ -157,6 +157,7 @@ function Home({ setCurrentChat }){
           gap={3}
           mt='1.5em'
           mb='1.5em'
+          ml='1.5em'
           sx={{
               '&::-webkit-scrollbar': {
                   display : 'hidden'
@@ -179,6 +180,7 @@ function Home({ setCurrentChat }){
         <FavContext.Provider value={favouriteListings}>
           <Show above='sm'>
             <SimpleGrid 
+              ml="1.5em"
               onChildStateChange={updateFav}  
               maxWidth='90vw'
               minChildWidth="30%">
