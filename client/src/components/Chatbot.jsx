@@ -20,6 +20,10 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  width: 30%;
+  @media (max-width: 768px) {
+    width: 85%;
+  }
 `;
 
 const ChatIcon = styled.div`
@@ -36,7 +40,7 @@ const ChatIcon = styled.div`
 const ChatWindow = styled.div`
   display: ${({ show }) => (show ? "flex" : "none")};
   flex-direction: column;
-  width: 500px;
+  width: 100%;
   height: 400px;
   background-color: white;
   border-radius: 10px;
@@ -168,11 +172,11 @@ const Chatbot = ({ show, setShow }) => {
 
     return (
         <Container>
-            <ChatIcon style={{backgroundImage: "url(" + IconImg + ")", display: show ? "none" : ""}} onClick={() => setShow(!show)} />
+            <ChatIcon style={{backgroundImage: "url(" + IconImg + ")", display: show ? "none" : "", alignSelf:'flex-end'}} onClick={() => setShow(!show)} />
             <ChatWindow show={show}>
                 <Header>
                     <span>Chatbot</span>
-                    <CloseIcon onClick={() => setShow(false)}>{`×`}</CloseIcon>
+                    <CloseIcon onClick={() => setShow(false)}>{`✕`}</CloseIcon>
                 </Header>
                 <MessagesContainer ref={messagesRef}>
                     {messages.map((message, index) => (

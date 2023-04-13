@@ -18,7 +18,6 @@ export default function MyChats({ currentChat, setCurrentChat }) {
   const [currentUser, setCurrentUser] = useState(undefined);
   const[isLogged, setIsLogged] = useState(false);
 
-  console.log(localStorage)
   useEffect(()=>{
       check();
   },[isLogged]);
