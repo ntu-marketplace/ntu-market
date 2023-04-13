@@ -1,16 +1,6 @@
 const Listings = require('../models/Listings');
 
 const handlePatchItem = async (req, res) => {
-    // try{
-    //     Listings.findByIdAndUpdate(req.params.id, req.body, {new:true}.then((listing)=>{
-    //         if(!listing){
-    //             return res.status(404).send();
-    //         }
-    //         res.send(listing);
-    //     }))
-    // } catch(error) {
-    //     res.status(500).send(error);
-    // }
     const id = req.params.id;
     const updateOps = {};
     for (const key of Object.keys(req.body)) {

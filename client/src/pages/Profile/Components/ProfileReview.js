@@ -41,7 +41,7 @@ function ProfileReview(){
             color='blackAlpha.700'
             fontWeight='bold'
             >
-            <Text align="left" fontSize="lg" fontFamily="san serif" >Review</Text>
+            <Text align="left" fontSize="lg" fontFamily="sans-serif" >Review</Text>
             <GridItem pl='3' bg='white.300' area={'nav'}>
                 <Description
                     name = {profileItems.name}

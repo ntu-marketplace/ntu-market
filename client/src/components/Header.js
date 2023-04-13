@@ -17,7 +17,7 @@ import {
   Image,
 } from '@chakra-ui/react';
 import { HamburgerIcon, Search2Icon, BellIcon, EmailIcon, StarIcon } from '@chakra-ui/icons';
-import cart from '../media/shopping-cart.png'
+import cart from '../media/LOGO.png'
 import { Link } from 'react-router-dom';
 import MyButton from './MyButton';
 function Header() {

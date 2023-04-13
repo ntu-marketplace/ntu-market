@@ -32,6 +32,8 @@ const deleteItem = require('./controllers/deleteItem');
 const patchItem = require('./controllers/patchItem');
 const getContact = require('./controllers/getContact');
 const chatbot = require('./controllers/chatbot');
+const getPoints = require('./controllers/getPoints');
+const patchPoints = require('./controllers/patchPoints');
 
 // app 
 const app = express();
@@ -119,6 +121,8 @@ app.delete("/delete-item/:id", deleteItem.handleDelItems);
 app.patch("/patch-item/:id", patchItem.handlePatchItem);
 app.use("/api/messages", messageRoutes);
 app.post('/chatbot', chatbot.handleBotPrompt(openai));
+app.patch('/patch-points', patchPoints.handlePatchPoints);
+app.get('/get-points', getPoints.handleGetPoints);
 
 // port
 const port = process.env.PORT || 8080;

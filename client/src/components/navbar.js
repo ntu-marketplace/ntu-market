@@ -16,7 +16,7 @@ import {
   Image
 } from '@chakra-ui/react';
 import { HamburgerIcon, Search2Icon, EmailIcon, StarIcon, AddIcon, InfoIcon, ExternalLinkIcon, MoonIcon } from '@chakra-ui/icons';
-import cart from '../media/shopping-cart.png'
+import cart from '../media/LOGO.png'
 import { Link } from 'react-router-dom';
 import { StateContext } from '../pages/Home';
 import { useState, useEffect, useContext } from 'react';
@@ -64,14 +64,14 @@ function Navbar(props) {
     <>
       <Box bg={'#181C62'} px={4}>
         <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
-          <Show above='766px'>
+          <Show above='620px'>
             <Box>
               <Link to='/home'>
-                <img src={cart} alt="NTU Marketplace" height={50} width={50} />
+                <img src={cart} alt="NTU Marketplace" height={150} width={150} />
               </Link>
             </Box>
           </Show>
-          <Show below='766px'>
+          <Show below='620px'>
             <Flex alignItems={'center'}>
               <Menu>
                 <MenuButton
@@ -97,11 +97,26 @@ function Navbar(props) {
                       mr='12px'
                     />
                   }
-                    <span>Hey there, Monica!</span>
+                    {!isSuperAdmin && <span>Hey there, Monica!</span>}
+                    {isSuperAdmin && <span>Hello Super Admin</span> }
                   </MenuItem>
+                  <Link to='/home'>
+                      <MenuItem>Home</MenuItem>
+                  </Link>
                   <Link to='/myProfile'>
                     <MenuItem>My Profile</MenuItem>
                   </Link>
+                  {isSuperAdmin && <Link to="https://dsoh010.grafana.net/goto/ipj5N-YVk?orgId=1">
+                    <MenuItem >Server Health</MenuItem>
+                  </Link>}
+                  {/*  */}
+                  {isSuperAdmin && <Link to="https://dsoh010.grafana.net/goto/7mw13BLVz?orgId=1">
+                    <MenuItem >Revenue </MenuItem>
+                  </Link>}
+                  {isSuperAdmin && <Link to="/MongoMetrics">
+                    <MenuItem >Database</MenuItem>
+                  </Link>
+                  }
                   <MenuDivider />
                   <MenuItem>
                     <Button onClick={handleLogout}>
@@ -134,19 +149,23 @@ function Navbar(props) {
             <Link to='/wishlist'>
               <StarIcon color={'white'} h={'1.2em'} w={'1.2em'} />
             </Link>
-            {isSuperAdmin && <Link to="https://dsoh010.grafana.net/goto/ipj5N-YVk?orgId=1">
-              <InfoIcon color={'white'} h={'1.2em'} w={'1.2em'} />
-            </Link>}
-            {/*  */}
-            {isSuperAdmin && <Link to="https://dsoh010.grafana.net/goto/7mw13BLVz?orgId=1">
-              <ExternalLinkIcon color={'white'} h={'1.2em'} w={'1.2em'} />
-            </Link>}
-            {isSuperAdmin && <Link to="/MongoMetrics">
-              <MoonIcon color={'white'} h={'1.2em'} w={'1.2em'} />
-            </Link>}
+            <Show above='620px'>
+              {isSuperAdmin && <Link to="https://dsoh010.grafana.net/goto/ipj5N-YVk?orgId=1">
+                <InfoIcon color={'white'} h={'1.2em'} w={'1.2em'} />
+              </Link>}
+              {/*  */}
+              {isSuperAdmin && <Link to="https://dsoh010.grafana.net/goto/7mw13BLVz?orgId=1">
+                <ExternalLinkIcon color={'white'} h={'1.2em'} w={'1.2em'} />
+              </Link>}
+              {isSuperAdmin && <Link to="/MongoMetrics">
+                <MoonIcon color={'white'} h={'1.2em'} w={'1.2em'} />
+              </Link>
+              }
+
+            </Show>
 
 
-            <Show above='766px'>
+            <Show above='620px'>
               <Flex alignItems={'center'}>
                 <Menu>
                   <MenuButton
@@ -170,9 +189,6 @@ function Navbar(props) {
                     }
                   </MenuButton>
                   <MenuList>
-                    <Link to='/settings'>
-                      <MenuItem>Settings</MenuItem>
-                    </Link>
                     <Link to='/myProfile'>
                       <MenuItem>My Profile</MenuItem>
                     </Link>

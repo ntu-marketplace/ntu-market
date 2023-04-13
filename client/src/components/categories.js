@@ -4,8 +4,11 @@ import { useContext, useState } from "react";
 
 function Categories(props) {
     const listings = useContext(StateContext); // list of items from home
+    // console.log(listings)
+    // console.log(props.title)
     const [query, setQuery] = useState(props.title);
     const handleSearch = (props) =>{
+        // console.log(props)
         setQuery(props.title);
     }
     function handleChange() { 

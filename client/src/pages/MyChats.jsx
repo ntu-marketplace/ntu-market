@@ -6,6 +6,8 @@ import styled from "styled-components";
 import ChatContainer from "../components/ChatContainer";
 import Contacts from "../components/Contacts";
 import Welcome from "../components/Welcome";
+import Navbar from "../components/navbar";
+import Header from "../components/Header";
 const server = "https://marketdb.herokuapp.com";
 
 export default function MyChats({ currentChat, setCurrentChat }) {
@@ -13,7 +15,22 @@ export default function MyChats({ currentChat, setCurrentChat }) {
   const socket = useRef();
   const [contacts, setContacts] = useState([]);
   const [currentUser, setCurrentUser] = useState(undefined);
+  const[isLogged, setIsLogged] = useState(false);
 
+  console.log(localStorage)
+  useEffect(()=>{
+      check();
+  },[isLogged]);
+  const check =() =>{
+      if(localStorage.getItem("user") == 'false'){
+        setIsLogged(false);
+        return;
+      }
+      else{
+        setIsLogged(true);
+      }
+      return;
+    }
   useEffect(() => {
     if (!localStorage.getItem("_id")) {
       navigate("/login");
@@ -50,6 +67,7 @@ export default function MyChats({ currentChat, setCurrentChat }) {
 
   useEffect(() => {
     updateContact();
+    check();
   }, [currentUser]);
 
   const handleChatChange = (chat) => {
@@ -58,6 +76,7 @@ export default function MyChats({ currentChat, setCurrentChat }) {
   
   return (
     <>
+      {isLogged ? <Navbar/>: <Header/>}
       <Container>
         <div className="container">
           <Contacts contacts={contacts} changeChat={handleChatChange} />
@@ -67,6 +86,7 @@ export default function MyChats({ currentChat, setCurrentChat }) {
             <ChatContainer currentChat={currentChat} socket={socket} />
           )}
         </div>
+        
       </Container>
     </>
   );

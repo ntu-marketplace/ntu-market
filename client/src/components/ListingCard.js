@@ -163,7 +163,8 @@ function ListingCard(props) {
                 </CardBody>
                 <Divider />
                 <CardFooter>
-                    <ButtonGroup className={isSold ? "grey-filter": ""}>
+                    {!isSold && 
+                    <ButtonGroup >
                         <Button onClick={handleChatBuyer} variant='solid' colorScheme='blue'>
                             Chat
                         </Button>
@@ -172,6 +173,18 @@ function ListingCard(props) {
                             <DeleteIcon/>
                         </Button>}
                     </ButtonGroup>
+                    }
+                    {isSold && 
+                    <ButtonGroup className={"grey-filter"}>
+                        <Button variant='solid'  colorScheme='blue'>
+                            Chat
+                        </Button>
+                        { isDeleteButton && 
+                        <Button variant='solid'  colorScheme='red'>
+                            <DeleteIcon/>
+                        </Button>}
+                    </ButtonGroup>
+                    }
                 </CardFooter>
             </Card>
         </GridItem>

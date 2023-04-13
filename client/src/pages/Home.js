@@ -6,7 +6,7 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Categories from "../components/categories";
 import axios from "axios";
-import { AppContextProvider, useAppContext } from "../AppContext";
+import { AppContextProvider } from "../AppContext";
 import AdsSpace from "../components/adsSpace";
 import ListingCard from "../components/ListingCard";
 import Chatbot from "../components/Chatbot";
@@ -22,7 +22,6 @@ function Home({ setCurrentChat }){
   const [favouriteListings, setFavouriteListings] = useState([]);
   const [listings, setListings] = useState([]);
   const [showChatbot, setShowChatbot] = useState(false);
-  // Changed getListings to sort based on whether an item has been bought before.
 
   const getListings = async () => {
     try{
