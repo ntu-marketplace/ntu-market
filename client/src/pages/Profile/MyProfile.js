@@ -7,8 +7,11 @@ import ProfileBody from "./Components/ProfileBody";
 import { useState, useEffect } from "react";
 import { useAppContext } from "../../AppContext";
 import Header from "../../components/Header";
-function MyProfile(props){
+
+
+export default function MyProfile(props){
   const[isLogged, setIsLogged] = useState(false);
+
   console.log(localStorage)
   useEffect(()=>{
       check();
@@ -23,6 +26,7 @@ function MyProfile(props){
       }
       return;
     }
+
   return(
       <>
         {isLogged ? <Navbar/>: <Header/>}
@@ -36,4 +40,3 @@ function MyProfile(props){
       </>
   )
 }
-export default MyProfile;

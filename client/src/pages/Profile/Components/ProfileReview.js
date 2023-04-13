@@ -24,9 +24,9 @@ function ProfileReview(){
     ]
     const profileItems = 
         {
-            userId: "Number",
-            name: "Name",
-            description: "Pull from DB pls. I will do just need to mock it up first",
+            userId: localStorage.getItem('_id'),
+            name: localStorage.getItem('username'),
+            description: "Just a broke uni student trying to make an extra buck and reducing waste.",
 
         };
     return(

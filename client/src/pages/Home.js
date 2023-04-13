@@ -9,6 +9,7 @@ import axios from "axios";
 import { AppContextProvider, useAppContext } from "../AppContext";
 import AdsSpace from "../components/adsSpace";
 import ListingCard from "../components/ListingCard";
+import Chatbot from "../components/Chatbot";
 
 export const StateContext = createContext();
 export const FavContext = createContext();
@@ -20,6 +21,7 @@ function Home({ setCurrentChat }){
   const [aIndex, setAIndex] = useState(0);
   const [favouriteListings, setFavouriteListings] = useState([]);
   const [listings, setListings] = useState([]);
+  const [showChatbot, setShowChatbot] = useState(false);
   // Changed getListings to sort based on whether an item has been bought before.
 
   const getListings = async () => {
@@ -140,6 +142,7 @@ function Home({ setCurrentChat }){
         mr='0'
         minWidth='100%'
         backgroundColor="#F5F5F5"
+        style={{position: 'relative'}}
           >
         {!isSearched && <PhishingAlert 
         title={ alerts && alerts.length > 0 ? alerts[pAIndex].title : "" } 
@@ -213,7 +216,7 @@ function Home({ setCurrentChat }){
             </SimpleGrid>
           </Show>
         </FavContext.Provider>
-
+        <Chatbot show={showChatbot} setShow={setShowChatbot} />
         </Container>
       <br/><br/>
       <Footer/>
