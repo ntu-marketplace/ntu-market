@@ -27,17 +27,44 @@ import { AppContextProvider, useAppContext } from '../AppContext';
 import Header from '../components/Header';
 
 const Form1 = () => {
-  const [selectedImages, setSelectedImage] = useState([])
+  const [selectedImages, setSelectedImages] = useState([])
+  // const OnSelectFile = (event) => {
+  //   event.preventDefault();
+  //   console.log("HEY LOOK HERE "+ event.target.files)
+  //   if(event.target.files){
+  //     const imageArray = Array.from(event.target.files).map((file)=>URL.createObjectURL(file))
+  //     console.log(imageArray)
+  //     setSelectedImages((prevData)=>prevData.concat(imageArray))
+  //     console.log(selectedImages)
+  //     Array.from(event.target.files).map(
+  //       (file)=>URL.revokeObjectURL(file)
+  //     )
+  //   }
+  // }
   const OnSelectFile = (event) => {
+    event.preventDefault();
+    console.log("HEY LOOK HERE "+ event.target.files)
     if(event.target.files){
       const imageArray = Array.from(event.target.files).map((file)=>URL.createObjectURL(file))
+      console.log(imageArray)
+      setSelectedImages((prevData)=>prevData.concat(imageArray))
+      setSelectedImages((prevData)=>prevData)
 
-      setSelectedImage((prevImages)=>prevImages.concat(imageArray))
+      // Save the selectedImages in local storage
+      localStorage.setItem("selectedImages", imageArray[0]);
+      console.log(localStorage.selectedImages)
+
       Array.from(event.target.files).map(
         (file)=>URL.revokeObjectURL(file)
       )
     }
   }
+  // useEffect(() => {
+  //   const storedImages = JSON.parse(localStorage.getItem("selectedImages"));
+  //   if (storedImages) {
+  //     setSelectedImages(storedImages);
+  //   }
+  // }, []);
   const previewImages = (source) =>{
     return source.map((image)=>{
       return (
@@ -55,7 +82,7 @@ const Form1 = () => {
             right='1'
             top='1' 
             borderRadius='10'
-            onClick={() => setSelectedImage(selectedImages.filter((e) => e !== image))}>
+            onClick={() => setSelectedImages(selectedImages.filter((e) => e !== image))}>
               <CloseIcon color='white' boxSize={2}></CloseIcon>
             </Button>        
       </GridItem>
@@ -166,10 +193,10 @@ const Form2 = () => {
         <Input size="md" isRequired mt='3' overflowX="hidden" overflowY="auto" variant="filled" background="#3b409c" 
         placeholder='Give us some details about your product' name='info' value={formData.info || ''} onChange={handleChange} />
       </FormControl>
-      <FormControl>
+      {/* <FormControl>
         <Input type='text' size="md" isRequired mt='3' overflowY="auto" variant="filled" background="#3b409c" 
         placeholder='Please provide us a source link of your picture' name='url' value={formData.url || ''} onChange={handleChangeArr} />
-      </FormControl>
+      </FormControl> */}
     </>
   );
 };
@@ -225,6 +252,24 @@ export default function AddListing() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try{
+      const blobobj = await fetch(localStorage.selectedImages)
+        .then(response => response.blob())
+        .then((blob) => {return blob});
+      const imgfile = new FormData();
+      const randomName = Math.random().toString(36).substring(2, 12);
+      imgfile.append('file', blobobj, randomName + '.jpg');
+      //post image to s3
+      const imgsrc = await fetch("https://marketdb.herokuapp.com/upload", {
+        method: "POST",
+        body: imgfile,
+      })
+      .then(response => response.json())
+      .then(data => {return data})
+      .catch(error => console.error(error));;
+
+      console.log("HEY IT WORKED LOOK : " + imgsrc);
+      setFormData((prevData)=> ({...prevData,url:[imgsrc]}))
+
       const response = await fetch("https://marketdb.herokuapp.com/post-item", {
         method: "POST",
         headers : {
