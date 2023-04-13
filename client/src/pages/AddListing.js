@@ -290,7 +290,7 @@ export default function AddListing() {
         });
         if (response.ok) {
           console.log("Form data posted successfully!");
-          window.location.replace("/home");
+          window.location.replace("/addListing/checkout");
         } else {
           console.error("Error")
         }
