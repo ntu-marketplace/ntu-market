@@ -8,6 +8,7 @@ import Contacts from "../components/Contacts";
 import Welcome from "../components/Welcome";
 import Navbar from "../components/navbar";
 import Header from "../components/Header";
+import { Show, VStack } from "@chakra-ui/react";
 const server = "https://marketdb.herokuapp.com";
 
 export default function MyChats({ currentChat, setCurrentChat }) {
@@ -17,7 +18,6 @@ export default function MyChats({ currentChat, setCurrentChat }) {
   const [currentUser, setCurrentUser] = useState(undefined);
   const[isLogged, setIsLogged] = useState(false);
 
-  console.log(localStorage)
   useEffect(()=>{
       check();
   },[isLogged]);
@@ -77,17 +77,40 @@ export default function MyChats({ currentChat, setCurrentChat }) {
   return (
     <>
       {isLogged ? <Navbar/>: <Header/>}
-      <Container>
-        <div className="container">
-          <Contacts contacts={contacts} changeChat={handleChatChange} />
-          {currentChat === undefined ? (
-            <Welcome />
-          ) : (
-            <ChatContainer currentChat={currentChat} socket={socket} />
-          )}
-        </div>
-        
-      </Container>
+      <Show above="620px">
+        <Container>
+          <div className="container">
+            <Contacts contacts={contacts} changeChat={handleChatChange} />
+            {currentChat === undefined ? (
+              <Welcome />
+            ) : (
+              <ChatContainer currentChat={currentChat} socket={socket} />
+            )}
+          </div>
+          
+        </Container>
+      </Show>
+
+      <Show below="620px">
+        <Container>
+          <VStack>
+            <Contacts contacts={contacts} changeChat={handleChatChange} />
+          </VStack>
+          <VStack>
+            {currentChat === undefined ? (
+              <Welcome />
+            ) : (
+              <ChatContainer currentChat={currentChat} socket={socket} />
+            )}
+          </VStack>
+            
+          
+
+          
+          
+        </Container>
+      </Show>
+
     </>
   );
 }
@@ -109,8 +132,33 @@ const Container = styled.div`
     background-color: #313690;
     display: grid;
     grid-template-columns: 25% 75%;
-    @media screen and (min-width: 720px) and (max-width: 1080px) {
-      grid-template-columns: 35% 65%;
+
+    @media only screen and (max-width: 768px) {
+      grid-template-columns: 100%;
+      height: auto;
+      width: 100%;
     }
   }
 `;
+// const Containero = styled.div`
+//   height: 100vh;
+//   width: 100vw;
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: center;
+//   gap: 1rem;
+//   align-items: center;
+//   background-color: #181C62;
+//   .container {
+//     box-shadow: 4px 4px 1px rgba(255, 255, 255, 0.4);
+//     border-radius: 35px;
+//     height: 85vh;
+//     width: 85vw;
+//     background-color: #313690;
+//     display: grid;
+//     grid-template-columns: 25% 75%;
+//     @media screen and (min-width: 720px) and (max-width: 1080px) {
+//       grid-template-columns: 35% 65%;
+//     }
+//   }
+// `;

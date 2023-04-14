@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import { Resizable } from 're-resizable';
 
 export default function Contacts({ contacts, changeChat }) {
   const [currentUserName, setCurrentUserName] = useState(undefined);
   const [currentSelected, setCurrentSelected] = useState(undefined);
+  const [containerWidth, setContainerWidth] = useState(300); // Add initial width
 
   useEffect(() => {
     const data = localStorage.getItem("username");
@@ -16,36 +18,42 @@ export default function Contacts({ contacts, changeChat }) {
   };
 
   return (
-        <Container>
-          <div className="brand">
-            {/* <img src={Logo} alt="logo" /> */}
-            <h3>Chat</h3>
-          </div>
-          <div className="contacts">
-            {contacts.map((contact, index) => {
-              return (
-                <div
-                  key={contact._id}
-                  className={`contact ${
-                    index === currentSelected ? "selected" : ""
-                  }`}
-                  onClick={() => changeCurrentChat(index, contact)}
-                >
-                  <div className="avatar">
-                  </div>
-                  <div className="username">
-                    <h3>{contact.username}</h3>
-                  </div>
+    <Resizable
+      defaultSize={{
+        width: 200,
+      }}
+    >
+      <Container>
+        <div className="brand">
+          {/* <img src={Logo} alt="logo" /> */}
+          <h3>Chat</h3>
+        </div>
+        <div className="contacts">
+          {contacts.map((contact, index) => {
+            return (
+              <div
+                key={contact._id}
+                className={`contact ${
+                  index === currentSelected ? "selected" : ""
+                }`}
+                onClick={() => changeCurrentChat(index, contact)}
+              >
+                <div className="avatar">
                 </div>
-              );
-            })}
+                <div className="username">
+                  <h3>{contact.username}</h3>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+        <div className="current-user">
+          <div className="username">
+            <h1>{`Welcome, ${currentUserName}`}</h1>
           </div>
-          <div className="current-user">
-            <div className="username">
-              <h1>{`Welcome, ${currentUserName}`}</h1>
-            </div>
-          </div>
-        </Container>
+        </div>
+      </Container>
+    </Resizable>
   );
 }
 const Container = styled.div`
@@ -54,6 +62,7 @@ const Container = styled.div`
   overflow: hidden;
   background-color: #080420;
   border-radius: 35px 0 0 35px;
+  height: 100%;
   .brand {
     display: flex;
     align-items: center;

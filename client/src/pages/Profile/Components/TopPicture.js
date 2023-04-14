@@ -9,27 +9,24 @@ function TopPicture({ imageUrl, profileImageUrl }) {
       bgSize="cover"
       bgPosition="center"
       h="180px"
-      position="relative"
     >
       <Box
         bg="rgba(0, 0, 0, 0.5)"
         bottom={0}
         h="100%"
         left={0}
-        position="absolute"
         right={0}
         top={0}
-        zIndex={1}
+        zIndex={0}
       />
       <Box
         position="absolute"
-        top="50%"
+        top="100%"
         left="50%"
         paddingLeft="50px"
-        paddingTop="200px"
         transform="translate(-50%, -50%)"
         w="100%"
-        zIndex={2}
+        zIndex={1}
         textAlign="center"
       >
         <Image

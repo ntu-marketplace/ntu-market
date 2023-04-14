@@ -3,12 +3,9 @@ import { StateContext } from '../pages/Home';
 import { useContext, useState } from "react";
 
 function Categories(props) {
-    const listings = useContext(StateContext); // list of items from home
-    // console.log(listings)
-    // console.log(props.title)
+    const listings = useContext(StateContext);
     const [query, setQuery] = useState(props.title);
     const handleSearch = (props) =>{
-        // console.log(props)
         setQuery(props.title);
     }
     function handleChange() { 
@@ -17,7 +14,7 @@ function Categories(props) {
         props.onChildStateChange(filteredListings);
       }
     return(
-        <GridItem display='flex' alignItems='flex-start' paddingTop='0.5em'>
+        <GridItem display='flex' paddingTop='0.5em'>
             <VStack>
                 <Image
                     shadow='base'
