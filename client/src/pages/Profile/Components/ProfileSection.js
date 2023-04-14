@@ -1,6 +1,7 @@
 import { Grid, GridItem, Card, CardBody, Image, Stack, Text, Divider, CardFooter, Button, ButtonGroup, HStack, filter, SimpleGrid, Show } from "@chakra-ui/react";
 import Description from "./Description";
 import ListingCard from "../../../components/ListingCard";
+import ListingCardSmaller from "../../../components/ListingCardSmaller";
 import { useEffect, useState } from "react";
 import axios from "axios";
 function ProfileSection(props) {
@@ -31,7 +32,7 @@ function ProfileSection(props) {
             templateAreas={`"nav main"
                             "nav main"`}
             gridTemplateRows={'50px 1fr 30px'}
-            gridTemplateColumns={'150px 1fr'}
+            gridTemplateColumns={'100px 1fr'}
             h='800px'
             gap='1'
             color='blackAlpha.700'
@@ -64,7 +65,7 @@ function ProfileSection(props) {
             <SimpleGrid     
               maxWidth='100vw'>
               {listings && listings.map((list)=>(
-                <ListingCard     
+                <ListingCardSmaller    
                 id = {list._id}
                 title={list.productTitle}
                 src={list.imageSrc} 
